@@ -18,9 +18,9 @@ export DATASET=$3
 fi
 if [ -z $4 ]
 then
-export SCALE=$4
-else
 export SCALE=1
+else
+export SCALE=$4
 fi
 
 export SCENE=$(echo $(basename $DATASET))

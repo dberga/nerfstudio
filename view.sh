@@ -18,19 +18,18 @@ export DATASET=$3
 fi
 if [ -z $4 ]
 then
-export RESOL=1
+export PORT="7007"
 else
-export RESOL=$4
+export PORT=$4
 fi
 
 export SCENE=$(echo $(basename $DATASET))
 CKPT_PATH=$(ls outputs/$SCENE/$MODEL/*/*/*.ckpt | sort -n | tail -n 1)
 MODEL_PATH=$(dirname $(dirname $CKPT_PATH))
-CKPT_DATE=$(basename $MODEL_PATH)
 CFG_PATH=$MODEL_PATH/config.yml
 OUTPUT_PATH=$MODEL_PATH/results.json
 
 # RUN
-ns-render camera-path --load-config $CFG_PATH --camera-path-filename $DATASET/camera_paths/$CKPT_DATE.json --output-path renders/$SCENE/$CKPT_DATE.mp4 --downscale-factor $RESOL
-echo "ns-render camera-path --load-config $CFG_PATH --camera-path-filename $DATASET/camera_paths/$CKPT_DATE.json --output-path renders/$SCENE/$CKPT_DATE.mp4 --downscale-factor $RESOL"
+ns-viewer --load-config $CFG_PATH --viewer.websocket-port $PORT;
+echo "ns-viewer --load-config $CFG_PATH --viewer.websocket-port $PORT"
 
