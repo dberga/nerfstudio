@@ -1,0 +1,10 @@
+sh train.sh 1 nerfacto data/sketchfab-giravolt/pipa;
+sh train.sh 1 nerfacto data/sketchfab-giravolt/amulet;
+sh train.sh 1 nerfacto data/sketchfab-giravolt/inflammatory;
+sh train.sh 1 nerfacto data/sketchfab-giravolt/meteor;
+sh train.sh 1 nerfacto data/sketchfab-giravolt/pietat;
+sh train.sh 1 nerfacto data/sketchfab-giravolt/rococo;
+sh train.sh 1 nerfacto data/sketchfab-giravolt/dress;
+sh train.sh 1 nerfacto data/sketchfab-giravolt/lucrecia;
+sh train.sh 1 nerfacto data/sketchfab-giravolt/neptune;
+sh train.sh 1 nerfacto data/sketchfab-giravolt/tauleta;

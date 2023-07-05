@@ -18,7 +18,8 @@ export DATASET=$3
 fi
 
 # RUN
-ns-train $MODEL --data $DATASET --vis wandb;
+echo "ns-train ${MODEL} --data ${DATASET} --vis wandb;";
+ns-train ${MODEL} --data ${DATASET} --vis wandb;
 
 ############################################
 #export CUDA_VISIBLE_DEVICES=0;
