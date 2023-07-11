@@ -16,10 +16,16 @@ export DATASET="data/nerfstudio/kitchen"
 else
 export DATASET=$3
 fi
+if [ -z $4 ]
+then
+export VIS="wandb"
+else
+export VIS=$4
+fi
 
 # RUN
-echo "ns-train ${MODEL} --data ${DATASET} --vis wandb;";
-ns-train ${MODEL} --data ${DATASET} --vis wandb;
+echo "ns-train ${MODEL} --data ${DATASET} --vis $VIS;";
+ns-train ${MODEL} --data ${DATASET} --vis $VIS;
 
 ############################################
 #export CUDA_VISIBLE_DEVICES=0;

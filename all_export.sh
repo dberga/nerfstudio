@@ -11,8 +11,6 @@ else
 export RESOL=$2
 fi
 
-
-
 ALL_CKPTS=$(ls outputs/*/*/*/*/*.ckpt)
 for CKPT in $ALL_CKPTS
 do
@@ -31,12 +29,12 @@ PACK=$(basename $FOLDER)
 if [ -d data/$PACK/$SCENE ];
 then
 DATASET=data/$PACK/$SCENE
-if [ -e exports/*/exports/mesh/$SCENE/$MODEL/*.ply ]
+if [ -e "exports/*/exports/mesh/$SCENE/$MODEL/*.ply" ] && [ -e "exports/*/exports/pcd/$SCENE/$MODEL/*.ply" ]
 then
 echo "$SCENE already exported to mesh/pcd"
 else
-echo "sh export.sh $1 $MODEL $DATASET 1"
-sh export.sh $1 $MODEL $DATASET 1
+echo "sh export.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1"
+sh export.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1
 fi
 fi
 done

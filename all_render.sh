@@ -28,21 +28,30 @@ SCENE=$(basename $(dirname $(dirname $(dirname $(dirname $CKPT)))))
 for FOLDER in data/*;
 do
 PACK=$(basename $FOLDER)
-if [ -d data/$PACK/$SCENE/camera_paths ];
+DATASET=data/$PACK/$SCENE
+echo "sh render.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1"
+sh render.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1
+done
+
+: ' # old: forcing existance of camera path
+for FOLDER in data/*;
+do
+PACK=$(basename $FOLDER)
+if [ -d "data/$PACK/$SCENE/camera_paths" ];
 then
-if [ -e data/$PACK/$SCENE/camera_paths/*.json ];
+if [ -e "data/$PACK/$SCENE/camera_paths/*.json" ];
 then
 DATASET=data/$PACK/$SCENE
-if [ -e renders/$SCENE/*.mp4 ]
+if [ -e "renders/$SCENE/*.mp4" ]
 then
 echo "$SCENE already rendered"
 else
-echo "sh render.sh $1 $MODEL $DATASET 1"
-sh render.sh $1 $MODEL $DATASET 1
+echo "sh render.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1"
+sh render.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1
 fi
 fi
 fi
 done
-
+'
 
 done
