@@ -29,7 +29,7 @@ SCENE=$(basename $SCENE_FOLDER)
 echo $SCENE
 if [ -e "outputs/$SCENE/$MODEL/*/nerfstudio_models" ]
 then
-if [ "$(ls -l outputs/$SCENE/$MODEL/*/nerfstudio_models/*.ckpt | wc -l)" > "0" ]
+if [ -e "outputs/$SCENE/$MODEL/*/nerfstudio_models/*.ckpt" ]
 then
 CKPT=$( ls outputs/$SCENE/$MODEL/*/nerfstudio_models/*.ckpt | sort -n 1 | tail -n 1)
 echo "$CKPT already trained (ckpt exists)"

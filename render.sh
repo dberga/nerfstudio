@@ -41,5 +41,5 @@ ns-render interpolate --load-config $CFG_PATH --output-path renders/$SCENE/$CKPT
 fi
 
 # convert to gif
-echo "ffmpeg -i renders/$SCENE/$CKPT_DATE.mp4 renders/$SCENE/$CKPT_DATE.gif"
-ffmpeg -i renders/$SCENE/$CKPT_DATE.mp4 renders/$SCENE/$CKPT_DATE.gif -filter_complex "fps=15,scale=480:-1"
+echo "ffmpeg -y -i renders/$SCENE/$CKPT_DATE.mp4 renders/$SCENE/$CKPT_DATE.gif"
+ffmpeg -y -i renders/$SCENE/$CKPT_DATE.mp4 renders/$SCENE/$CKPT_DATE.gif -filter_complex "fps=15,scale=480:-1"
