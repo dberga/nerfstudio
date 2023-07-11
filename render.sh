@@ -30,8 +30,12 @@ CKPT_DATE=$(basename $MODEL_PATH)
 CFG_PATH=$MODEL_PATH/config.yml
 OUTPUT_PATH=$MODEL_PATH/results.json
 
-if [ -e $DATASET/camera_paths/*.json ]
-then
+if [ -e renders/$SCENE/$CKPT_DATE.mp4 ]; then
+echo "renders/$SCENE/$CKPT_DATE.mp4 already rendered"
+exit
+fi
+
+if [ -e $DATASET/camera_paths/*.json ]; then
 CAM_PATH=$(ls $DATASET/camera_paths/*.json | sort -n | tail -n 1)
 echo "ns-render camera-path --load-config $CFG_PATH --camera-path-filename $DATASET/camera_paths/$CKPT_DATE.json --output-path renders/$SCENE/$CKPT_DATE.mp4 --downscale-factor $RESOL"
 ns-render camera-path --load-config $CFG_PATH --camera-path-filename $CAM_PATH --output-path renders/$SCENE/$CKPT_DATE.mp4 --downscale-factor $RESOL

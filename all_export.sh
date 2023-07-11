@@ -26,7 +26,7 @@ SCENE=$(basename $(dirname $(dirname $(dirname $(dirname $CKPT)))))
 for FOLDER in data/*;
 do
 PACK=$(basename $FOLDER)
-if [ -d data/$PACK/$SCENE ];
+if [ -e data/$PACK/$SCENE ];
 then
 DATASET=data/$PACK/$SCENE
 if [ -e "exports/*/exports/mesh/$SCENE/$MODEL/*.ply" ] && [ -e "exports/*/exports/pcd/$SCENE/$MODEL/*.ply" ]

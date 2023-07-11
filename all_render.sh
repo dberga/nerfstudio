@@ -21,19 +21,18 @@ DATE=$(basename $(dirname $(dirname $CKPT)))
 MODEL=$(basename $(dirname $(dirname $(dirname $CKPT))))
 SCENE=$(basename $(dirname $(dirname $(dirname $(dirname $CKPT)))))
 
-#echo "$DATE"
-#echo "$MODEL"
-#echo "$SCENE"
-
 for FOLDER in data/*;
 do
 PACK=$(basename $FOLDER)
+if [ -e data/$PACK/$SCENE ]; then
 DATASET=data/$PACK/$SCENE
 echo "sh render.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1"
 sh render.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1
+fi
 done
 
-: ' # old: forcing existance of camera path
+##################### old: force existing camera path
+: '
 for FOLDER in data/*;
 do
 PACK=$(basename $FOLDER)
@@ -55,3 +54,4 @@ done
 '
 
 done
+
