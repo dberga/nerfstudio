@@ -32,5 +32,8 @@ OUTPUT_PATH=$MODEL_PATH/results.json
 CAM_PATH=$(ls $DATASET/camera_paths/*.json | sort -n | tail -n 1)
 
 # RUN
-ns-render camera-path --load-config $CFG_PATH --camera-path-filename $CAM_PATH --output-path renders/$SCENE/$CKPT_DATE.mp4 --downscale-factor $RESOL
 echo "ns-render camera-path --load-config $CFG_PATH --camera-path-filename $DATASET/camera_paths/$CKPT_DATE.json --output-path renders/$SCENE/$CKPT_DATE.mp4 --downscale-factor $RESOL"
+ns-render camera-path --load-config $CFG_PATH --camera-path-filename $CAM_PATH --output-path renders/$SCENE/$CKPT_DATE.mp4 --downscale-factor $RESOL
+echo "ffmpeg -i renders/$SCENE/$CKPT_DATE.mp4 renders/$SCENE/$CKPT_DATE.gif"
+ffmpeg -i renders/$SCENE/$CKPT_DATE.mp4 renders/$SCENE/$CKPT_DATE.gif -filter_complex "fps=15,scale=480:-1"
+
