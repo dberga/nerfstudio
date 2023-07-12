@@ -30,20 +30,25 @@ CKPT_DATE=$(basename $MODEL_PATH)
 CFG_PATH=$MODEL_PATH/config.yml
 OUTPUT_PATH=$MODEL_PATH/results.json
 
-if [ -e renders/$SCENE/$CKPT_DATE.mp4 ]; then
-echo "renders/$SCENE/$CKPT_DATE.mp4 already rendered"
+if [ -e renders/$SCENE/$MODEL/$CKPT_DATE.mp4 ]; then
+echo "renders/$SCENE/$MODEL/$CKPT_DATE.mp4 already rendered"
 exit
 fi
 
 if [ -e $DATASET/camera_paths/*.json ]; then
 CAM_PATH=$(ls $DATASET/camera_paths/*.json | sort -n | tail -n 1)
-echo "ns-render camera-path --load-config $CFG_PATH --camera-path-filename $DATASET/camera_paths/$CKPT_DATE.json --output-path renders/$SCENE/$CKPT_DATE.mp4 --downscale-factor $RESOL"
-ns-render camera-path --load-config $CFG_PATH --camera-path-filename $CAM_PATH --output-path renders/$SCENE/$CKPT_DATE.mp4 --downscale-factor $RESOL
+echo "ns-render camera-path --load-config $CFG_PATH --camera-path-filename $DATASET/camera_paths/$CKPT_DATE.json --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL"
+ns-render camera-path --load-config $CFG_PATH --camera-path-filename $CAM_PATH --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL
 else
-echo "ns-render interpolate --load-config $CFG_PATH --output-path renders/$SCENE/$CKPT_DATE.mp4 --downscale-factor $RESOL"
-ns-render interpolate --load-config $CFG_PATH --output-path renders/$SCENE/$CKPT_DATE.mp4 --downscale-factor $RESOL
+
+echo "ns-render interpolate --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL"
+ns-render interpolate --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL
+
+#echo "ns-render spiral --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/spiral-$CKPT_DATE.mp4 --downscale-factor $RESOL"
+#ns-render spiral --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/spiral-$CKPT_DATE.mp4 --downscale-factor $RESOL
 fi
 
-# convert to gif
-echo "ffmpeg -y -i renders/$SCENE/$CKPT_DATE.mp4 renders/$SCENE/$CKPT_DATE.gif"
-ffmpeg -y -i renders/$SCENE/$CKPT_DATE.mp4 renders/$SCENE/$CKPT_DATE.gif -filter_complex "fps=15,scale=480:-1"
+# mp4 video to gif
+echo "ffmpeg -y -i renders/$SCENE/$MODEL/$CKPT_DATE.mp4 renders/$SCENE/$MODEL/$CKPT_DATE.gif"
+ffmpeg -y -i renders/$SCENE/$MODEL/$CKPT_DATE.mp4 renders/$SCENE/$MODEL/$CKPT_DATE.gif -filter_complex "fps=15,scale=480:-1"
+

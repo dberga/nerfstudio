@@ -41,7 +41,7 @@ then
 if [ -e "data/$PACK/$SCENE/camera_paths/*.json" ];
 then
 DATASET=data/$PACK/$SCENE
-if [ -e "renders/$SCENE/*.mp4" ]
+if [ -e "renders/$SCENE/*/*.mp4" ]
 then
 echo "$SCENE already rendered"
 else
