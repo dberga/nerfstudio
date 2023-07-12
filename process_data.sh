@@ -17,6 +17,8 @@ else
 export DATASET=$3
 fi
 
+# disable xcb Qt
+export QT_QPA_PLATFORM=offscreen
 
 # RUN
 {
