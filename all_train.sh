@@ -23,10 +23,10 @@ else
 export VIS=$4
 fi
 
-for PACK in $FOLDER/*
+for SCENE_FOLDER in $FOLDER/*
 do
-SCENE=$(basename $PACK)
-#echo $SCENE
+SCENE=$(basename $SCENE_FOLDER)
+DATASET=$FOLDER/$SCENE
 if [ -e "outputs/$SCENE/$MODEL/*/nerfstudio_models" ]
 then
 if [ -e "outputs/$SCENE/$MODEL/*/nerfstudio_models/*.ckpt" ]
@@ -35,8 +35,8 @@ CKPT=$( ls outputs/$SCENE/$MODEL/*/nerfstudio_models/*.ckpt | sort -n 1 | tail -
 echo "$CKPT already trained (ckpt exists)"
 fi
 else
-echo "sh train.sh $CUDA_VISIBLE_DEVICES $MODEL $PACK/$SCENE $VIS"
-sh train.sh $CUDA_VISIBLE_DEVICES $MODEL $PACK/$SCENE $VIS
+echo "sh train.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET $VIS"
+sh train.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET $VIS
 fi
 done
 

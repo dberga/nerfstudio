@@ -20,6 +20,7 @@ fi
 
 for FOLDER in data/*; 
 do
+echo "sh all_train.sh $CUDA_VISIBLE_DEVICES $FOLDER $MODEL $VIS"
 sh all_train.sh $CUDA_VISIBLE_DEVICES $FOLDER $MODEL $VIS
 done
 

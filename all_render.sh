@@ -46,7 +46,7 @@ then
 echo "$SCENE already rendered"
 else
 echo "sh render.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1"
-sh render.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1
+#sh render.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1
 fi
 fi
 fi
