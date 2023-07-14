@@ -23,10 +23,10 @@ else
 export VIS=$4
 fi
 
-for SCENE_FOLDER in $FOLDER/*
+for PACK in $FOLDER/*
 do
-SCENE=$(basename $SCENE_FOLDER)
-echo $SCENE
+SCENE=$(basename $PACK)
+#echo $SCENE
 if [ -e "outputs/$SCENE/$MODEL/*/nerfstudio_models" ]
 then
 if [ -e "outputs/$SCENE/$MODEL/*/nerfstudio_models/*.ckpt" ]
