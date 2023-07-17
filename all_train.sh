@@ -16,12 +16,12 @@ export MODEL="nerfacto"
 else
 export MODEL=$3
 fi
-if [ -z $4 ]
-then
-export VIS="wandb"
-else
-export VIS=$4
-fi
+#if [ -z $4 ]
+#then
+#export VIS="wandb"
+#else
+#export VIS=$4
+#fi
 
 for SCENE_FOLDER in $FOLDER/*
 do
@@ -35,8 +35,8 @@ CKPT=$( ls outputs/$SCENE/$MODEL/*/nerfstudio_models/*.ckpt | sort -n 1 | tail -
 echo "$CKPT already trained (ckpt exists)"
 fi
 else
-echo "sh train.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET $VIS"
-sh train.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET $VIS
+echo "sh train.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET"
+sh train.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET
 fi
 done
 

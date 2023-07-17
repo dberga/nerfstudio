@@ -10,18 +10,18 @@ export MODEL="nerfacto"
 else
 export MODEL=$2
 fi
-if [ -z $3 ]
-then
-export VIS="wandb"
-else
-export VIS=$3
-fi
+#if [ -z $3 ]
+#then
+#export VIS="wandb"
+#else
+#export VIS=$3
+#fi
 
 
 for FOLDER in data/*; 
 do
-echo "sh all_train.sh $CUDA_VISIBLE_DEVICES $FOLDER $MODEL $VIS"
-sh all_train.sh $CUDA_VISIBLE_DEVICES $FOLDER $MODEL $VIS
+echo "sh all_train.sh $CUDA_VISIBLE_DEVICES $FOLDER $MODEL"
+sh all_train.sh $CUDA_VISIBLE_DEVICES $FOLDER $MODEL
 done
 
 
