@@ -22,8 +22,15 @@ CKPT_PATH=$(ls outputs/$SCENE/$MODEL/*/*/*.ckpt | sort -n | tail -n 1)
 MODEL_PATH=$(dirname $(dirname $CKPT_PATH))
 CFG_PATH=$MODEL_PATH/config.yml
 OUTPUT_PATH=$MODEL_PATH/results.json
+RENDER_PATH=$MODEL_PATH/renders
+
+if [ -e $RENDER_PATH ]
+rmdir $RENDER_PATH
+then
+
+fi
 
 # RUN
-ns-eval --load-config=$CFG_PATH --output-path=$OUTPUT_PATH
-echo "ns-eval --load-config=$CFG_PATH --output-path=$OUTPUT_PATH;";
+echo "ns-eval --load-config=$CFG_PATH --output-path=$OUTPUT_PATH --render-output-path=$RENDER_PATH"
+ns-eval --load-config=$CFG_PATH --output-path=$OUTPUT_PATH --render-output-path=$RENDER_PATH
 
