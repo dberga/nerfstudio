@@ -383,7 +383,7 @@ method_configs["vanilla-nerf"] = TrainerConfig(
     method_name="vanilla-nerf",
     pipeline=VanillaPipelineConfig(
         datamanager=VanillaDataManagerConfig(
-            dataparser=BlenderDataParserConfig(),
+            dataparser=NerfstudioDataParserConfig(),
         ),
         model=VanillaModelConfig(_target=NeRFModel),
     ),
@@ -407,7 +407,7 @@ method_configs["tensorf"] = TrainerConfig(
     mixed_precision=False,
     pipeline=VanillaPipelineConfig(
         datamanager=VanillaDataManagerConfig(
-            dataparser=BlenderDataParserConfig(),
+            dataparser=NerfstudioDataParserConfig(),
             train_num_rays_per_batch=4096,
             eval_num_rays_per_batch=4096,
         ),
