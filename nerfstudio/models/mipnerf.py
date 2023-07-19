@@ -131,6 +131,7 @@ class MipNerfModel(Model):
         depth_fine = self.renderer_depth(weights_fine, ray_samples_pdf)
 
         outputs = {
+            "rgb": rgb_coarse,
             "rgb_coarse": rgb_coarse,
             "rgb_fine": rgb_fine,
             "accumulation_coarse": accumulation_coarse,
