@@ -23,8 +23,15 @@ fi
 #export VIS=$4
 #fi
 
+if [ $MODEL == "nerfacto" ] || [ $MODEL == "refnerfacto" ]
+then
+export EXTRAFLAGS="--pipeline.model.predict-normals"
+else
+export EXTRAFLAGS=""
+fi
+
 # RUN
-echo "ns-train ${MODEL} --data ${DATASET} --viewer.quit-on-train-completion True";
-ns-train ${MODEL} --data ${DATASET} --viewer.quit-on-train-completion True;
+echo "ns-train ${MODEL} --data ${DATASET} --vis viewer --viewer.quit-on-train-completion True $EXTRAFLAGS";
+ns-train ${MODEL} --data ${DATASET} --vis viewer --viewer.quit-on-train-completion True $EXTRAFLAGS;
 
 
