@@ -165,11 +165,15 @@ cython_debug/
 outputs/
 exports/
 renders/
+outputs
+renders
+exports
 # tensorboard log files
 events.out.*
 
 # Data
 /data
+data
 
 # Misc
 old/
