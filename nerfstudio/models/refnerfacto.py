@@ -543,6 +543,12 @@ class RefNerfactoModel(Model):
                 loss_dict["pred_normal_loss"] = self.config.pred_normal_loss_mult * torch.mean(
                     outputs["rendered_pred_normal_loss"]
                 )
+                
+                # Regularization loss for normals
+                normals = outputs["normals"]  # Extract the rendered normals from the outputs
+                loss_dict["normals_regularization_loss"] = self.config.orientation_loss_mult * orientation_loss(
+                    outputs["weights_list"], normals, outputs["ray_samples_list"]
+                )
         return loss_dict
 
     def get_image_metrics_and_images(
