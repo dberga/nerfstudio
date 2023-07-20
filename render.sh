@@ -44,8 +44,8 @@ else
 echo "ns-render interpolate --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_name rgb"
 ns-render interpolate --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_name rgb
 
-#echo "ns-render spiral --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/spiral-$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_name rgb_fine"
-#ns-render spiral --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/spiral-$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_name rgb_fine
+echo "ns-render spiral --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/spiral-$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_name rgb"
+ns-render spiral --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/spiral-$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_name rgb
 fi
 
 # mp4 video to gif
