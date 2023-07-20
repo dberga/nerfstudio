@@ -17,3 +17,6 @@ from .base_field_component import FieldComponent as FieldComponent
 from .encodings import Encoding as Encoding
 from .encodings import ScalingAndOffset as ScalingAndOffset
 from .mlp import MLP as MLP
+from .hallucidated import E_attr as E_attr
+from .hallucidated import implicit_mask as implicit_mask
+from .hallucidated import PosEmbedding as PosEmbedding

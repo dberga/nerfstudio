@@ -60,6 +60,7 @@ from nerfstudio.models.neus_facto import NeuSFactoModelConfig
 from nerfstudio.models.semantic_nerfw import SemanticNerfWModelConfig
 from nerfstudio.models.tensorf import TensoRFModelConfig
 from nerfstudio.models.vanilla_nerf import NeRFModel, VanillaModelConfig
+from nerfstudio.models.ha_nerf import HaNeRFModel, HaNerfModelConfig
 from nerfstudio.pipelines.base_pipeline import VanillaPipelineConfig
 from nerfstudio.pipelines.dynamic_batch import DynamicBatchPipelineConfig
 from nerfstudio.plugins.registry import discover_methods
@@ -81,6 +82,7 @@ descriptions = {
     "neus": "Implementation of NeuS. (slow)",
     "neus-facto": "Implementation of NeuS-Facto. (slow)",
     "refnerfacto": "Combines nerfacto and ref-nerf.",
+    "ha-nerf": "Hallucidated NeRF model.",
 }
 
 method_configs["nerfacto"] = TrainerConfig(
@@ -386,6 +388,26 @@ method_configs["vanilla-nerf"] = TrainerConfig(
             dataparser=NerfstudioDataParserConfig(),
         ),
         model=VanillaModelConfig(_target=NeRFModel),
+    ),
+    optimizers={
+        "fields": {
+            "optimizer": RAdamOptimizerConfig(lr=5e-4, eps=1e-08),
+            "scheduler": None,
+        },
+        "temporal_distortion": {
+            "optimizer": RAdamOptimizerConfig(lr=5e-4, eps=1e-08),
+            "scheduler": None,
+        },
+    },
+)
+
+method_configs["ha-nerf"] = TrainerConfig(
+    method_name="ha-nerf",
+    pipeline=VanillaPipelineConfig(
+        datamanager=VanillaDataManagerConfig(
+            dataparser=NerfstudioDataParserConfig(),
+        ),
+        model=HaModelConfig(_target=HaNeRFModel),
     ),
     optimizers={
         "fields": {
