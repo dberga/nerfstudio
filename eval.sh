@@ -25,9 +25,8 @@ OUTPUT_PATH=$MODEL_PATH/results.json
 RENDER_PATH=$MODEL_PATH/renders
 
 if [ -e $RENDER_PATH ]
-rmdir $RENDER_PATH
 then
-
+rm -rf $RENDER_PATH/*
 fi
 
 # RUN
