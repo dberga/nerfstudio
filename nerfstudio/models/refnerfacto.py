@@ -494,6 +494,9 @@ class RefNerfactoModel(Model):
             pred_normals = self.renderer_normals(field_outputs[FieldHeadNames.PRED_NORMALS], weights=weights)
             outputs["normals"] = self.normals_shader(normals)
             outputs["pred_normals"] = self.normals_shader(pred_normals)
+            tangent = field_outputs[FieldHeadNames.TANGENT]
+            output["tangent"] = tangent
+
         # These use a lot of GPU memory, so we avoid storing them for eval.
         if self.training:
             outputs["weights_list"] = weights_list
@@ -549,6 +552,14 @@ class RefNerfactoModel(Model):
                 loss_dict["normals_regularization_loss"] = self.config.orientation_loss_mult * orientation_loss(
                     outputs["weights_list"], normals, outputs["ray_samples_list"]
                 )
+
+                # Tangent loss
+                tangent = outputs[FieldHeadNames.TANGENT]
+                tangent_dot_normals = torch.sum(tangent * normals, dim=-1, keepdims=True)
+                tangent_loss = torch.mean(tangent_dot_normals ** 2)
+                loss_dict["tangent_loss"] = tangent_loss
+                loss_dict["total_loss"] += tangent_loss
+                
         return loss_dict
 
     def get_image_metrics_and_images(
