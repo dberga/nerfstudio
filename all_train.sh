@@ -27,7 +27,7 @@ for SCENE_FOLDER in $FOLDER/*
 do
 SCENE=$(basename $SCENE_FOLDER)
 DATASET=$FOLDER/$SCENE
-if [ -e "outputs/$SCENE/$MODEL/*/nerfstudio_models" ]
+if [ $( ls outputs/$SCENE/$MODEL) ]
 then
 if [ -e "outputs/$SCENE/$MODEL/*/nerfstudio_models/*.ckpt" ]
 then
