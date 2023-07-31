@@ -334,6 +334,7 @@ method_configs["instant-ngp-bounded"] = TrainerConfig(
 
 method_configs["mipnerf"] = TrainerConfig(
     method_name="mipnerf",
+    max_num_iterations=30000,
     pipeline=VanillaPipelineConfig(
         datamanager=VanillaDataManagerConfig(dataparser=NerfstudioDataParserConfig(), train_num_rays_per_batch=1024),
         model=VanillaModelConfig(
@@ -383,6 +384,7 @@ method_configs["semantic-nerfw"] = TrainerConfig(
 
 method_configs["vanilla-nerf"] = TrainerConfig(
     method_name="vanilla-nerf",
+    max_num_iterations=30000,
     pipeline=VanillaPipelineConfig(
         datamanager=VanillaDataManagerConfig(
             dataparser=NerfstudioDataParserConfig(),
@@ -401,7 +403,7 @@ method_configs["vanilla-nerf"] = TrainerConfig(
     },
 )
 
-method_configs["ha-nerf"] = TrainerConfig(
+"""method_configs["ha-nerf"] = TrainerConfig(
     method_name="ha-nerf",
     pipeline=VanillaPipelineConfig(
         datamanager=VanillaDataManagerConfig(
@@ -419,7 +421,7 @@ method_configs["ha-nerf"] = TrainerConfig(
             "scheduler": None,
         },
     },
-)
+)"""
 
 method_configs["tensorf"] = TrainerConfig(
     method_name="tensorf",

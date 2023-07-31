@@ -116,6 +116,7 @@ class NerfactoField(Field):
         self.use_pred_normals = use_pred_normals
         self.pass_semantic_gradients = pass_semantic_gradients
         self.base_res = base_res
+        self.tangent = torch.nn.Parameter(torch.zeros(hidden_dim, 3))
 
         self.direction_encoding = SHEncoding(
             levels=4,
@@ -286,6 +287,10 @@ class NerfactoField(Field):
 
             x = self.mlp_pred_normals(pred_normals_inp).view(*outputs_shape, -1).to(directions)
             outputs[FieldHeadNames.PRED_NORMALS] = self.field_head_pred_normals(x)
+
+            # Add tangent
+            tangent = l2_normalize(self.tangent.expand(ray_samples.shape[0], -1), eps=1e-6)
+            outputs[FieldHeadNames.tangent] = tangent
 
         h = torch.cat(
             [
