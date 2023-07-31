@@ -27,17 +27,28 @@ for SCENE_FOLDER in $FOLDER/*
 do
 SCENE=$(basename $SCENE_FOLDER)
 DATASET=$FOLDER/$SCENE
-if [ $( ls outputs/$SCENE/$MODEL) ]
+if [ -e "outputs/$SCENE/$MODEL" ]
 then
-if [ -e "outputs/$SCENE/$MODEL/*/nerfstudio_models/*.ckpt" ]
+if [ `ls -a outputs/$SCENE/$MODEL | wc -l` ]
+#if [[ ! -z $(ls -A outputs/$SCENE/$MODEL) ]]
 then
-CKPT=$( ls outputs/$SCENE/$MODEL/*/nerfstudio_models/*.ckpt | sort -n 1 | tail -n 1)
+for DATE in outputs/$SCENE/$MODEL/*
+do
+CKPT_DATE=$(basename $DATE)
+if [ -e "outputs/$SCENE/$MODEL/$CKPT_DATE/nerfstudio_models" ]
+then
+if [ `ls -a outputs/$SCENE/$MODEL/$CKPT_DATE/nerfstudio_models/*.ckpt | wc -l` ]
+then
+CKPT=$( ls outputs/$SCENE/$MODEL/$CKPT_DATE/nerfstudio_models/*.ckpt | sort -n 1 | tail -n 1)
 echo "$CKPT already trained (ckpt exists)"
+exit
 fi
-else
+fi
+done
+fi
+fi
 echo "sh train.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET"
 sh train.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET
-fi
 done
 
 
