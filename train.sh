@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ -z $1 ]
 then
 export CUDA_VISIBLE_DEVICES=0
@@ -23,7 +24,7 @@ fi
 #export VIS=$4
 #fi
 
-if [ $MODEL == "nerfacto" ] || [ $MODEL == "refnerfacto" ]
+if [ "${MODEL}" = "nerfacto" ] || [ "${MODEL}" = "refnerfacto" ]
 then
 export EXTRAFLAGS="--pipeline.model.predict-normals"
 else
