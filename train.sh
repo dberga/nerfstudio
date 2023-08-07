@@ -26,7 +26,7 @@ fi
 
 if [ "${MODEL}" = "nerfacto" ] || [ "${MODEL}" = "refnerfacto" ]
 then
-export EXTRAFLAGS="--pipeline.model.predict-normals"
+export EXTRAFLAGS="--pipeline.model.predict-normals True"
 else
 export EXTRAFLAGS=""
 fi

@@ -10,13 +10,19 @@ export FOLDER="data/nerfstudio"
 else
 export FOLDER=$2
 fi
+if [ -z $3 ]
+then
+export OVERWRITE=false
+else
+export OVERWRITE=$3
+fi
 
 for SCENE_FOLDER in $FOLDER/*
 do
 SCENE=$(basename $SCENE_FOLDER)
 DATASET=$FOLDER/$SCENE
 
-if [ -e "$DATASET/transforms*.json" ]; then
+if [ -e "$DATASET/transforms*.json" ] && ! $OVERWRITE; then
 echo "$DATASET already processed"
 break
 

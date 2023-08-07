@@ -22,6 +22,12 @@ export RESOL=1
 else
 export RESOL=$4
 fi
+if [ -z $5 ]
+then
+export OVERWRITE=false
+else
+export OVERWRITE=$5
+fi
 
 export SCENE=$(echo $(basename $DATASET))
 CKPT_PATH=$(ls outputs/$SCENE/$MODEL/*/*/*.ckpt | sort -n | tail -n 1)
@@ -30,7 +36,7 @@ CKPT_DATE=$(basename $MODEL_PATH)
 CFG_PATH=$MODEL_PATH/config.yml
 OUTPUT_PATH=$MODEL_PATH/results.json
 
-if [ -e renders/$SCENE/$MODEL/$CKPT_DATE.mp4 ]; then
+if [ -e renders/$SCENE/$MODEL/$CKPT_DATE.mp4 ] && ! $OVERWRITE; then
 echo "renders/$SCENE/$MODEL/$CKPT_DATE.mp4 already rendered"
 exit
 fi

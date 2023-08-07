@@ -10,7 +10,12 @@ export RESOL=1
 else
 export RESOL=$2
 fi
-
+if [ -z $3 ]
+then
+export OVERWRITE=false
+else
+export OVERWRITE=$3
+fi
 
 
 ALL_CKPTS=$(ls outputs/*/*/*/*/*.ckpt)
@@ -26,8 +31,8 @@ do
 PACK=$(basename $FOLDER)
 if [ -e data/$PACK/$SCENE ]; then
 DATASET=data/$PACK/$SCENE
-echo "sh render.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1"
-sh render.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1
+echo "sh render.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1 $OVERWRITE"
+sh render.sh $CUDA_VISIBLE_DEVICES $MODEL $DATASET 1 $OVERWRITE
 fi
 done
 

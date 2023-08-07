@@ -16,6 +16,12 @@ export MODEL="nerfacto"
 else
 export MODEL=$3
 fi
+if [ -z $4 ]
+then
+export OVERWRITE=false
+else
+export OVERWRITE=$4
+fi
 #if [ -z $4 ]
 #then
 #export VIS="wandb"
@@ -37,7 +43,7 @@ do
 CKPT_DATE=$(basename $DATE)
 if [ -e "outputs/$SCENE/$MODEL/$CKPT_DATE/nerfstudio_models" ]
 then
-if [ `ls -a outputs/$SCENE/$MODEL/$CKPT_DATE/nerfstudio_models/*.ckpt | wc -l` ]
+if [ `ls -a outputs/$SCENE/$MODEL/$CKPT_DATE/nerfstudio_models/*.ckpt | wc -l` ] && ! $OVERWRITE
 then
 CKPT=$( ls outputs/$SCENE/$MODEL/$CKPT_DATE/nerfstudio_models/*.ckpt | sort -n 1 | tail -n 1)
 echo "$CKPT already trained (ckpt exists)"

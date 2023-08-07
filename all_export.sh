@@ -10,6 +10,12 @@ export RESOL=1
 else
 export RESOL=$2
 fi
+if [ -z $3 ]
+then
+export OVERWRITE=false
+else
+export OVERWRITE=$3
+fi
 
 ALL_CKPTS=$(ls outputs/*/*/*/*/*.ckpt)
 for CKPT in $ALL_CKPTS
@@ -29,7 +35,7 @@ PACK=$(basename $FOLDER)
 if [ -e data/$PACK/$SCENE ];
 then
 DATASET=data/$PACK/$SCENE
-if [ -e "exports/*/exports/mesh/$SCENE/$MODEL/*.ply" ] && [ -e "exports/*/exports/pcd/$SCENE/$MODEL/*.ply" ]
+if [ -e "exports/*/exports/mesh/$SCENE/$MODEL/*.ply" ] && [ -e "exports/*/exports/pcd/$SCENE/$MODEL/*.ply" ] && ! $OVERWRITE
 then
 echo "$SCENE already exported to mesh/pcd"
 else
