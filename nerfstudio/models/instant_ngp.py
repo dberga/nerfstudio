@@ -268,6 +268,8 @@ class NGPModel(Model):
             "img": combined_rgb,
             "accumulation": combined_acc,
             "depth": combined_depth,
+            'original': batch["image"], 
+            'output': rgb
         }
 
         return metrics_dict, images_dict

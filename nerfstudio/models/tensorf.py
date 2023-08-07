@@ -365,5 +365,5 @@ class TensoRFModel(Model):
             "ssim": float(ssim.item()),
             "lpips": float(lpips.item()),
         }
-        images_dict = {"img": combined_rgb, "accumulation": acc, "depth": depth}
+        images_dict = {"img": combined_rgb, "accumulation": acc, "depth": depth, 'original': batch["image"], 'output': rgb}
         return metrics_dict, images_dict

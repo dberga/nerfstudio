@@ -318,5 +318,5 @@ class HaNeRFModel(Model):
             "fine_ssim": float(fine_ssim),
             "fine_lpips": float(fine_lpips),
         }
-        images_dict = {"img": combined_rgb, "accumulation": combined_acc, "depth": combined_depth}
+        images_dict = {"img": combined_rgb, "accumulation": combined_acc, "depth": combined_depth, 'original': batch["image"], 'output': rgb_fine}
         return metrics_dict, images_dict

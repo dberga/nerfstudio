@@ -386,6 +386,8 @@ class GenerfactoModel(Model):
             "background": background,
             "accumulation": accum_mask,
             "depth": depth,
+            'original': batch["image"], 
+            'output': rgb
         }
 
         # These use a lot of GPU memory, so we avoid storing them for eval.

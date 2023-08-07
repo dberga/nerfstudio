@@ -397,6 +397,8 @@ class SurfaceModel(Model):
             "accumulation": combined_acc,
             "depth": combined_depth,
             "normal": combined_normal,
+            "original": batch["image"],
+            "output": rgb
         }
 
         # Switch images from [H, W, C] to [1, C, H, W] for metrics computations
