@@ -21,6 +21,7 @@ from typing import Type
 
 import imageio
 import numpy as np
+import math
 import torch
 
 from nerfstudio.cameras.cameras import Cameras, CameraType
@@ -46,7 +47,8 @@ class BlenderDataParserConfig(DataParserConfig):
     """How much to scale the camera origins by."""
     alpha_color: str = "white"
     """alpha color of background"""
-
+    
+    train_split_fraction: float = 0.9
 
 @dataclass
 class Blender(DataParser):
@@ -63,19 +65,59 @@ class Blender(DataParser):
         self.alpha_color = config.alpha_color
 
     def _generate_dataparser_outputs(self, split="train"):
+        meta = load_from_json(self.data / f"transforms_{split}.json")
+        '''
+        assert self.config.data.exists(), f"Data directory {self.config.data} does not exist."
+        if self.config.data.suffix == ".json":
+            meta = load_from_json(self.config.data)
+            data_dir = self.config.data.parent
+        else:
+            meta = load_from_json(self.config.data / "transforms.json")
+            data_dir = self.config.data
+        '''
         if self.alpha_color is not None:
             alpha_color_tensor = get_color(self.alpha_color)
         else:
             alpha_color_tensor = None
-
-        meta = load_from_json(self.data / f"transforms_{split}.json")
+        
         image_filenames = []
         poses = []
         for frame in meta["frames"]:
-            fname = self.data / Path(frame["file_path"].replace("./", "") + ".png")
+            fname = self.data / Path(frame["file_path"].replace("./", "")+ '.png')
             image_filenames.append(fname)
             poses.append(np.array(frame["transform_matrix"]))
         poses = np.array(poses).astype(np.float32)
+
+        has_split_files_spec = any(f"{split}_filenames" in meta for split in ("train", "val", "test"))
+        if f"{split}_filenames" in meta:
+            # Validate split first
+            split_filenames = set(self._get_fname(Path(x), data_dir) for x in meta[f"{split}_filenames"])
+            unmatched_filenames = split_filenames.difference(image_filenames)
+            if unmatched_filenames:
+                raise RuntimeError(f"Some filenames for split {split} were not found: {unmatched_filenames}.")
+
+            indices = [i for i, path in enumerate(image_filenames) if path in split_filenames]
+            CONSOLE.log(f"[yellow] Dataset is overriding {split}_indices to {indices}")
+            indices = np.array(indices, dtype=np.int32)
+        elif has_split_files_spec:
+            raise RuntimeError(f"The dataset's list of filenames for split {split} is missing.")
+        else:
+            # filter image_filenames and poses based on train/eval split percentage
+            num_images = len(image_filenames)
+            num_train_images = math.ceil(num_images * self.config.train_split_fraction)
+            num_eval_images = num_images - num_train_images
+            i_all = np.arange(num_images)
+            i_train = np.linspace(
+                0, num_images - 1, num_train_images, dtype=int
+            )  # equally spaced training images starting and ending at 0 and num_images-1
+            i_eval = np.setdiff1d(i_all, i_train)  # eval images are the remaining images
+            assert len(i_eval) == num_eval_images
+            if split == "train":
+                indices = i_train
+            elif split in ["val", "test"]:
+                indices = i_eval
+            else:
+                raise ValueError(f"Unknown dataparser split {split}")
 
         img_0 = imageio.v2.imread(image_filenames[0])
         image_height, image_width = img_0.shape[:2]
