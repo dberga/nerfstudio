@@ -10,6 +10,12 @@ export MODEL="nerfacto"
 else
 export MODEL=$2
 fi
+if [ -z $3 ]
+then
+export OVERWRITE=false
+else
+export OVERWRITE=$3
+fi
 #if [ -z $3 ]
 #then
 #export VIS="wandb"
@@ -20,8 +26,8 @@ fi
 
 for FOLDER in data/*; 
 do
-echo "sh all_train.sh $CUDA_VISIBLE_DEVICES $FOLDER $MODEL"
-sh all_train.sh $CUDA_VISIBLE_DEVICES $FOLDER $MODEL
+echo "sh all_train.sh $CUDA_VISIBLE_DEVICES $FOLDER $MODEL $OVERWRITE"
+sh all_train.sh $CUDA_VISIBLE_DEVICES $FOLDER $MODEL $OVERWRITE
 done
 
 
