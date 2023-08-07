@@ -39,6 +39,13 @@ from nerfstudio.field_components.mlp import MLP
 from nerfstudio.field_components.spatial_distortions import SpatialDistortion
 from nerfstudio.fields.base_field import Field, get_normalized_directions
 
+def l2_normalize(x, eps=torch.finfo(torch.float32).eps):
+    """Normalize x to unit length along last axis."""
+
+    return x / torch.sqrt(
+        torch.fmax(torch.sum(x**2, dim=-1, keepdims=True), torch.full_like(x, eps))
+    )
+
 
 class NerfactoField(Field):
     """Compound Field that uses TCNN
