@@ -388,7 +388,7 @@ class NerfactoModel(Model):
         metrics_dict = {"psnr": float(psnr.item()), "ssim": float(ssim)}  # type: ignore
         metrics_dict["lpips"] = float(lpips)
 
-        images_dict = {"img": combined_rgb, "accumulation": combined_acc, "depth": combined_depth, 'original': batch["image"], 'output': rgb}
+        images_dict = {"img": combined_rgb, "accumulation": combined_acc, "depth": combined_depth, 'original': batch["image"], 'output': predicted_rgb}
 
         for i in range(self.config.num_proposal_iterations):
             key = f"prop_depth_{i}"
