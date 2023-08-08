@@ -94,7 +94,7 @@ method_configs["nerfacto"] = TrainerConfig(
     mixed_precision=True,
     pipeline=VanillaPipelineConfig(
         datamanager=VanillaDataManagerConfig(
-            dataparser=NerfstudioDataParserConfig(),
+            dataparser=BlenderDataParserConfig(),
             train_num_rays_per_batch=4096,
             eval_num_rays_per_batch=4096,
             camera_optimizer=CameraOptimizerConfig(
@@ -388,7 +388,7 @@ method_configs["vanilla-nerf"] = TrainerConfig(
     max_num_iterations=30000,
     pipeline=VanillaPipelineConfig(
         datamanager=VanillaDataManagerConfig(
-            dataparser=BlenderDataParserConfig(),
+            dataparser=NerfstudioDataParserConfig(),
         ),
         model=VanillaModelConfig(_target=NeRFModel),
     ),
@@ -408,7 +408,7 @@ method_configs["vanilla-nerf-blender"] = TrainerConfig(
     max_num_iterations=30000,
     pipeline=VanillaPipelineConfig(
         datamanager=VanillaDataManagerConfig(
-            dataparser=NerfstudioDataParserConfig(),
+            dataparser=BlenderDataParserConfig(),
         ),
         model=VanillaModelConfig(_target=NeRFModel),
     ),
@@ -669,7 +669,7 @@ method_configs["refnerfacto"] = TrainerConfig(
     mixed_precision=True,
     pipeline=VanillaPipelineConfig(
         datamanager=VanillaDataManagerConfig(
-            dataparser=NerfstudioDataParserConfig(),
+            dataparser=BlenderDataParserConfig(),
             train_num_rays_per_batch=4096,
             eval_num_rays_per_batch=4096,
             camera_optimizer=CameraOptimizerConfig(
