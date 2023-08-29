@@ -1,0 +1,21 @@
+{
+  "experiment_name": "sagrada",
+  "method_name": "vanilla-nerf",
+  "checkpoint": "outputs/sagrada/vanilla-nerf/2023-07-31_235754/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 15.783310890197754,
+    "psnr_std": 1.710966944694519,
+    "coarse_psnr": 16.06770896911621,
+    "coarse_psnr_std": 1.6026676893234253,
+    "fine_psnr": 15.783310890197754,
+    "fine_psnr_std": 1.710966944694519,
+    "fine_ssim": 0.43663063645362854,
+    "fine_ssim_std": 0.07864342629909515,
+    "fine_lpips": 0.9092873334884644,
+    "fine_lpips_std": 0.050165146589279175,
+    "num_rays_per_sec": 12743.515625,
+    "num_rays_per_sec_std": 33.05694580078125,
+    "fps": 0.031087812036275864,
+    "fps_std": 8.064226130954921e-05
+  }
+}

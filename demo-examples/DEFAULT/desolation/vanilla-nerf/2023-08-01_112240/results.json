@@ -1,0 +1,21 @@
+{
+  "experiment_name": "desolation",
+  "method_name": "vanilla-nerf",
+  "checkpoint": "outputs/desolation/vanilla-nerf/2023-08-01_112240/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 13.424324989318848,
+    "psnr_std": 0.7533490657806396,
+    "coarse_psnr": 13.294597625732422,
+    "coarse_psnr_std": 0.9939831495285034,
+    "fine_psnr": 13.424324989318848,
+    "fine_psnr_std": 0.7533490657806396,
+    "fine_ssim": 0.3320448398590088,
+    "fine_ssim_std": 0.0823628380894661,
+    "fine_lpips": 0.9104710817337036,
+    "fine_lpips_std": 0.08746078610420227,
+    "num_rays_per_sec": 12640.162109375,
+    "num_rays_per_sec_std": 36.535438537597656,
+    "fps": 0.024383028969168663,
+    "fps_std": 7.047715916996822e-05
+  }
+}

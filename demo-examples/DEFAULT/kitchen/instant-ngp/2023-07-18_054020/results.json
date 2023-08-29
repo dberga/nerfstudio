@@ -1,0 +1,17 @@
+{
+  "experiment_name": "kitchen",
+  "method_name": "instant-ngp",
+  "checkpoint": "outputs/kitchen/instant-ngp/2023-07-18_054020/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 20.454448699951172,
+    "psnr_std": 3.223389148712158,
+    "ssim": 0.7968719005584717,
+    "ssim_std": 0.0723424181342125,
+    "lpips": 0.3108128607273102,
+    "lpips_std": 0.08529369533061981,
+    "num_rays_per_sec": 37752.3671875,
+    "num_rays_per_sec_std": 4757.2705078125,
+    "fps": 0.05146374925971031,
+    "fps_std": 0.006485076621174812
+  }
+}

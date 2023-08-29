@@ -1,0 +1,17 @@
+{
+  "experiment_name": "desolation",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/desolation/nerfacto/2023-07-19_055311/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 19.29541778564453,
+    "psnr_std": 1.7436749935150146,
+    "ssim": 0.5070080161094666,
+    "ssim_std": 0.11784882843494415,
+    "lpips": 0.3000093698501587,
+    "lpips_std": 0.07977675646543503,
+    "num_rays_per_sec": 84378.359375,
+    "num_rays_per_sec_std": 3349.3330078125,
+    "fps": 0.16276688873767853,
+    "fps_std": 0.006460907403379679
+  }
+}

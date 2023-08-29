@@ -1,0 +1,17 @@
+{
+  "experiment_name": "sagrada",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/sagrada/nerfacto/2023-07-18_212627/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 24.645824432373047,
+    "psnr_std": 3.0580685138702393,
+    "ssim": 0.7312962412834167,
+    "ssim_std": 0.09444955736398697,
+    "lpips": 0.2497740089893341,
+    "lpips_std": 0.08177778869867325,
+    "num_rays_per_sec": 83275.7109375,
+    "num_rays_per_sec_std": 4351.66064453125,
+    "fps": 0.20315112173557281,
+    "fps_std": 0.010615876875817776
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "experiment_name": "bww_entrance",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/bww_entrance/nerfacto/2023-07-19_030730/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 23.3227481842041,
+    "psnr_std": 1.85923171043396,
+    "ssim": 0.7596955895423889,
+    "ssim_std": 0.06163275986909866,
+    "lpips": 0.228135883808136,
+    "lpips_std": 0.02567209117114544,
+    "num_rays_per_sec": 83735.609375,
+    "num_rays_per_sec_std": 3033.863525390625,
+    "fps": 0.16152702271938324,
+    "fps_std": 0.005852358881384134
+  }
+}

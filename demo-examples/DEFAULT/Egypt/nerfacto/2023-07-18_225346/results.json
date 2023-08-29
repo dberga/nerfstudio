@@ -1,0 +1,17 @@
+{
+  "experiment_name": "Egypt",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/Egypt/nerfacto/2023-07-18_225346/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 20.835588455200195,
+    "psnr_std": 2.3726646900177,
+    "ssim": 0.6381936073303223,
+    "ssim_std": 0.10879833251237869,
+    "lpips": 0.35702013969421387,
+    "lpips_std": 0.1012573167681694,
+    "num_rays_per_sec": 88151.28125,
+    "num_rays_per_sec_std": 4759.900390625,
+    "fps": 0.1700449138879776,
+    "fps_std": 0.009181908331811428
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "experiment_name": "Giannini-Hall",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/Giannini-Hall/nerfacto/2023-07-19_001806/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 18.976802825927734,
+    "psnr_std": 2.156578540802002,
+    "ssim": 0.5631924271583557,
+    "ssim_std": 0.09345300495624542,
+    "lpips": 0.4699304401874542,
+    "lpips_std": 0.09604024887084961,
+    "num_rays_per_sec": 85183.1640625,
+    "num_rays_per_sec_std": 2053.09814453125,
+    "fps": 0.05663774162530899,
+    "fps_std": 0.001365091884508729
+  }
+}

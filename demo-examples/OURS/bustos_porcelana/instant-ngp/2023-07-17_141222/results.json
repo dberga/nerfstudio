@@ -1,0 +1,17 @@
+{
+  "experiment_name": "bustos_porcelana",
+  "method_name": "instant-ngp",
+  "checkpoint": "outputs/bustos_porcelana/instant-ngp/2023-07-17_141222/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 31.571796417236328,
+    "psnr_std": 1.5318679809570312,
+    "ssim": 0.9507211446762085,
+    "ssim_std": 0.012640385888516903,
+    "lpips": 0.1132701188325882,
+    "lpips_std": 0.02533949725329876,
+    "num_rays_per_sec": 53725.546875,
+    "num_rays_per_sec_std": 4340.71533203125,
+    "fps": 0.10363724082708359,
+    "fps_std": 0.008373293094336987
+  }
+}

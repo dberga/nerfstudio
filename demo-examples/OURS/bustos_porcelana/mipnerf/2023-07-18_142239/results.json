@@ -1,0 +1,21 @@
+{
+  "experiment_name": "bustos_porcelana",
+  "method_name": "mipnerf",
+  "checkpoint": "outputs/bustos_porcelana/mipnerf/2023-07-18_142239/nerfstudio_models/step-000278000.ckpt",
+  "results": {
+    "psnr": 15.566411972045898,
+    "psnr_std": 0.990768551826477,
+    "coarse_psnr": 15.285701751708984,
+    "coarse_psnr_std": 0.9677935838699341,
+    "fine_psnr": 15.566411972045898,
+    "fine_psnr_std": 0.990768551826477,
+    "fine_ssim": 0.6744033694267273,
+    "fine_ssim_std": 0.05415968596935272,
+    "fine_lpips": 0.6907877922058105,
+    "fine_lpips_std": 0.07890407741069794,
+    "num_rays_per_sec": 11632.498046875,
+    "num_rays_per_sec_std": 53.9962272644043,
+    "fps": 0.02243923209607601,
+    "fps_std": 0.00010415932047180831
+  }
+}

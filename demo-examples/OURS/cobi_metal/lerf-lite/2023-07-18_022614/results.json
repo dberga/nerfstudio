@@ -1,0 +1,17 @@
+{
+  "experiment_name": "cobi_metal",
+  "method_name": "lerf-lite",
+  "checkpoint": "outputs/cobi_metal/lerf-lite/2023-07-18_022614/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 28.380817413330078,
+    "psnr_std": 0.5361214280128479,
+    "ssim": 0.9237713813781738,
+    "ssim_std": 0.004420656710863113,
+    "lpips": 0.1954389214515686,
+    "lpips_std": 0.031240256503224373,
+    "num_rays_per_sec": 5530.7236328125,
+    "num_rays_per_sec_std": 44.54323959350586,
+    "fps": 0.010668834671378136,
+    "fps_std": 8.592425001552328e-05
+  }
+}

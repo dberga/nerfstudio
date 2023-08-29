@@ -1,0 +1,21 @@
+{
+  "experiment_name": "Pan_video_half",
+  "method_name": "vanilla-nerf",
+  "checkpoint": "outputs/Pan_video_half/vanilla-nerf/2023-07-31_215920/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 11.281822204589844,
+    "psnr_std": 1.4347388744354248,
+    "coarse_psnr": 11.122817993164062,
+    "coarse_psnr_std": 1.3283913135528564,
+    "fine_psnr": 11.281822204589844,
+    "fine_psnr_std": 1.4347388744354248,
+    "fine_ssim": 0.6018422842025757,
+    "fine_ssim_std": 0.07560113817453384,
+    "fine_lpips": 0.6995090246200562,
+    "fine_lpips_std": 0.07146088778972626,
+    "num_rays_per_sec": 12490.4287109375,
+    "num_rays_per_sec_std": 188.55186462402344,
+    "fps": 0.024094192311167717,
+    "fps_std": 0.000363718718290329
+  }
+}

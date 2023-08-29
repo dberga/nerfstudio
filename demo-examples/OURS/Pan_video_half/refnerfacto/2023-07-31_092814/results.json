@@ -1,0 +1,17 @@
+{
+  "experiment_name": "Pan_video_half",
+  "method_name": "refnerfacto",
+  "checkpoint": "outputs/Pan_video_half/refnerfacto/2023-07-31_092814/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 21.50745964050293,
+    "psnr_std": 3.0035579204559326,
+    "ssim": 0.8202908635139465,
+    "ssim_std": 0.03726055473089218,
+    "lpips": 0.2837253212928772,
+    "lpips_std": 0.05804813280701637,
+    "num_rays_per_sec": 84080.0234375,
+    "num_rays_per_sec_std": 3283.98291015625,
+    "fps": 0.16219140589237213,
+    "fps_std": 0.00633484311401844
+  }
+}

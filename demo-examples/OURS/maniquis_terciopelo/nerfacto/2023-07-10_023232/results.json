@@ -1,0 +1,12 @@
+{
+  "experiment_name": "maniquis_terciopelo",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/maniquis_terciopelo/nerfacto/2023-07-10_023232/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 25.975893020629883,
+    "ssim": 0.8486320972442627,
+    "lpips": 0.2266503870487213,
+    "num_rays_per_sec": 85381.34375,
+    "fps": 0.1647016555070877
+  }
+}

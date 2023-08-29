@@ -1,0 +1,21 @@
+{
+  "experiment_name": "Egypt",
+  "method_name": "vanilla-nerf",
+  "checkpoint": "outputs/Egypt/vanilla-nerf/2023-08-01_015311/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 12.586479187011719,
+    "psnr_std": 1.2521823644638062,
+    "coarse_psnr": 12.763259887695312,
+    "coarse_psnr_std": 1.2079421281814575,
+    "fine_psnr": 12.586479187011719,
+    "fine_psnr_std": 1.2521823644638062,
+    "fine_ssim": 0.41761890053749084,
+    "fine_ssim_std": 0.09954916685819626,
+    "fine_lpips": 0.967278242111206,
+    "fine_lpips_std": 0.07398007065057755,
+    "num_rays_per_sec": 12652.8125,
+    "num_rays_per_sec_std": 64.4314956665039,
+    "fps": 0.024407431483268738,
+    "fps_std": 0.00012428897025529295
+  }
+}

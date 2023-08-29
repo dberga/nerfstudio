@@ -1,0 +1,17 @@
+{
+  "experiment_name": "kitchen",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/kitchen/nerfacto/2023-07-19_100644/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 20.409406661987305,
+    "psnr_std": 3.18617844581604,
+    "ssim": 0.7889113426208496,
+    "ssim_std": 0.07419319450855255,
+    "lpips": 0.3120581805706024,
+    "lpips_std": 0.0890401229262352,
+    "num_rays_per_sec": 83829.84375,
+    "num_rays_per_sec_std": 3310.73046875,
+    "fps": 0.11427623778581619,
+    "fps_std": 0.004513164050877094
+  }
+}
