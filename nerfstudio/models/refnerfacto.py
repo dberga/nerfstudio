@@ -308,6 +308,7 @@ class RefNerfactoModelConfig(ModelConfig):
     """Which implementation to use for the model."""
     appearance_embed_dim: int = 32
     """Dimension of the appearance embedding."""
+    degree_view: int = 5
 
 
 class RefNerfactoModel(Model):
@@ -331,6 +332,7 @@ class RefNerfactoModel(Model):
         # Add directional encoding to the model
         if self.config.predict_normals:
             self.directional_encoding_fn = generate_dir_enc_fn(self.config.degree_view)
+
 
         # Fields
         self.field = NerfactoField(

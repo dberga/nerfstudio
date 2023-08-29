@@ -296,8 +296,8 @@ class NerfactoField(Field):
             outputs[FieldHeadNames.PRED_NORMALS] = self.field_head_pred_normals(x)
 
             # Add tangent
-            tangent = l2_normalize(self.tangent.expand(ray_samples.shape[0], -1), eps=1e-6)
-            outputs[FieldHeadNames.tangent] = tangent
+            """tangent = l2_normalize(self.tangent.expand(ray_samples.shape[0], -1), eps=1e-6)
+            outputs[FieldHeadNames.tangent] = tangent"""
 
         h = torch.cat(
             [
