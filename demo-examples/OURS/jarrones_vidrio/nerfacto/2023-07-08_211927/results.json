@@ -1,0 +1,12 @@
+{
+  "experiment_name": "jarrones_vidrio",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/jarrones_vidrio/nerfacto/2023-07-08_211927/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 31.517017364501953,
+    "ssim": 0.9492090344429016,
+    "lpips": 0.20407648384571075,
+    "num_rays_per_sec": 84989.5234375,
+    "fps": 0.16394583880901337
+  }
+}

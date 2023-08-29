@@ -1,0 +1,17 @@
+{
+  "experiment_name": "aspen",
+  "method_name": "instant-ngp",
+  "checkpoint": "outputs/aspen/instant-ngp/2023-07-17_234322/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 16.565099716186523,
+    "psnr_std": 0.733397901058197,
+    "ssim": 0.3078721761703491,
+    "ssim_std": 0.04645385220646858,
+    "lpips": 0.6745649576187134,
+    "lpips_std": 0.04859650880098343,
+    "num_rays_per_sec": 47527.37109375,
+    "num_rays_per_sec_std": 5352.21240234375,
+    "fps": 0.031600646674633026,
+    "fps_std": 0.0035586520098149776
+  }
+}

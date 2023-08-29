@@ -1,0 +1,1 @@
+{"tile_ratio": 0.5, "stride_ratio": 0.5, "image_shape": [540, 960], "model_name": "openclip_ViT-B-16_laion2b_s34b_b88k"}

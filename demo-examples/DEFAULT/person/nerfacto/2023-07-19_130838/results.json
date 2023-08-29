@@ -1,0 +1,17 @@
+{
+  "experiment_name": "person",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/person/nerfacto/2023-07-19_130838/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 25.386035919189453,
+    "psnr_std": 1.865116834640503,
+    "ssim": 0.6915274262428284,
+    "ssim_std": 0.051020752638578415,
+    "lpips": 0.3399493992328644,
+    "lpips_std": 0.029503533616662025,
+    "num_rays_per_sec": 84385.375,
+    "num_rays_per_sec_std": 2928.27783203125,
+    "fps": 0.130224347114563,
+    "fps_std": 0.004518948495388031
+  }
+}

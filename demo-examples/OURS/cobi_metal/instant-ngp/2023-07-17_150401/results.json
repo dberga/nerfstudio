@@ -1,0 +1,17 @@
+{
+  "experiment_name": "cobi_metal",
+  "method_name": "instant-ngp",
+  "checkpoint": "outputs/cobi_metal/instant-ngp/2023-07-17_150401/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 27.406766891479492,
+    "psnr_std": 2.3165283203125,
+    "ssim": 0.9260343909263611,
+    "ssim_std": 0.012836698442697525,
+    "lpips": 0.23006442189216614,
+    "lpips_std": 0.028874389827251434,
+    "num_rays_per_sec": 88060.09375,
+    "num_rays_per_sec_std": 12390.953125,
+    "fps": 0.16986902058124542,
+    "fps_std": 0.023902302607893944
+  }
+}

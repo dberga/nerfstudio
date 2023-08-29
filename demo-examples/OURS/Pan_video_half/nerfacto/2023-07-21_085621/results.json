@@ -1,0 +1,17 @@
+{
+  "experiment_name": "Pan_video_half",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/Pan_video_half/nerfacto/2023-07-21_085621/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 21.638212203979492,
+    "psnr_std": 3.1315653324127197,
+    "ssim": 0.8202990889549255,
+    "ssim_std": 0.043335314840078354,
+    "lpips": 0.28306713700294495,
+    "lpips_std": 0.05712796375155449,
+    "num_rays_per_sec": 83160.5546875,
+    "num_rays_per_sec_std": 3387.4033203125,
+    "fps": 0.16041773557662964,
+    "fps_std": 0.006534342188388109
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "experiment_name": "floating-tree",
+  "method_name": "instant-ngp",
+  "checkpoint": "outputs/floating-tree/instant-ngp/2023-07-18_043807/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 19.887617111206055,
+    "psnr_std": 3.439988851547241,
+    "ssim": 0.7276551127433777,
+    "ssim_std": 0.05264446884393692,
+    "lpips": 0.23886170983314514,
+    "lpips_std": 0.04783398285508156,
+    "num_rays_per_sec": 47772.98828125,
+    "num_rays_per_sec_std": 5576.4462890625,
+    "fps": 0.031763955950737,
+    "fps_std": 0.003707743249833584
+  }
+}

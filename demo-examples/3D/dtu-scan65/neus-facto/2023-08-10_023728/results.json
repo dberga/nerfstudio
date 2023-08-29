@@ -1,0 +1,17 @@
+{
+  "experiment_name": "dtu-scan65",
+  "method_name": "neus-facto",
+  "checkpoint": "outputs/dtu-scan65/neus-facto/2023-08-10_023728/nerfstudio_models/step-000020000.ckpt",
+  "results": {
+    "psnr": 9.315997123718262,
+    "psnr_std": 2.1825928688049316,
+    "ssim": 0.4371775686740875,
+    "ssim_std": 0.08111027628183365,
+    "lpips": 0.5382652878761292,
+    "lpips_std": 0.07067754119634628,
+    "num_rays_per_sec": 42855.19921875,
+    "num_rays_per_sec_std": 1368.883056640625,
+    "fps": 0.29063042998313904,
+    "fps_std": 0.009283333085477352
+  }
+}

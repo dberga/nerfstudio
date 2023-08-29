@@ -1,0 +1,21 @@
+{
+  "experiment_name": "jarrones_vidrio",
+  "method_name": "vanilla-nerf",
+  "checkpoint": "outputs/jarrones_vidrio/vanilla-nerf/2023-07-31_195835/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 15.402867317199707,
+    "psnr_std": 1.3389796018600464,
+    "coarse_psnr": 14.934897422790527,
+    "coarse_psnr_std": 1.3020447492599487,
+    "fine_psnr": 15.402867317199707,
+    "fine_psnr_std": 1.3389796018600464,
+    "fine_ssim": 0.8523732423782349,
+    "fine_ssim_std": 0.02979746088385582,
+    "fine_lpips": 0.6008408069610596,
+    "fine_lpips_std": 0.060805290937423706,
+    "num_rays_per_sec": 12640.455078125,
+    "num_rays_per_sec_std": 35.676841735839844,
+    "fps": 0.02438359521329403,
+    "fps_std": 6.882086745463312e-05
+  }
+}

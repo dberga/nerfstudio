@@ -1,0 +1,17 @@
+{
+  "experiment_name": "bustos_porcelana",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/bustos_porcelana/nerfacto/2023-07-18_114042/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 30.887794494628906,
+    "psnr_std": 1.4895392656326294,
+    "ssim": 0.9419514536857605,
+    "ssim_std": 0.01417034212499857,
+    "lpips": 0.12340175360441208,
+    "lpips_std": 0.024036290124058723,
+    "num_rays_per_sec": 83519.265625,
+    "num_rays_per_sec_std": 3562.706787109375,
+    "fps": 0.16110970079898834,
+    "fps_std": 0.00687250355258584
+  }
+}

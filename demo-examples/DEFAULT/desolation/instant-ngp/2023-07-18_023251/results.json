@@ -1,0 +1,17 @@
+{
+  "experiment_name": "desolation",
+  "method_name": "instant-ngp",
+  "checkpoint": "outputs/desolation/instant-ngp/2023-07-18_023251/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 19.96342658996582,
+    "psnr_std": 1.2935702800750732,
+    "ssim": 0.5999189019203186,
+    "ssim_std": 0.06936493515968323,
+    "lpips": 0.3619805574417114,
+    "lpips_std": 0.061621855944395065,
+    "num_rays_per_sec": 65931.09375,
+    "num_rays_per_sec_std": 16247.435546875,
+    "fps": 0.12718190252780914,
+    "fps_std": 0.03134150803089142
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "experiment_name": "floating-tree",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/floating-tree/nerfacto/2023-07-19_084237/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 19.470783233642578,
+    "psnr_std": 3.784041404724121,
+    "ssim": 0.6912599205970764,
+    "ssim_std": 0.06813056766986847,
+    "lpips": 0.2294301986694336,
+    "lpips_std": 0.05639936029911041,
+    "num_rays_per_sec": 85613.421875,
+    "num_rays_per_sec_std": 1693.82275390625,
+    "fps": 0.056923817843198776,
+    "fps_std": 0.0011262112529948354
+  }
+}

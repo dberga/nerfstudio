@@ -1,0 +1,17 @@
+{
+  "experiment_name": "person",
+  "method_name": "instant-ngp",
+  "checkpoint": "outputs/person/instant-ngp/2023-07-18_072956/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 24.210491180419922,
+    "psnr_std": 1.5508606433868408,
+    "ssim": 0.6665109395980835,
+    "ssim_std": 0.04827135428786278,
+    "lpips": 0.38137444853782654,
+    "lpips_std": 0.02946554496884346,
+    "num_rays_per_sec": 51405.96875,
+    "num_rays_per_sec_std": 3967.585693359375,
+    "fps": 0.0793301984667778,
+    "fps_std": 0.0061228168196976185
+  }
+}

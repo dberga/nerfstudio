@@ -1,0 +1,17 @@
+{
+  "experiment_name": "maniquis_terciopelo",
+  "method_name": "instant-ngp",
+  "checkpoint": "outputs/maniquis_terciopelo/instant-ngp/2023-07-17_161759/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 26.9512996673584,
+    "psnr_std": 4.521903038024902,
+    "ssim": 0.8761016130447388,
+    "ssim_std": 0.027372663840651512,
+    "lpips": 0.20358213782310486,
+    "lpips_std": 0.06633119285106659,
+    "num_rays_per_sec": 52761.46484375,
+    "num_rays_per_sec_std": 5229.25439453125,
+    "fps": 0.10177751630544662,
+    "fps_std": 0.01008729636669159
+  }
+}

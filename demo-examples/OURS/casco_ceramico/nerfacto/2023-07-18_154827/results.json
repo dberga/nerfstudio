@@ -1,0 +1,17 @@
+{
+  "experiment_name": "casco_ceramico",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/casco_ceramico/nerfacto/2023-07-18_154827/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 26.575315475463867,
+    "psnr_std": 4.515202522277832,
+    "ssim": 0.8605993986129761,
+    "ssim_std": 0.07694419473409653,
+    "lpips": 0.27029693126678467,
+    "lpips_std": 0.0847185030579567,
+    "num_rays_per_sec": 83632.2578125,
+    "num_rays_per_sec_std": 2986.811767578125,
+    "fps": 0.16132764518260956,
+    "fps_std": 0.00576159730553627
+  }
+}

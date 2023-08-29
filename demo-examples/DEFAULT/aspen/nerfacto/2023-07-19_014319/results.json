@@ -1,0 +1,17 @@
+{
+  "experiment_name": "aspen",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/aspen/nerfacto/2023-07-19_014319/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 16.786537170410156,
+    "psnr_std": 0.8671984672546387,
+    "ssim": 0.3198392391204834,
+    "ssim_std": 0.059271108359098434,
+    "lpips": 0.6724122762680054,
+    "lpips_std": 0.051088280975818634,
+    "num_rays_per_sec": 82532.4609375,
+    "num_rays_per_sec_std": 1725.580078125,
+    "fps": 0.05487530305981636,
+    "fps_std": 0.0011473268968984485
+  }
+}
