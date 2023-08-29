@@ -1,0 +1,2 @@
+| experiment_name | ckpt_path | fps | fps_std | lpips | lpips_std | psnr | psnr_std | ssim | ssim_std |
+| --------------- | --------- | --- | ------- | ----- | --------- | ---- | -------- | ---- | -------- |
