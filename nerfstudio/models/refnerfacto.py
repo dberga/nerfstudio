@@ -471,7 +471,11 @@ class RefNerfactoModel(Model):
 
         # Add directional encoding to the input features
         if self.config.predict_normals:
-            directions = ray_samples.directions
+            try:
+                directions = ray_samples.directions # old
+                # directions = ray_samples.metadata['directions_norm'] #not working, wrong mat sizes
+            except:
+                import pdb; pdb.set_trace()
             view_direction_features = self.directional_encoding_fn(directions)
             field_outputs[FieldHeadNames.RGB] = torch.cat(
                 [field_outputs[FieldHeadNames.RGB], view_direction_features], dim=-1
