@@ -17,7 +17,7 @@ sh process_data.sh 0 images data/nerfstudio/kitchen
 ```
 For processing an entire dataset (folder of scenes), use `all_process.sh` specifying the `GPU`, `FOLDER` (folder with scenes) and whether to `OVERWRITE` your processed files:
 ```
-sh all_train.sh 0 data/nerfstudio
+sh all_process.sh 0 data/nerfstudio
 ```
 The script `whole_process.sh` will read all folders in `data/`, so that if you want to run all examples that exist in your `data` folder, then:
 ```
