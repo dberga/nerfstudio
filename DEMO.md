@@ -3,15 +3,70 @@
 
 <img src="data_gifs/nerfstudio/desolation/IMG_8981.MOV.gif" width="256" height="156"/><img src="data_gifs/nerfstudio/Giannini-Hall/view.gif" width="256" height="156"/><img src="data_gifs/nerfstudio/kitchen/view.gif" width="256" height="156"/><img src="data_gifs/nerfstudio/Egypt/frame_00301.png" width="256" height="156"/><img src="data_gifs/Museu-DissenyHub/bustos_porcelana/IMG_9409.MOV.gif" width="256" height="156"/><img src="data_gifs/Museu-MAC/casco_ceramico/IMG_9156.MOV.gif" width="256" height="156"/><img src="data_gifs/Museu-DissenyHub/cobi_metal/IMG_9382.MOV.gif" width="256" height="156"/><img src="data_gifs/Museu-MAC/jarrones_vidrio/IMG_9198.MOV.gif" width="256" height="156"/><img src="data_gifs/Museu-DissenyHub/maniquis_terciopelo/IMG_9442.MOV.gif" width="256" height="156"/>
 
-<!--- poner originales -->
-
 The following renders have been done using [Nerfacto](https://docs.nerf.studio/en/latest/nerfology/methods/nerfacto.html) over Nerfstudio scenes and our own captures from the Design and Archeological Museums of Barcelona.
 
 <img src="demo-examples/desolation.gif" width="256" height="156"/><img src="demo-examples/gianinni.gif" width="256" height="156"/><img src="demo-examples/kitchen.gif" width="256" height="156"/><img src="demo-examples/egypt.gif" width="256" height="156"/><img src="demo-examples/bustos.gif" width="256" height="156"/><img src="demo-examples/casco.gif" width="256" height="156"/><img src="demo-examples/cobi.gif" width="256" height="156"/><img src="demo-examples/jarrones.gif" width="256" height="156"/><img src="demo-examples/maniquis.gif" width="256" height="156"/>
 
-<!--- 
-<img src="demo-examples/aniso.gif" width="256" height="156"/>) 
--->
+
+## Usage (Scripts)
+
+### Preprocessing scenes of videos and images
+Use `process_data.sh` to use `ns-process`, specifying the `GPU`, `TYPE` (whether 'images' or 'video') and `DATASET` (scene folder), for example:
+```
+sh process_data.sh 0 images data/nerfstudio/kitchen
+```
+For processing an entire dataset (folder of scenes), use `all_process.sh` specifying the `GPU`, `FOLDER` (folder with scenes) and whether to `OVERWRITE` your processed files:
+```
+sh all_train.sh 0 data/nerfstudio
+```
+The script `whole_process.sh` will read all folders in `data/`, so that if you want to run all examples that exist in your `data` folder, then:
+```
+sh whole_process.sh 0
+```
+
+### Training Nerfs from images and videos
+
+Use `train.sh` to use `ns-train`, specifying the `GPU`, `MODEL` and `DATASET` (scene folder), for example:
+```
+sh train.sh 0 nerfacto data/nerfstudio/kitchen
+```
+For training an entire dataset (folder of scenes), use `all_train.sh` specifying the `GPU`, `MODEL`, `FOLDER` (folder with scenes) and whether to `OVERWRITE` your outputs:
+```
+sh all_train.sh 0 nerfacto data/nerfstudio true
+```
+The script `whole_train.sh` will read all folders in `data/`, so that if you want to run all examples that exist in your `data` folder, then:
+```
+sh whole_train.sh 0 nerfacto
+```
+### Rendering scenes as videos and gifs
+
+Use `render.sh` to use `ns-render`, specifying the `GPU`, `MODEL`, `DATASET` (scene folder), `RESOL` for resolution scaling (default 1) and `OVERWRITE`:
+```
+sh render.sh 0 nerfacto data/nerfstudio/kitchen 1 false
+```
+For rendering all output files, use `all_render.sh` specifying the `GPU`, `RESOL` and whether to `OVERWRITE` your outputs:
+```
+sh all_render.sh 0 1 false
+```
+### Evaluating and Benchmarking models
+Use `eval.sh` to use `ns-eval`, specifying the `GPU`, `MODEL`, `DATASET` (scene folder):
+```
+sh eval.sh 0 nerfacto data/nerfstudio/kitchen
+```
+For rendering all output files, use `all_eval.sh` specifying the `GPU` and whether to `OVERWRITE` your outputs:
+```
+sh all_eval.sh 0 true
+```
+### Exporting Nerf's 3D scenes to Point Clouds and Meshes
+Use `export.sh` to use `ns-export`, specifying the `GPU`, `MODEL`, `DATASET` (scene folder) and `SCALE`:
+```
+sh export.sh 0 nerfacto data/nerfstudio/kitchen 1
+```
+For exporting all output files, use `all_export.sh` specifying the `GPU`, `MODEL`, `DATASET` (scene folder) and `SCALE` and whether to `OVERWRITE` your outputs:
+```
+sh all_export.sh 0 1 true
+```
+
 ## Benchmarking
 
 ### Nerfstudio scene benchmarks
@@ -76,7 +131,47 @@ The following renders have been done using [Nerfacto](https://docs.nerf.studio/e
 | nerfacto:2023-07-18_142444    | outputs/maniquis_terciopelo/nerfacto/2023-07-18_142444/nerfstudio_models/step-000029999.ckpt    | 0.16221582889556885 | 0.00700002908706665 | 0.22625789046287537 | 0.06007741764187813 | 25.73456382751465  | 4.360090255737305 | 0.841499924659729  | 0.05815812572836876  | 84092.6875       | 3628.81494140625     |
 | instant-ngp:2023-07-17_161759 | outputs/maniquis_terciopelo/instant-ngp/2023-07-17_161759/nerfstudio_models/step-000029999.ckpt | 0.10177751630544662 | 0.01008729636669159 | 0.20358213782310486 | 0.06633119285106659 | 26.9512996673584   | 4.521903038024902 | 0.8761016130447388 | 0.027372663840651512 | 52761.46484375   | 5229.25439453125     |
 
-## Other applications (i.e. depth & segmentation)
+## Other applications
+### Depth and Segmentation with [LERF](https://docs.nerf.studio/en/latest/nerfology/methods/lerf.html)
+To use this we simply need to run our training `train.sh` script selecting the `lerf` model, such as:
+```
+sh train.sh 0 lerf data/nerfstudio/kitchen
+```
+Then run the viewer separately, prompting the segmentation category target manually inside the new viewer's lerf textbox.
 
-## Usage (Scripts)
+<img src="demo-examples/lerf-kitchen-original.png" width="256" height="156"/>
+<table>
+  <tr>
+    <th>"chair"</th>
+    <th>"guitar"</th>
+    <th>"walls"</th>
+  </tr>
+  <tr>
+    <th><img src="demo-examples/lerf-kitchen.png" width="256" height="156"/></th>
+    <th><img src="demo-examples/lerf-kitchen-guitar.png" width="256" height="156"/></th>
+    <th><img src="demo-examples/lerf-kitchen-walls.png" width="256" height="156"/></th>
+  </tr>
+</table>
+<table>
+  <tr>
+    <th>"piano"</th>
+    <th>"computer"</th>
+    <th>"window"</th>
+  </tr>
+  <tr>
+    <th><img src="demo-examples/lerf-kitchen-piano.png" width="256" height="156"/></th>
+    <th><img src="demo-examples/lerf-kitchen-computer.png" width="256" height="156"/></th>
+    <th><img src="demo-examples/lerf-kitchen-window.png" width="256" height="156"/></th>
+  </tr>
+</table>
+
+### Video Editing with [Instruct-Nerf2Nerf](https://docs.nerf.studio/en/latest/nerfology/methods/in2n.html)
+
+[![in2n](https://neuralradiancefields.io/wp-content/uploads/2023/03/Screenshot-2023-03-24-at-1.47.01-PM.jpg)](https://instruct-nerf2nerf.github.io/data/videos/face.mp4)
+
+To use this we built a script `instruct.sh` in which you can run `ns-train in2n` with specific `GPU`, `MODEL`, `DATASET` (scene folder), `PROMPT` (the edit target prompt you can enter), `GSCALE` and `ISCALE`, for example:
+```
+sh instruct.sh 0 nerfacto data/nerfstudio/kitchen "convert the piano to drums" 7.5 1.5
+```
+
 
