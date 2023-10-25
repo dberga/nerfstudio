@@ -58,6 +58,8 @@ if __name__ == "__main__":
 		
 		# create dataframe
 		df = df.append(series_results)
+	# round decimals
+	df = df.round({'fps': 4, 'lpips': 4, 'psnr': 4, 'ssim': 4})
 	#reorder columns
 	df = df.reindex(columns=set( ['experiment_name','fps','lpips','psnr','ssim'] + list(df.columns) ))
 	# output
