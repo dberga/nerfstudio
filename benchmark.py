@@ -62,7 +62,11 @@ if __name__ == "__main__":
 	df = df.round({'fps': 4, 'lpips': 4, 'psnr': 4, 'ssim': 4})
 	#reorder columns
 	df = df.reindex(columns=set( ['experiment_name','fps','lpips','psnr','ssim'] + list(df.columns) ))
-	# output
-	output_benchmark = os.path.join(scene_path,f'benchmark_{scene_name}.csv')	
-	print(f"writing {output_benchmark}")
-	df.to_csv(output_benchmark, sep=',')
+	# write .csv
+	output_benchmark_csv = os.path.join(scene_path,f'benchmark_{scene_name}.csv')	
+	print(f"writing {output_benchmark_csv}")
+	df.to_csv(output_benchmark_csv, sep=',')
+	# write .md
+	output_benchmark_md = os.path.join(scene_path,f'benchmark_{scene_name}.md')
+	with open(output_benchmark_md, 'w') as md:
+  	    df.to_markdown(buf=md, tablefmt="grid")
