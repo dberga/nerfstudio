@@ -78,4 +78,4 @@ if __name__ == "__main__":
 		# write .md
 		output_benchmark_md = os.path.join(BENCHMARKS_FOLDER,f'benchmark_{scene_name}.md')
 		with open(output_benchmark_md, 'w') as md:
-	  	    df.to_markdown(buf=md, tablefmt="grid")
+			df.to_markdown(buf=md) # tablefmt="grid"
