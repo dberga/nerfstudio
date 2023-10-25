@@ -56,5 +56,5 @@ fi
 
 # mp4 video to gif
 echo "ffmpeg -y -i renders/$SCENE/$MODEL/$CKPT_DATE.mp4 renders/$SCENE/$MODEL/$CKPT_DATE.gif"
-ffmpeg -y -i renders/$SCENE/$MODEL/$CKPT_DATE.mp4 renders/$SCENE/$MODEL/$CKPT_DATE.gif -filter_complex "fps=15,scale=480:-1"
+ffmpeg -y -i renders/$SCENE/$MODEL/$CKPT_DATE.mp4 renders/$SCENE/$MODEL/$CKPT_DATE.gif -filter_complex "fps=30,scale=480:-1"
 

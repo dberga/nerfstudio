@@ -66,10 +66,10 @@ echo "$DATASET has no data"
 break
 fi
 
-echo "ffmpeg -i $DATASET/frame_%05d.png -c:v libx264 showcase/$SCENE.mp4 -filter_complex 'fps=30:-1'"
-ffmpeg -i $DATASET/frame_%05d.png -c:v libx264 showcase/$SCENE.mp4 -filter_complex "fps=30:-1"
+echo "ffmpeg -i $DATASET/frame_%05d.png -c:v libx264 showcase/$SCENE.mp4"
+ffmpeg -i $DATASET/frame_%05d.png -c:v libx264 showcase/$SCENE.mp4
 echo "ffmpeg -y -i showcase/$SCENE.mp4 showcase/$SCENE.gif -filter_complex 'fps=15,scale=480:-1'"
-ffmpeg -y -i showcase/$SCENE.mp4 showcase/$SCENE.gif -filter_complex "fps=15,scale=480:-1"
+ffmpeg -y -i showcase/$SCENE.mp4 showcase/$SCENE.gif -filter_complex "fps=30,scale=480:-1"
 
 fi
 
