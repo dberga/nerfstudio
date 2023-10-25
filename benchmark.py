@@ -59,7 +59,7 @@ if __name__ == "__main__":
 		# create dataframe
 		df = df.append(series_results)
 	#reorder columns
-	df = df.reindex(columns=set( ['fps','lpips','psnr','ssim'] + list(df.columns) ))
+	df = df.reindex(columns=set( ['experiment_name','fps','lpips','psnr','ssim'] + list(df.columns) ))
 	# output
 	output_benchmark = os.path.join(scene_path,f'benchmark_{scene_name}.csv')	
 	print(f"writing {output_benchmark}")
