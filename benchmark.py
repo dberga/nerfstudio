@@ -70,7 +70,9 @@ if __name__ == "__main__":
 		list_essential = ['fps','lpips','psnr','ssim']
 		list_nonessential = [i for i in list(df.columns) if i not in list_essential]
 		df = df.reindex(columns=list_essential+list_nonessential)
-		# write .csv
+		# rename experiment_name by value (scene name)
+		df.index.name = scene_name
+		# write csv
 		print(f"writing benchmark_{scene_name}")
 		output_benchmark_csv = os.path.join(scene_path,f'benchmark_{scene_name}.csv')
 		df.to_csv(output_benchmark_csv, sep=',')
