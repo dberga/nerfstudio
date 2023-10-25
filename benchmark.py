@@ -55,9 +55,12 @@ if __name__ == "__main__":
 		# join experiment name and ckpt path to one single series
 		series_results = results_row.append(pd.Series([ckpt_path],index=['ckpt_path']))
 		series_results.name = experiment_name
-
+		
 		# create dataframe
 		df = df.append(series_results)
-	output_benchmark = os.path.join(scene_path,f'benchmark_{scene_name}.csv')
+	#reorder columns
+	df = df.reindex(columns=set( ['fps','lpips','psnr','ssim'] + list(df.columns) ))
+	# output
+	output_benchmark = os.path.join(scene_path,f'benchmark_{scene_name}.csv')	
 	print(f"writing {output_benchmark}")
 	df.to_csv(output_benchmark, sep=',')
