@@ -4,7 +4,10 @@ import pandas as pd
 #pd.options.display.max_columns = 999
 import json
 import os
+import shutil
 
+BENCHMARKS_FOLDER="benchmarks"
+	
 def find_all(name, path):
 	# get all results.json files
     result = []
@@ -34,6 +37,7 @@ def read_json(json_path):
 
 
 if __name__ == "__main__":
+	os.makedirs(BENCHMARKS_FOLDER,exist_ok=True)
 	scene_path,scene_name, output_folder = parse_scene_path()
 	list_results = find_all('results.json',scene_path)
 	df = pd.DataFrame(columns=['experiment_name','ckpt_path','fps','fps_std','lpips','lpips_std','psnr','psnr_std','ssim','ssim_std']).set_index('experiment_name')
@@ -58,15 +62,20 @@ if __name__ == "__main__":
 		
 		# create dataframe
 		df = df.append(series_results)
-	# round decimals
-	df = df.round({'fps': 4, 'lpips': 4, 'psnr': 4, 'ssim': 4})
-	#reorder columns
-	df = df.reindex(columns=set( ['experiment_name','fps','lpips','psnr','ssim'] + list(df.columns) ))
-	# write .csv
-	output_benchmark_csv = os.path.join(scene_path,f'benchmark_{scene_name}.csv')	
-	print(f"writing {output_benchmark_csv}")
-	df.to_csv(output_benchmark_csv, sep=',')
-	# write .md
-	output_benchmark_md = os.path.join(scene_path,f'benchmark_{scene_name}.md')
-	with open(output_benchmark_md, 'w') as md:
-  	    df.to_markdown(buf=md, tablefmt="grid")
+
+	if not df.empty:
+		# round decimals
+		df = df.round({'fps': 4, 'lpips': 4, 'psnr': 4, 'ssim': 4})
+		#reorder columns
+		list_essential = ['fps','lpips','psnr','ssim']
+		list_nonessential = [i for i in list(df.columns) if i not in list_essential]
+		df = df.reindex(columns=list_essential+list_nonessential)
+		# write .csv
+		print(f"writing benchmark_{scene_name}")
+		output_benchmark_csv = os.path.join(scene_path,f'benchmark_{scene_name}.csv')
+		df.to_csv(output_benchmark_csv, sep=',')
+		shutil.copy(output_benchmark_csv,os.path.join(BENCHMARKS_FOLDER,f'benchmark_{scene_name}.csv'))
+		# write .md
+		output_benchmark_md = os.path.join(BENCHMARKS_FOLDER,f'benchmark_{scene_name}.md')
+		with open(output_benchmark_md, 'w') as md:
+	  	    df.to_markdown(buf=md, tablefmt="grid")
