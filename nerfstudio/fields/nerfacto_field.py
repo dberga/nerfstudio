@@ -39,6 +39,14 @@ from nerfstudio.field_components.mlp import MLP, MLPWithHashEncoding
 from nerfstudio.field_components.spatial_distortions import SpatialDistortion
 from nerfstudio.fields.base_field import Field, get_normalized_directions
 
+"""
+def l2_normalize(x, eps=torch.finfo(torch.float32).eps):
+    """Normalize x to unit length along last axis."""
+
+    return x / torch.sqrt(
+        torch.fmax(torch.sum(x**2, dim=-1, keepdims=True), torch.full_like(x, eps))
+    )
+"""
 
 class NerfactoField(Field):
     """Compound Field
@@ -116,6 +124,7 @@ class NerfactoField(Field):
         self.use_pred_normals = use_pred_normals
         self.pass_semantic_gradients = pass_semantic_gradients
         self.base_res = base_res
+        #self.tangent = torch.nn.Parameter(torch.zeros(hidden_dim, 3))
         self.step = 0
 
         self.direction_encoding = SHEncoding(
@@ -282,6 +291,10 @@ class NerfactoField(Field):
 
             x = self.mlp_pred_normals(pred_normals_inp).view(*outputs_shape, -1).to(directions)
             outputs[FieldHeadNames.PRED_NORMALS] = self.field_head_pred_normals(x)
+
+            # Add tangent
+            """tangent = l2_normalize(self.tangent.expand(ray_samples.shape[0], -1), eps=1e-6)
+            outputs[FieldHeadNames.tangent] = tangent"""
 
         h = torch.cat(
             [
