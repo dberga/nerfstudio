@@ -1,0 +1,17 @@
+{
+  "experiment_name": "campanile",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/campanile/nerfacto/2023-07-19_043059/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 22.855907440185547,
+    "psnr_std": 3.1795237064361572,
+    "ssim": 0.7964239120483398,
+    "ssim_std": 0.11311479657888412,
+    "lpips": 0.16520650684833527,
+    "lpips_std": 0.12043631821870804,
+    "num_rays_per_sec": 83682.8828125,
+    "num_rays_per_sec_std": 2959.299072265625,
+    "fps": 0.16142532229423523,
+    "fps_std": 0.0057085249572992325
+  }
+}

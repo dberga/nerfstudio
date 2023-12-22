@@ -1,0 +1,21 @@
+{
+  "experiment_name": "floating-tree",
+  "method_name": "vanilla-nerf",
+  "checkpoint": "outputs/floating-tree/vanilla-nerf/2023-08-01_150836/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 10.94599723815918,
+    "psnr_std": 1.4454108476638794,
+    "coarse_psnr": 10.747292518615723,
+    "coarse_psnr_std": 1.153813362121582,
+    "fine_psnr": 10.94599723815918,
+    "fine_psnr_std": 1.4454108476638794,
+    "fine_ssim": 0.31942158937454224,
+    "fine_ssim_std": 0.06946957111358643,
+    "fine_lpips": 0.9279580116271973,
+    "fine_lpips_std": 0.04242837801575661,
+    "num_rays_per_sec": 12640.73046875,
+    "num_rays_per_sec_std": 22.529552459716797,
+    "fps": 0.008404741063714027,
+    "fps_std": 1.4979632396716624e-05
+  }
+}

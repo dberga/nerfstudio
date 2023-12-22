@@ -1,0 +1,21 @@
+{
+  "experiment_name": "bww_entrance",
+  "method_name": "vanilla-nerf",
+  "checkpoint": "outputs/bww_entrance/vanilla-nerf/2023-08-01_073635/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 9.294007301330566,
+    "psnr_std": 1.507386326789856,
+    "coarse_psnr": 9.546590805053711,
+    "coarse_psnr_std": 1.4202672243118286,
+    "fine_psnr": 9.294007301330566,
+    "fine_psnr_std": 1.507386326789856,
+    "fine_ssim": 0.37006163597106934,
+    "fine_ssim_std": 0.07761421799659729,
+    "fine_lpips": 1.0147517919540405,
+    "fine_lpips_std": 0.0360330305993557,
+    "num_rays_per_sec": 12642.6357421875,
+    "num_rays_per_sec_std": 25.55206298828125,
+    "fps": 0.024387801066040993,
+    "fps_std": 4.92901453981176e-05
+  }
+}

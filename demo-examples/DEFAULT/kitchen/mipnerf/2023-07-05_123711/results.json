@@ -1,0 +1,21 @@
+{
+  "experiment_name": "kitchen",
+  "method_name": "mipnerf",
+  "checkpoint": "outputs/kitchen/mipnerf/2023-07-05_123711/nerfstudio_models/step-001000000.ckpt",
+  "results": {
+    "psnr": 11.178438186645508,
+    "psnr_std": 1.6322969198226929,
+    "coarse_psnr": 10.189096450805664,
+    "coarse_psnr_std": 1.659471035003662,
+    "fine_psnr": 11.178438186645508,
+    "fine_psnr_std": 1.6322969198226929,
+    "fine_ssim": 0.418868750333786,
+    "fine_ssim_std": 0.11881706118583679,
+    "fine_lpips": 0.8722162842750549,
+    "fine_lpips_std": 0.07145166397094727,
+    "num_rays_per_sec": 11659.7001953125,
+    "num_rays_per_sec_std": 14.59115219116211,
+    "fps": 0.015894418582320213,
+    "fps_std": 1.989054544537794e-05
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "experiment_name": "aspen",
+  "method_name": "vanilla-nerf",
+  "checkpoint": "outputs/aspen/vanilla-nerf/2023-08-01_054257/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 11.828986167907715,
+    "psnr_std": 0.4060294032096863,
+    "coarse_psnr": 11.73621654510498,
+    "coarse_psnr_std": 0.5112645626068115,
+    "fine_psnr": 11.828986167907715,
+    "fine_psnr_std": 0.4060294032096863,
+    "fine_ssim": 0.14530624449253082,
+    "fine_ssim_std": 0.03855401277542114,
+    "fine_lpips": 1.2473077774047852,
+    "fine_lpips_std": 0.020126046612858772,
+    "num_rays_per_sec": 12618.458984375,
+    "num_rays_per_sec_std": 106.89432525634766,
+    "fps": 0.008389933034777641,
+    "fps_std": 7.107324927346781e-05
+  }
+}

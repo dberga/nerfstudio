@@ -1,0 +1,21 @@
+{
+  "experiment_name": "Giannini-Hall",
+  "method_name": "vanilla-nerf",
+  "checkpoint": "outputs/Giannini-Hall/vanilla-nerf/2023-08-01_034801/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 9.710603713989258,
+    "psnr_std": 0.6323637366294861,
+    "coarse_psnr": 9.797874450683594,
+    "coarse_psnr_std": 0.6915231347084045,
+    "fine_psnr": 9.710603713989258,
+    "fine_psnr_std": 0.6323637366294861,
+    "fine_ssim": 0.33742550015449524,
+    "fine_ssim_std": 0.08470986038446426,
+    "fine_lpips": 1.0546433925628662,
+    "fine_lpips_std": 0.0449506938457489,
+    "num_rays_per_sec": 12662.48046875,
+    "num_rays_per_sec_std": 13.332724571228027,
+    "fps": 0.008419201709330082,
+    "fps_std": 8.864850315148942e-06
+  }
+}

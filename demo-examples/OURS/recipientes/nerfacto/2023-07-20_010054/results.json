@@ -1,0 +1,17 @@
+{
+  "experiment_name": "recipientes",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/recipientes/nerfacto/2023-07-20_010054/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 20.265703201293945,
+    "psnr_std": 4.55159330368042,
+    "ssim": 0.8078782558441162,
+    "ssim_std": 0.06819351762533188,
+    "lpips": 0.30148550868034363,
+    "lpips_std": 0.13025899231433868,
+    "num_rays_per_sec": 82098.6953125,
+    "num_rays_per_sec_std": 2870.29931640625,
+    "fps": 0.15836939215660095,
+    "fps_std": 0.005536842159926891
+  }
+}

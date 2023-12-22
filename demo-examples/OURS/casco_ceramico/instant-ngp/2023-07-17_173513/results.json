@@ -1,0 +1,17 @@
+{
+  "experiment_name": "casco_ceramico",
+  "method_name": "instant-ngp",
+  "checkpoint": "outputs/casco_ceramico/instant-ngp/2023-07-17_173513/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 24.30323028564453,
+    "psnr_std": 2.830996036529541,
+    "ssim": 0.8521311283111572,
+    "ssim_std": 0.04665771499276161,
+    "lpips": 0.299986332654953,
+    "lpips_std": 0.06511297821998596,
+    "num_rays_per_sec": 64954.25,
+    "num_rays_per_sec_std": 11128.2294921875,
+    "fps": 0.12529754638671875,
+    "fps_std": 0.021466491743922234
+  }
+}

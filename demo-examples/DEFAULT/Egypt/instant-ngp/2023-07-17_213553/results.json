@@ -1,0 +1,12 @@
+{
+  "experiment_name": "Egypt",
+  "method_name": "instant-ngp",
+  "checkpoint": "outputs/Egypt/instant-ngp/2023-07-17_213553/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 19.93259048461914,
+    "ssim": 0.6055247783660889,
+    "lpips": 0.41044577956199646,
+    "num_rays_per_sec": 92806.515625,
+    "fps": 0.17902493476867676
+  }
+}

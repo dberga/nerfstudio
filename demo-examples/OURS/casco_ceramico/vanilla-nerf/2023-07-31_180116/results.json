@@ -1,0 +1,21 @@
+{
+  "experiment_name": "casco_ceramico",
+  "method_name": "vanilla-nerf",
+  "checkpoint": "outputs/casco_ceramico/vanilla-nerf/2023-07-31_180116/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 10.361473083496094,
+    "psnr_std": 1.776335597038269,
+    "coarse_psnr": 10.157804489135742,
+    "coarse_psnr_std": 1.8672261238098145,
+    "fine_psnr": 10.361473083496094,
+    "fine_psnr_std": 1.776335597038269,
+    "fine_ssim": 0.5855503082275391,
+    "fine_ssim_std": 0.0608246773481369,
+    "fine_lpips": 0.8359054923057556,
+    "fine_lpips_std": 0.043813999742269516,
+    "num_rays_per_sec": 12637.796875,
+    "num_rays_per_sec_std": 32.95848846435547,
+    "fps": 0.024378467351198196,
+    "fps_std": 6.357721576932818e-05
+  }
+}

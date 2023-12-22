@@ -1,0 +1,17 @@
+{
+  "experiment_name": "bustos_porcelana",
+  "method_name": "lerf-lite",
+  "checkpoint": "outputs/bustos_porcelana/lerf-lite/2023-07-17_222319/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 31.51173210144043,
+    "psnr_std": 0.34249255061149597,
+    "ssim": 0.9422565698623657,
+    "ssim_std": 0.006111848168075085,
+    "lpips": 0.13336652517318726,
+    "lpips_std": 0.013338170945644379,
+    "num_rays_per_sec": 5546.90380859375,
+    "num_rays_per_sec_std": 12.296174049377441,
+    "fps": 0.010700046084821224,
+    "fps_std": 2.3719521777820773e-05
+  }
+}

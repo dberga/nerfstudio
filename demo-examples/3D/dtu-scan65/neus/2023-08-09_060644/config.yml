@@ -1,0 +1,198 @@
+!!python/object:nerfstudio.engine.trainer.TrainerConfig
+_target: !!python/name:nerfstudio.engine.trainer.Trainer ''
+data: &id003 !!python/object/apply:pathlib.PosixPath
+- data
+- sdfstudio-demo-data
+- dtu-scan65
+experiment_name: dtu-scan65
+gradient_accumulation_steps: 1
+load_checkpoint: null
+load_config: null
+load_dir: null
+load_scheduler: true
+load_step: null
+log_gradients: false
+logging: !!python/object:nerfstudio.configs.base_config.LoggingConfig
+  local_writer: !!python/object:nerfstudio.configs.base_config.LocalWriterConfig
+    _target: !!python/name:nerfstudio.utils.writer.LocalWriter ''
+    enable: true
+    max_log_size: 10
+    stats_to_track: !!python/tuple
+    - !!python/object/apply:nerfstudio.utils.writer.EventName
+      - Train Iter (time)
+    - !!python/object/apply:nerfstudio.utils.writer.EventName
+      - Train Rays / Sec
+    - !!python/object/apply:nerfstudio.utils.writer.EventName
+      - Test PSNR
+    - !!python/object/apply:nerfstudio.utils.writer.EventName
+      - Vis Rays / Sec
+    - !!python/object/apply:nerfstudio.utils.writer.EventName
+      - Test Rays / Sec
+    - !!python/object/apply:nerfstudio.utils.writer.EventName
+      - ETA (time)
+  max_buffer_size: 20
+  profiler: basic
+  relative_log_dir: !!python/object/apply:pathlib.PosixPath []
+  steps_per_log: 10
+machine: !!python/object:nerfstudio.configs.base_config.MachineConfig
+  device_type: cuda
+  dist_url: auto
+  machine_rank: 0
+  num_devices: 1
+  num_machines: 1
+  seed: 42
+max_num_iterations: 100000
+method_name: neus
+mixed_precision: false
+optimizers:
+  field_background:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: &id001 !!python/name:torch.optim.adam.Adam ''
+      eps: 1.0e-15
+      lr: 0.0005
+      max_norm: null
+      weight_decay: 0
+    scheduler: !!python/object:nerfstudio.engine.schedulers.CosineDecaySchedulerConfig
+      _target: &id002 !!python/name:nerfstudio.engine.schedulers.CosineDecayScheduler ''
+      learning_rate_alpha: 0.05
+      max_steps: 300000
+      warm_up_end: 5000
+  fields:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: *id001
+      eps: 1.0e-15
+      lr: 0.0005
+      max_norm: null
+      weight_decay: 0
+    scheduler: !!python/object:nerfstudio.engine.schedulers.CosineDecaySchedulerConfig
+      _target: *id002
+      learning_rate_alpha: 0.05
+      max_steps: 300000
+      warm_up_end: 5000
+output_dir: !!python/object/apply:pathlib.PosixPath
+- outputs
+pipeline: !!python/object:nerfstudio.pipelines.base_pipeline.VanillaPipelineConfig
+  _target: !!python/name:nerfstudio.pipelines.base_pipeline.VanillaPipeline ''
+  datamanager: !!python/object:nerfstudio.data.datamanagers.base_datamanager.VanillaDataManagerConfig
+    _target: !!python/object/apply:_operator.getitem
+    - !!python/name:nerfstudio.data.datamanagers.base_datamanager.VanillaDataManager ''
+    - !!python/name:nerfstudio.data.datasets.sdf_dataset.SDFDataset ''
+    camera_optimizer: !!python/object:nerfstudio.cameras.camera_optimizers.CameraOptimizerConfig
+      _target: !!python/name:nerfstudio.cameras.camera_optimizers.CameraOptimizer ''
+      mode: 'off'
+      optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+        _target: *id001
+        eps: 1.0e-08
+        lr: 0.0006
+        max_norm: null
+        weight_decay: 0.01
+      orientation_noise_std: 0.0
+      param_group: camera_opt
+      position_noise_std: 0.0
+      scheduler: !!python/object:nerfstudio.engine.schedulers.ExponentialDecaySchedulerConfig
+        _target: !!python/name:nerfstudio.engine.schedulers.ExponentialDecayScheduler ''
+        lr_final: null
+        lr_pre_warmup: 1.0e-08
+        max_steps: 10000
+        ramp: cosine
+        warmup_steps: 0
+    camera_res_scale_factor: 1.0
+    collate_fn: !!python/name:nerfstudio.data.utils.nerfstudio_collate.nerfstudio_collate ''
+    data: *id003
+    dataparser: !!python/object:nerfstudio.data.dataparsers.sdfstudio_dataparser.SDFStudioDataParserConfig
+      _target: !!python/name:nerfstudio.data.dataparsers.sdfstudio_dataparser.SDFStudio ''
+      auto_orient: true
+      data: !!python/object/apply:pathlib.PosixPath
+      - data
+      - DTU
+      - scan65
+      downscale_factor: 1
+      include_foreground_mask: false
+      include_mono_prior: false
+      scene_scale: 2.0
+      skip_every_for_val_split: 1
+    eval_image_indices: !!python/tuple
+    - 0
+    eval_num_images_to_sample_from: -1
+    eval_num_rays_per_batch: 1024
+    eval_num_times_to_repeat_images: -1
+    masks_on_gpu: null
+    patch_size: 1
+    train_num_images_to_sample_from: -1
+    train_num_rays_per_batch: 1024
+    train_num_times_to_repeat_images: -1
+  model: !!python/object:nerfstudio.models.neus.NeuSModelConfig
+    _target: !!python/name:nerfstudio.models.neus.NeuSModel ''
+    background_color: black
+    background_model: mlp
+    base_variance: 64
+    collider_params:
+      far_plane: 6.0
+      near_plane: 2.0
+    eikonal_loss_mult: 0.1
+    enable_collider: true
+    eval_num_rays_per_chunk: 1024
+    far_plane: 4.0
+    far_plane_bg: 1000.0
+    fg_mask_loss_mult: 0.01
+    loss_coefficients:
+      rgb_loss_coarse: 1.0
+      rgb_loss_fine: 1.0
+    mono_depth_loss_mult: 0.0
+    mono_normal_loss_mult: 0.0
+    near_plane: 0.05
+    num_samples: 64
+    num_samples_importance: 64
+    num_samples_outside: 32
+    num_up_sample_steps: 4
+    overwrite_near_far_plane: false
+    periodic_tvl_mult: 0.0
+    perturb: true
+    prompt: null
+    sdf_field: !!python/object:nerfstudio.fields.sdf_field.SDFFieldConfig
+      _target: !!python/name:nerfstudio.fields.sdf_field.SDFField ''
+      appearance_embedding_dim: 32
+      base_res: 16
+      beta_init: 0.1
+      bias: 0.8
+      divide_factor: 2.0
+      encoding_type: hash
+      features_per_level: 2
+      geo_feat_dim: 256
+      geometric_init: true
+      hidden_dim: 256
+      hidden_dim_color: 256
+      inside_outside: true
+      log2_hashmap_size: 19
+      max_res: 2048
+      num_layers: 8
+      num_layers_color: 4
+      num_levels: 16
+      smoothstep: true
+      use_appearance_embedding: false
+      use_grid_feature: false
+      use_hash: true
+      weight_norm: true
+    use_average_appearance_embedding: false
+project_name: nerfstudio-project
+prompt: null
+relative_model_dir: !!python/object/apply:pathlib.PosixPath
+- nerfstudio_models
+save_only_latest_checkpoint: true
+steps_per_eval_all_images: 1000000
+steps_per_eval_batch: 5000
+steps_per_eval_image: 500
+steps_per_save: 20000
+timestamp: 2023-08-09_060644
+use_grad_scaler: false
+viewer: !!python/object:nerfstudio.configs.base_config.ViewerConfig
+  image_format: jpeg
+  jpeg_quality: 90
+  max_num_display_images: 512
+  num_rays_per_chunk: 32768
+  quit_on_train_completion: true
+  relative_log_filename: viewer_log_filename.txt
+  websocket_host: 0.0.0.0
+  websocket_port: null
+  websocket_port_default: 7007
+vis: viewer

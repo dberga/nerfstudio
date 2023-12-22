@@ -1,0 +1,17 @@
+{
+  "experiment_name": "cobi_metal",
+  "method_name": "nerfacto",
+  "checkpoint": "outputs/cobi_metal/nerfacto/2023-07-18_130434/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 28.05245590209961,
+    "psnr_std": 2.133716344833374,
+    "ssim": 0.926744282245636,
+    "ssim_std": 0.020334823057055473,
+    "lpips": 0.18666164577007294,
+    "lpips_std": 0.025379372760653496,
+    "num_rays_per_sec": 84563.4765625,
+    "num_rays_per_sec_std": 3701.188720703125,
+    "fps": 0.1631239950656891,
+    "fps_std": 0.007139638531953096
+  }
+}

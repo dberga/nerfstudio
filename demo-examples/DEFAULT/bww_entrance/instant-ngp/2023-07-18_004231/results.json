@@ -1,0 +1,17 @@
+{
+  "experiment_name": "bww_entrance",
+  "method_name": "instant-ngp",
+  "checkpoint": "outputs/bww_entrance/instant-ngp/2023-07-18_004231/nerfstudio_models/step-000029999.ckpt",
+  "results": {
+    "psnr": 24.654644012451172,
+    "psnr_std": 1.9594852924346924,
+    "ssim": 0.8113139271736145,
+    "ssim_std": 0.04256533458828926,
+    "lpips": 0.19218133389949799,
+    "lpips_std": 0.02968265675008297,
+    "num_rays_per_sec": 51278.49609375,
+    "num_rays_per_sec_std": 4503.64404296875,
+    "fps": 0.09891685098409653,
+    "fps_std": 0.008687585592269897
+  }
+}
