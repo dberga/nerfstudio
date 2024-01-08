@@ -33,6 +33,40 @@ The script `whole_train.sh` will read all folders in `data/`, so that if you wan
 ```
 sh whole_train.sh 0 nerfacto
 ```
+#### List of current implemented 3D reconstruction [methods in Nerfstudio](https://docs.nerf.studio/nerfology/methods/index.html):
+```
+vanilla-nerf
+vanilla-nerf-blender
+mipnerf
+nerfacto
+nerfacto-big
+nerfacto-huge
+depth-nerfacto
+instant-ngp
+instant-ngp-bounded
+dnerf
+neus
+neus-facto
+tensorf
+volinga
+kplanes
+kplanes-dynamic
+tetra-nerf
+tetra-nerf-original
+phototourism
+gaussian-splatting
+generfacto
+in2n
+in2n-small
+in2n-tiny
+igs2gs
+lerf
+lerf-big
+lerf-lite
+nerfplayer-nerfacto
+nerfplayer-ngp
+semantic-nerfw
+```
 ### Rendering scenes as videos and gifs
 
 Use `render.sh` to use `ns-render`, specifying the `GPU`, `MODEL`, `DATASET` (scene folder), `RESOL` for resolution scaling (default 1) and `OVERWRITE`:
@@ -183,7 +217,8 @@ Then run the viewer separately, prompting the segmentation category target manua
   </tr>
 </table>
 
-### Video Editing with [Instruct-Nerf2Nerf](https://docs.nerf.studio/nerfology/methods/in2n.html)
+### Video Editing (changing 3D style/texture and elements with text)
+#### [Instruct-Nerf2Nerf](https://docs.nerf.studio/nerfology/methods/in2n.html) using `nerfacto`
 
 [![in2n](https://neuralradiancefields.io/wp-content/uploads/2023/03/Screenshot-2023-03-24-at-1.47.01-PM.jpg)](https://instruct-nerf2nerf.github.io/data/videos/face.mp4)
 
@@ -193,7 +228,17 @@ python -m pip install git+https://github.com/ayaanzhaque/instruct-nerf2nerf
 ```
 To use this we built a script `instruct.sh` in which you can run `ns-train in2n` with specific `GPU`, `MODEL`, `DATASET` (scene folder), `PROMPT` (the edit target prompt you can enter), `GSCALE` and `ISCALE`, for example:
 ```
-sh instruct.sh 0 nerfacto data/nerfstudio/kitchen "convert the piano to drums" 7.5 1.5
+sh instruct.sh 0 nerfacto data/nerfstudio/kitchen "convert the piano to drums" 7.5 1.5 in2n
+```
+#### [Instruct-GS2GS](https://docs.nerf.studio/nerfology/methods/igs2gs.html) using `gaussian-splatting`
+
+Installation:
+```
+python -m pip install git+https://github.com/cvachha/instruct-gs2gs
+```
+To use this we built a script `instruct.sh` in which you can run `ns-train igs2gs` with specific `GPU`, `MODEL`, `DATASET` (scene folder), `PROMPT` (the edit target prompt you can enter), `GSCALE` and `ISCALE`, for example:
+```
+sh instruct.sh 0 gaussian-splatting data/nerfstudio/kitchen "convert the piano to drums" 12.5 1.5 igs2gs
 ```
 
 ### Playing 3D Videos in [Nerfplayer](https://docs.nerf.studio/nerfology/methods/nerfplayer.html)
@@ -240,10 +285,11 @@ ns-train generfacto --prompt "a high quality photo of a pineapple" --pipeline.mo
 ```
 The first time you run this method, the diffusion model weights will be downloaded and cached from Hugging Face, which may take a couple minutes. Specify which diffusion model to use with the diffusion, either "stablediffusion" or "deepfloyd".
 
-#### Other 3D generation tools (SSDNerf, Text2Nerf and GET3D)
+#### Other 3D generation tools (SSDNerf, Text2Nerf, GET3D and Magic3D)
 [![SSDNerf](https://lakonik.github.io/ssdnerf/static/images/framework.png)](https://lakonik.github.io/ssdnerf/)
 [![Text2Nerf](https://eckertzhang.github.io/Text2NeRF.github.io/static/images/pipeline.png)](https://eckertzhang.github.io/Text2NeRF.github.io/)
 [![NVidia GET3D](https://research.nvidia.com/labs/toronto-ai/GET3D/assets/get3d_model.png)](https://research.nvidia.com/labs/toronto-ai/GET3D/)
+[![Nvidia Magic3D](https://research.nvidia.com/labs/dir/magic3d/assets/diagram.jpg)](https://research.nvidia.com/labs/dir/magic3d/)
 
 ## Installation: Setup your Nerfstudio Package
 
