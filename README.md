@@ -33,6 +33,39 @@ The script `whole_train.sh` will read all folders in `data/`, so that if you wan
 ```
 sh whole_train.sh 0 nerfacto
 ```
+#### List of current implemented 3D reconstruction [methods in Nerfstudio](https://docs.nerf.studio/nerfology/methods/index.html):
+```
+vanilla-nerf
+vanilla-nerf-blender
+mipnerf
+nerfacto
+nerfacto-big
+nerfacto-huge
+depth-nerfacto
+instant-ngp
+instant-ngp-bounded
+dnerf
+neus
+neus-facto
+tensorf
+volinga
+kplanes
+kplanes-dynamic
+tetra-nerf
+tetra-nerf-original
+phototourism
+gaussian-splatting
+generfacto
+in2n
+in2n-small
+in2n-tiny
+lerf
+lerf-big
+lerf-lite
+nerfplayer-nerfacto
+nerfplayer-ngp
+semantic-nerfw
+```
 ### Rendering scenes as videos and gifs
 
 Use `render.sh` to use `ns-render`, specifying the `GPU`, `MODEL`, `DATASET` (scene folder), `RESOL` for resolution scaling (default 1) and `OVERWRITE`:
