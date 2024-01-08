@@ -35,6 +35,14 @@ export ISCALE=1.5
 else
 export ISCALE=$6
 fi
+if [ -z $7 ]
+then
+export INSTRUCT="in2n" #or 'igs2gs'
+else
+export INSTRUCT=$7
+fi
+
+
 export SCENE=$(echo $(basename $DATASET))
 
 echo $PROMPT
@@ -47,6 +55,6 @@ CFG_PATH=$MODEL_PATH/config.yml
 OUTPUT_PATH=$MODEL_PATH/results.json
 
 # RUN
-echo "ns-train in2n --data $DATASET --load-dir $MODEL_PATH --pipeline.prompt '$PROMPT' --experiment-name '${SCENE}' --pipeline.guidance-scale $GSCALE --pipeline.image-guidance-scale $ISCALE --vis viewer"
-ns-train in2n --data $DATASET --load-dir $MODEL_PATH --pipeline.prompt '$PROMPT' --experiment-name '${SCENE}' --pipeline.guidance-scale $GSCALE --pipeline.image-guidance-scale $ISCALE --vis viewer
+echo "ns-train $INSTRUCT --data $DATASET --load-dir $MODEL_PATH --pipeline.prompt '$PROMPT' --experiment-name '${SCENE}' --pipeline.guidance-scale $GSCALE --pipeline.image-guidance-scale $ISCALE --vis viewer"
+ns-train $INSTRUCT --data $DATASET --load-dir $MODEL_PATH --pipeline.prompt '$PROMPT' --experiment-name '${SCENE}' --pipeline.guidance-scale $GSCALE --pipeline.image-guidance-scale $ISCALE --vis viewer
 
