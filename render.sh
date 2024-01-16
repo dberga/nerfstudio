@@ -51,7 +51,8 @@ echo "renders/$SCENE/$MODEL/$CKPT_DATE.mp4 already rendered"
 exit
 fi
 
-if [ -e $DATASET/camera_paths/*.json ]; then
+PATH_CAMERA_JSON=${DATASET}/camera_paths/*.json
+if [ -e $PATH_CAMERA_JSON ]; then
 CAM_PATH=$(ls $DATASET/camera_paths/*.json | sort -n | tail -n 1)
 echo "ns-render camera-path --load-config $CFG_PATH --camera-path-filename $DATASET/camera_paths/$CKPT_DATE.json --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL  --rendered_output_name rgb_fine"
 ns-render camera-path --load-config $CFG_PATH --camera-path-filename $CAM_PATH --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_name rgb_fine

@@ -4,7 +4,8 @@ for MODEL in $SCENE/*
 do
 for DATE in $MODEL/*
 do
-if [ -e $DATE/nerfstudio_models/*.ckpt ]
+PATH_CKPT=${DATE}/nerfstudio_models/*.ckpt
+if [ -e $PATH_CKPT ]
 then
 echo "$DATE checkpoint exists, all ok here"
 else

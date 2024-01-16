@@ -32,7 +32,9 @@ SCENE=$(basename $(dirname $(dirname $(dirname $(dirname $CKPT)))))
 if [ "${MODEL}" = "generfacto" ] # for model generation
 then
 	export DATASET=$SCENE
-	if [ -e "exports/*/exports/mesh/$SCENE/$MODEL/*.ply" ] && [ -e "exports/*/exports/pcd/$SCENE/$MODEL/*.ply" ] && ! $OVERWRITE
+        PATH_EXPORTS_MESH=exports/mesh/${SCENE}/${MODEL}/*.obj
+        PATH_EXPORTS_PCD=exports/pcd/${SCENE}/${MODEL}/*.ply
+	if [ -e $PATH_EXPORTS_MESH ] && [ -e $PATH_EXPORTS_PCD ] && ! $OVERWRITE
 	then
 	echo "$SCENE already exported to mesh/pcd"
 	else
@@ -46,7 +48,9 @@ else # for any nerf model
 	if [ -e data/$PACK/$SCENE ];
 	then
 	DATASET=data/$PACK/$SCENE
-	if [ -e "exports/*/exports/mesh/$SCENE/$MODEL/*.ply" ] && [ -e "exports/*/exports/pcd/$SCENE/$MODEL/*.ply" ] && ! $OVERWRITE
+        PATH_EXPORTS_MESH=exports/mesh/${SCENE}/${MODEL}/*.obj
+        PATH_EXPORTS_PCD=exports/pcd/${SCENE}/${MODEL}/*.ply
+	if [ -e $PATH_EXPORTS_MESH ] && [ -e $PATH_EXPORTS_PCD ] && ! $OVERWRITE
 	then
 	echo "$SCENE already exported to mesh/pcd"
 	else

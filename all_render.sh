@@ -52,10 +52,12 @@ do
 PACK=$(basename $FOLDER)
 if [ -d "data/$PACK/$SCENE/camera_paths" ];
 then
-if [ -e "data/$PACK/$SCENE/camera_paths/*.json" ];
+PATH_SUB_CAMERA=data/${PACK}/${SCENE}/camera_paths/*.json
+if [ -e $PATH_SUB_CAMERA ];
 then
 DATASET=data/$PACK/$SCENE
-if [ -e "renders/$SCENE/*/*.mp4" ]
+PATH_SUB_MP4=renders/${SCENE}/*/*.mp4
+if [ -e $PATH_SUB_MP4 ]
 then
 echo "$SCENE already rendered"
 else

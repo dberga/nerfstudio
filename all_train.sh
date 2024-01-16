@@ -33,6 +33,14 @@ for SCENE_FOLDER in $FOLDER/*
 do
 SCENE=$(basename $SCENE_FOLDER)
 DATASET=$FOLDER/$SCENE
+
+PATH_TRANSFORMS=${DATASET}/transforms*.json
+
+if ![ -e $PATH_TRANSFORMS ]; then
+echo "$DATASET not processed"
+continue
+fi
+
 if [ -e "outputs/$SCENE/$MODEL" ]
 then
 if [ `ls -a outputs/$SCENE/$MODEL | wc -l` ]

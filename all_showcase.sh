@@ -31,34 +31,46 @@ echo "$DATASET already showcased"
 break
 
 else
+
+PATH_MP4=${DATASET}/*.mp4
+PATH_AVI=${DATASET}/*.avi
+PATH_MKV=${DATASET}/*.mkv
+PATH_MOV=${DATASET}/*.MOV
+PATH_WMV=${DATASET}/*.wmv
+PATH_FLV=${DATASET}/*.flv
+PATH_WEBM=${DATASET}/*.webm
+
 if [ -e "$DATASET/images" ]; then
 TYPE="images"
 DATASET="$DATASET/images"
 elif [ -e "$DATASET/rgb" ]; then
 TYPE="images"
 DATASET="$DATASET/rgb"
+elif [ -e "$DATASET/image" ]; then
+TYPE="images"
+DATASET="$DATASET/image"
 elif [ -e "$DATASET/train" ] || [ -e "$DATASET/test" ] || [ -e "$DATASET/val" ]; then
 TYPE="images"
 DATASET="$DATASET/train"
-elif [ -e "$DATASET/*.mp4" ]; then
+elif [ -e $PATH_MP4 ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.mp4 | sort -n 1 | tail -n 1)
-elif [ -e "$DATASET/*.avi" ]; then
+elif [ -e $PATH_AVI ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.avi | sort -n 1 | tail -n 1)
-elif [ -e "$DATASET/*.mkv" ]; then
+elif [ -e $PATH_MKV ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.mkv | sort -n 1 | tail -n 1)
-elif [ -e "$DATASET/*.MOV" ]; then
+elif [ -e $PATH_MOV ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.MOV | sort -n 1 | tail -n 1)
-elif [ -e "$DATASET/*.wmv" ]; then
+elif [ -e $PATH_WMV ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.wmv | sort -n 1 | tail -n 1)
-elif [ -e "$DATASET/*.flv" ]; then
+elif [ -e $PATH_FLV ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.flv | sort -n 1 | tail -n 1)
-elif [ -e "$DATASET/*.webm" ]; then
+elif [ -e $PATH_WEBM ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.webm | sort -n 1 | tail -n 1)
 else

@@ -23,11 +23,25 @@ SCENE=$(basename $SCENE_FOLDER)
 DATASET=$FOLDER/$SCENE
 OUTPUT_DIR=$DATASET
 
-if [ -e "$DATASET/transforms*.json" ] && ! $OVERWRITE; then
+TRANSFORMS=${DATASET}/transforms.json
+TRANSFORMS_TRAIN=${DATASET}/transforms_train.json
+TRANSFORMS_TEST=${DATASET}/transforms_test.json
+TRANSFORMS_VAL=${DATASET}/transforms_val.json
+
+if ([ -e $TRANSFORMS ] || [ -e $TRANSFORMS_TRAIN ] || [ -e $TRANSFORMS_TEST ] || [ -e $TRANSFORMS_VAL ] ) && ! $OVERWRITE; then
 echo "$DATASET already processed"
 break
 
 else
+
+# possible video paths
+PATH_MP4=${DATASET}/*.mp4
+PATH_AVI=${DATASET}/*.avi
+PATH_MKV=${DATASET}/*.mkv
+PATH_MOV=${DATASET}/*.mov
+PATH_WMV=${DATASET}/*.wmv
+PATH_FLV=${DATASET}/*.flv
+PATH_WEBM=${DATASET}/*.webm
 
 # check data dir for images or video
 if [ -e "$DATASET/images" ]; then
@@ -36,28 +50,31 @@ DATASET="$DATASET/images"
 elif [ -e "$DATASET/rgb" ]; then
 TYPE="images"
 DATASET="$DATASET/rgb"
+elif [ -e "$DATASET/image" ]; then
+TYPE="images"
+DATASET="$DATASET/image"
 elif [ -e "$DATASET/train" ] || [ -e "$DATASET/test" ] || [ -e "$DATASET/val" ]; then
 TYPE="images"
 DATASET="$DATASET/train"
-elif [ -e "$DATASET/*.mp4" ]; then
+elif [ -e $PATH_MP4 ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.mp4 | sort -n 1 | tail -n 1)
-elif [ -e "$DATASET/*.avi" ]; then
+elif [ -e $PATH_AVI ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.avi | sort -n 1 | tail -n 1)
-elif [ -e "$DATASET/*.mkv" ]; then
+elif [ -e $PATH_MKV ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.mkv | sort -n 1 | tail -n 1)
-elif [ -e "$DATASET/*.MOV" ]; then
+elif [ -e $PATH_MOV ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.MOV | sort -n 1 | tail -n 1)
-elif [ -e "$DATASET/*.wmv" ]; then
+elif [ -e $PATH_WMV ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.wmv | sort -n 1 | tail -n 1)
-elif [ -e "$DATASET/*.flv" ]; then
+elif [ -e $PATH_FLV ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.flv | sort -n 1 | tail -n 1)
-elif [ -e "$DATASET/*.webm" ]; then
+elif [ -e $PATH_WEBM ]; then
 TYPE="video"
 DATASET=$(ls $DATASET/*.webm | sort -n 1 | tail -n 1)
 else
