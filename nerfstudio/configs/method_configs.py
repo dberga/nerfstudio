@@ -19,30 +19,22 @@ Put all the method implementations in one location.
 from __future__ import annotations
 
 from collections import OrderedDict
-from typing import Dict
+from typing import Dict, Union
 
 import tyro
 
 from nerfstudio.cameras.camera_optimizers import CameraOptimizerConfig
 from nerfstudio.configs.base_config import ViewerConfig
-from nerfstudio.configs.external_methods import get_external_methods
-from nerfstudio.data.datamanagers.base_datamanager import (
-    VanillaDataManager,
-    VanillaDataManagerConfig,
-)
+from nerfstudio.configs.external_methods import ExternalMethodDummyTrainerConfig, get_external_methods
+from nerfstudio.data.datamanagers.base_datamanager import VanillaDataManager, VanillaDataManagerConfig
+from nerfstudio.data.datamanagers.full_images_datamanager import FullImageDatamanagerConfig
 from nerfstudio.data.datamanagers.parallel_datamanager import ParallelDataManagerConfig
-from nerfstudio.data.datamanagers.random_cameras_datamanager import (
-    RandomCamerasDataManagerConfig,
-)
+from nerfstudio.data.datamanagers.random_cameras_datamanager import RandomCamerasDataManagerConfig
 from nerfstudio.data.dataparsers.blender_dataparser import BlenderDataParserConfig
 from nerfstudio.data.dataparsers.dnerf_dataparser import DNeRFDataParserConfig
-from nerfstudio.data.dataparsers.instant_ngp_dataparser import (
-    InstantNGPDataParserConfig,
-)
+from nerfstudio.data.dataparsers.instant_ngp_dataparser import InstantNGPDataParserConfig
 from nerfstudio.data.dataparsers.nerfstudio_dataparser import NerfstudioDataParserConfig
-from nerfstudio.data.dataparsers.phototourism_dataparser import (
-    PhototourismDataParserConfig,
-)
+from nerfstudio.data.dataparsers.phototourism_dataparser import PhototourismDataParserConfig
 from nerfstudio.data.dataparsers.sdfstudio_dataparser import SDFStudioDataParserConfig
 from nerfstudio.data.dataparsers.sitcoms3d_dataparser import Sitcoms3DDataParserConfig
 from nerfstudio.data.datasets.depth_dataset import DepthDataset
@@ -78,7 +70,7 @@ from nerfstudio.data.datamanagers.full_images_datamanager import FullImageDatama
 from nerfstudio.pipelines.dynamic_batch import DynamicBatchPipelineConfig
 from nerfstudio.plugins.registry import discover_methods
 
-method_configs: Dict[str, TrainerConfig] = {}
+method_configs: Dict[str, Union[TrainerConfig, ExternalMethodDummyTrainerConfig]] = {}
 descriptions = {
     "nerfacto": "Recommended real-time model tuned for real captures. This model will be continually updated.",
     "depth-nerfacto": "Nerfacto with depth supervision.",
@@ -93,6 +85,7 @@ descriptions = {
     "dnerf": "Dynamic-NeRF model. (slow)",
     "phototourism": "Uses the Phototourism data.",
     "generfacto": "Generative Text to NeRF model",
+    "splatfacto": "Gaussian Splatting model",
     "neus": "Implementation of NeuS. (slow)",
     "neus-facto": "Implementation of NeuS-Facto. (slow)",
     "refnerfacto": "Combines nerfacto and ref-nerf.",
@@ -112,11 +105,6 @@ method_configs["nerfacto"] = TrainerConfig(
             dataparser=NerfstudioDataParserConfig(),
             train_num_rays_per_batch=4096,
             eval_num_rays_per_batch=4096,
-            #camera_optimizer=CameraOptimizerConfig(
-            #    mode="SO3xR3",
-            #    optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
-            #    scheduler=ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
-            #),
         ),
         model=NerfactoModelConfig(
             eval_num_rays_per_chunk=1 << 15,
@@ -152,10 +140,6 @@ method_configs["nerfacto-big"] = TrainerConfig(
             dataparser=NerfstudioDataParserConfig(),
             train_num_rays_per_batch=8192,
             eval_num_rays_per_batch=4096,
-            #camera_optimizer=CameraOptimizerConfig(
-            #    mode="SO3xR3",
-            #    optimizer=RAdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-3),
-            #),
         ),
         model=NerfactoModelConfig(
             eval_num_rays_per_chunk=1 << 15,
@@ -199,11 +183,6 @@ method_configs["nerfacto-huge"] = TrainerConfig(
             dataparser=NerfstudioDataParserConfig(),
             train_num_rays_per_batch=16384,
             eval_num_rays_per_batch=4096,
-            #camera_optimizer=CameraOptimizerConfig(
-            #    mode="SO3xR3",
-            #    optimizer=RAdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-3),
-            #    scheduler=ExponentialDecaySchedulerConfig(lr_final=6e-5, max_steps=50000),
-            #),
         ),
         model=NerfactoModelConfig(
             eval_num_rays_per_chunk=1 << 15,
@@ -253,9 +232,6 @@ method_configs["depth-nerfacto"] = TrainerConfig(
             dataparser=NerfstudioDataParserConfig(),
             train_num_rays_per_batch=4096,
             eval_num_rays_per_batch=4096,
-            #camera_optimizer=CameraOptimizerConfig(
-            #    mode="SO3xR3", optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2)
-            #),
         ),
         model=DepthNerfactoModelConfig(
             eval_num_rays_per_chunk=1 << 15,
@@ -345,7 +321,6 @@ method_configs["instant-ngp"] = TrainerConfig(
     vis="viewer",
 )
 
-
 method_configs["instant-ngp-bounded"] = TrainerConfig(
     method_name="instant-ngp-bounded",
     steps_per_eval_batch=500,
@@ -373,11 +348,10 @@ method_configs["instant-ngp-bounded"] = TrainerConfig(
     viewer=ViewerConfig(num_rays_per_chunk=1 << 12),
     vis="viewer",
 )
-
-
+#
+#
 method_configs["mipnerf"] = TrainerConfig(
     method_name="mipnerf",
-    max_num_iterations=30000,
     pipeline=VanillaPipelineConfig(
         datamanager=ParallelDataManagerConfig(dataparser=NerfstudioDataParserConfig(), train_num_rays_per_batch=1024),
         model=VanillaModelConfig(
@@ -447,7 +421,6 @@ method_configs["semantic-nerfw"] = TrainerConfig(
 
 method_configs["vanilla-nerf"] = TrainerConfig(
     method_name="vanilla-nerf",
-    max_num_iterations=30000,
     pipeline=VanillaPipelineConfig(
         datamanager=VanillaDataManagerConfig(
             dataparser=NerfstudioDataParserConfig(),
@@ -467,7 +440,6 @@ method_configs["vanilla-nerf"] = TrainerConfig(
 )
 method_configs["vanilla-nerf-blender"] = TrainerConfig(
     method_name="vanilla-nerf-blender",
-    max_num_iterations=30000,
     pipeline=VanillaPipelineConfig(
         datamanager=VanillaDataManagerConfig(
             dataparser=BlenderDataParserConfig(),
@@ -520,7 +492,7 @@ method_configs["tensorf"] = TrainerConfig(
         ),
         model=TensoRFModelConfig(
             regularization="tv",
-            #camera_optimizer=CameraOptimizerConfig(mode="off"),
+            camera_optimizer=CameraOptimizerConfig(mode="off"),
         ),
     ),
     optimizers={
@@ -574,9 +546,6 @@ method_configs["phototourism"] = TrainerConfig(
             dataparser=PhototourismDataParserConfig(),  # NOTE: one of the only differences with nerfacto
             train_num_rays_per_batch=4096,
             eval_num_rays_per_batch=4096,
-            #camera_optimizer=CameraOptimizerConfig(
-            #    mode="SO3xR3", optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2)
-            #),
             # Large dataset, so using prior values from VariableResDataManager.
             train_num_images_to_sample_from=40,
             train_num_times_to_repeat_images=100,
@@ -665,9 +634,6 @@ method_configs["neus"] = TrainerConfig(
             dataparser=SDFStudioDataParserConfig(),
             train_num_rays_per_batch=1024,
             eval_num_rays_per_batch=1024,
-            #camera_optimizer=CameraOptimizerConfig(
-            #    mode="off", optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2)
-            #),
         ),
         model=NeuSModelConfig(eval_num_rays_per_chunk=1024),
     ),
@@ -699,9 +665,6 @@ method_configs["neus-facto"] = TrainerConfig(
             dataparser=SDFStudioDataParserConfig(),
             train_num_rays_per_batch=2048,
             eval_num_rays_per_batch=2048,
-            #camera_optimizer=CameraOptimizerConfig(
-            #    mode="SO3xR3", optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2)
-            #),
         ),
         model=NeuSFactoModelConfig(
             # proposal network allows for significantly smaller sdf/color network
@@ -736,20 +699,20 @@ method_configs["neus-facto"] = TrainerConfig(
     vis="viewer",
 )
 
-method_configs["gaussian-splatting"] = TrainerConfig(
-    method_name="gaussian-splatting",
+method_configs["splatfacto"] = TrainerConfig(
+    method_name="splatfacto",
     steps_per_eval_image=100,
-    steps_per_eval_batch=100,
+    steps_per_eval_batch=0,
     steps_per_save=2000,
     steps_per_eval_all_images=1000,
     max_num_iterations=30000,
     mixed_precision=False,
-    gradient_accumulation_steps={"camera_opt": 100, "color": 2},
+    gradient_accumulation_steps={"camera_opt": 100},
     pipeline=VanillaPipelineConfig(
         datamanager=FullImageDatamanagerConfig(
-            dataparser=ColmapDataParserConfig(load_3D_points=True),
+            dataparser=NerfstudioDataParserConfig(load_3D_points=True),
         ),
-        model=GaussianSplattingModelConfig(),
+        model=SplatfactoModelConfig(),
     ),
     optimizers={
         "xyz": {
@@ -759,12 +722,13 @@ method_configs["gaussian-splatting"] = TrainerConfig(
                 max_steps=30000,
             ),
         },
-        "color": {
-            "optimizer": AdamOptimizerConfig(lr=5e-4, eps=1e-15),
-            "scheduler": ExponentialDecaySchedulerConfig(
-                lr_final=1e-4,
-                max_steps=30000,
-            ),
+        "features_dc": {
+            "optimizer": AdamOptimizerConfig(lr=0.0025, eps=1e-15),
+            "scheduler": None,
+        },
+        "features_rest": {
+            "optimizer": AdamOptimizerConfig(lr=0.0025 / 20, eps=1e-15),
+            "scheduler": None,
         },
         "opacity": {
             "optimizer": AdamOptimizerConfig(lr=0.05, eps=1e-15),
@@ -772,7 +736,7 @@ method_configs["gaussian-splatting"] = TrainerConfig(
         },
         "scaling": {
             "optimizer": AdamOptimizerConfig(lr=0.005, eps=1e-15),
-            "scheduler": ExponentialDecaySchedulerConfig(lr_final=1e-3, max_steps=30000),
+            "scheduler": None,
         },
         "rotation": {"optimizer": AdamOptimizerConfig(lr=0.001, eps=1e-15), "scheduler": None},
         "camera_opt": {
@@ -781,7 +745,7 @@ method_configs["gaussian-splatting"] = TrainerConfig(
         },
     },
     viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
-    vis="viewer_beta",
+    vis="viewer",
 )
 
 method_configs["refnerfacto"] = TrainerConfig(
