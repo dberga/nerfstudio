@@ -28,11 +28,13 @@ from nerfstudio.cameras.rays import RaySamples
 from nerfstudio.field_components.encodings import Encoding, Identity
 from nerfstudio.field_components.field_heads import (
     DensityFieldHead,
-    RoughnessFieldHead,
     PredNormalsFieldHead,
     FieldHead,
     FieldHeadNames,
     RGBFieldHead,
+)
+from nerfstudio.field_components.mod_field_heads import (
+    RoughnessFieldHead,
     SpecularTintFieldHead,
 )
 from nerfstudio.field_components.mlp import MLP

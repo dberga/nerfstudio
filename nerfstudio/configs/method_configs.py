@@ -51,7 +51,6 @@ from nerfstudio.engine.trainer import TrainerConfig
 from nerfstudio.field_components.temporal_distortions import TemporalDistortionKind
 from nerfstudio.fields.sdf_field import SDFFieldConfig
 from nerfstudio.models.depth_nerfacto import DepthNerfactoModelConfig
-from nerfstudio.models.gaussian_splatting import GaussianSplattingModelConfig
 from nerfstudio.models.generfacto import GenerfactoModelConfig
 from nerfstudio.models.instant_ngp import InstantNGPModelConfig
 from nerfstudio.data.dataparsers.colmap_dataparser import ColmapDataParserConfig
@@ -64,6 +63,7 @@ from nerfstudio.models.neus_facto import NeuSFactoModelConfig
 from nerfstudio.models.semantic_nerfw import SemanticNerfWModelConfig
 from nerfstudio.models.tensorf import TensoRFModelConfig
 from nerfstudio.models.vanilla_nerf import NeRFModel, VanillaModelConfig
+from nerfstudio.models.splatfacto import SplatfactoModelConfig
 from nerfstudio.models.ha_nerf import HaNeRFModel, HaNerfModelConfig
 from nerfstudio.pipelines.base_pipeline import VanillaPipelineConfig
 from nerfstudio.data.datamanagers.full_images_datamanager import FullImageDatamanagerConfig
@@ -267,9 +267,6 @@ method_configs["volinga"] = TrainerConfig(
             dataparser=NerfstudioDataParserConfig(),
             train_num_rays_per_batch=4096,
             eval_num_rays_per_batch=4096,
-            camera_optimizer=CameraOptimizerConfig(
-                mode="SO3xR3", optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2)
-            ),
         ),
         model=NerfactoModelConfig(
             eval_num_rays_per_chunk=1 << 15,
@@ -759,11 +756,6 @@ method_configs["refnerfacto"] = TrainerConfig(
             dataparser=NerfstudioDataParserConfig(),
             train_num_rays_per_batch=4096,
             eval_num_rays_per_batch=4096,
-            camera_optimizer=CameraOptimizerConfig(
-                mode="SO3xR3",
-                optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
-                scheduler=ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
-            ),
         ),
         model=RefNerfactoModelConfig(eval_num_rays_per_chunk=1 << 15),
     ),
@@ -791,11 +783,6 @@ method_configs["refnerfacto-blender"] = TrainerConfig(
             dataparser=BlenderDataParserConfig(),
             train_num_rays_per_batch=4096,
             eval_num_rays_per_batch=4096,
-            camera_optimizer=CameraOptimizerConfig(
-                mode="SO3xR3",
-                optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
-                scheduler=ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
-            ),
         ),
         model=RefNerfactoModelConfig(eval_num_rays_per_chunk=1 << 15),
     ),
