@@ -1,0 +1,26 @@
+numpy==1.23.4
+urllib3==1.26.18
+protobuf==3.20.3
+nbclient==0.5.0
+jsonschema[format-nongpl]==4.18.0
+pyyaml==5.4.1
+markdown-it-py==2.2.0
+rsa==3.1.4
+
+botocore==1.31.77
+s3transfer==0.7.0
+boto3==1.33.12
+awscli==1.31.12
+colorama==0.4.4
+
+tensorstore==0.1.35
+pluggy==0.12
+platformdirs==3.5.1
+nbclient==0.5
+torchtyping
+torchmetrics[image]==1.0.1
+pytorch_lightning==1.4
+
+# generfacto
+huggingface-hub==0.19.0
+diffusers==0.24.0
