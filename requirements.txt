@@ -24,3 +24,31 @@ pytorch_lightning==1.4
 # generfacto
 huggingface-hub==0.19.0
 diffusers==0.24.0
+
+# Gaussian Splatting (splatfacto)
+gsplat
+
+# pynerf
+pynerf @ git+https://github.com/hturki/pynerf
+torch-scatter @ https://data.pyg.org/whl/torch-2.0.0%2Bcu117/torch_scatter-2.1.1%2Bpt20cu117-cp310-cp310-linux_x86_64.whl # for cuda 11.7
+#torch-scatter @ https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_scatter-2.1.2%2Bpt21cu121-cp311-cp311-linux_x86_64.whl # for cuda 12.X
+
+# instruct-nerf2nerf and instruct-gs2gs
+in2n @ git+https://github.com/ayaanzhaque/instruct-nerf2nerf
+igs2gs @ git+https://github.com/cvachha/instruct-gs2gs
+
+# kplanes
+kplanes-nerfstudio
+
+# language-embedded region proposals (lerf)
+lerf @ git+https://github.com/kerrj/lerf
+
+# nerfbusters
+nerfbusters @ git+https://github.com/ethanweber/nerfbusters
+###note: this requires to run 'nerfbusters-setup' in terminal
+
+# Tetra-nerf
+tetra-nerf @ git+https://github.com/jkulhanek/tetra-nerf
+###note: this requires extra preprocessing and triangulation:
+## python -m tetranerf.scripts.process_images --path <data folder>
+## python -m tetranerf.scripts.triangulate --pointcloud <data folder>/sparse.ply --output <data folder>/sparse.th
