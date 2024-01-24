@@ -1,43 +1,29 @@
 for FOLDER in data/*
 do
-for SCENE in $FOLDER/*
+for SCENE_FOLDER in $FOLDER/*
 do
-
-if ! [ -e $SCENE/transforms.json ]
-then
-echo "no transforms file $SCENE, trying to link"
-
-if [ -f $SCENE/transforms_train.json ]
-then
-ln -s $(pwd)/$SCENE/transforms_train.json $(pwd)/$SCENE/transforms.json
+if [ ! -d "${SCENE_FOLDER}" ]; then 
+continue;
 fi
 
-if ! [ -e $SCENE/*.json ];
+TRANSFORMS_PATH=$SCENE_FOLDER/transforms.json
+TRANSFORMS_TRAIN_PATH=$SCENE_FOLDER/transforms_train.json
+
+if ! [ -e $TRANSFORMS_PATH ]
 then
-echo "no json to link for $SCENE"
-else
-JSON=$(ls $SCENE/*.json | sort -n | tail -n 1)
-echo $JSON
+echo "no transforms file $SCENE_FOLDER, trying to link"
+
+if [ -L $TRANSFORMS_PATH ]; then
+unlink $TRANSFORMS_PATH
 fi
 
-if [ -L $JSON ]
+if [ -f $TRANSFORMS_TRAIN ]
 then
-unlink $JSON
-fi
-if [ -L $(pwd)/$SCENE/transforms.json ]
-then
-unlink $(pwd)/$SCENE/transforms.json
-fi
-if [ -f $JSON ]
-then
-echo "linking $JSON to $(pwd)/$SCENE/transforms.json"
-ln -s $JSON $(pwd)/$SCENE/transforms.json
+ln -s transforms_train.json $TRANSFORMS_PATH
 fi
 
-else
-echo "transforms found $SCENE"
 fi
-
 done
 done
+
 
