@@ -318,6 +318,7 @@ For CUDA 11.7
 ```bash
 python -m pip install torch==2.0.1+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
 python -m pip install torchvision==0.15.2+cu117 torchaudio==2.0.1+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
+python -m pip install torch-scatter -f https://data.pyg.org/whl/torch-2.0.1+cu117.html
 
 conda install -c "nvidia/label/cuda-11.7.1" cuda-toolkit
 python -m pip install ninja git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
@@ -326,6 +327,7 @@ For CUDA 12 and above
 ```bash
 python -m pip install torch==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121
 python -m pip install torchvision==0.16.1 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121
+python -m pip install torch-scatter -f https://data.pyg.org/whl/torch-2.1.1+cu121.html
 
 conda install -c "nvidia/label/cuda-12.3.0" cuda-toolkit
 python -m pip install ninja git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
