@@ -324,8 +324,8 @@ python -m pip install ninja git+https://github.com/NVlabs/tiny-cuda-nn/#subdirec
 ```
 For CUDA 12 and above
 ```bash
-python -m pip install torchvision==0.15.2 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121
-python -m pip install torchvision==0.15.2 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121
+python -m pip install torch==2.1.1
+python -m pip install torchvision==0.16.1 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121
 
 conda install -c "nvidia/label/cuda-12.3.0" cuda-toolkit
 python -m pip install ninja git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
