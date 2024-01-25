@@ -30,8 +30,8 @@ gsplat
 
 # pynerf
 pynerf @ git+https://github.com/hturki/pynerf
-torch-scatter @ https://data.pyg.org/whl/torch-2.0.0%2Bcu117/torch_scatter-2.1.1%2Bpt20cu117-cp310-cp310-linux_x86_64.whl # for cuda 11.7
-#torch-scatter @ https://data.pyg.org/whl/torch-2.1.0%2Bcu121/torch_scatter-2.1.2%2Bpt21cu121-cp311-cp311-linux_x86_64.whl # for cuda 12.X
+#torch-scatter @ git+https://data.pyg.org/whl/torch-2.1.1+cu117.html # for cuda 11.7
+#torch-scatter @ git+https://data.pyg.org/whl/torch-2.1.1+cu121.html # for cuda 12.X
 
 # instruct-nerf2nerf and instruct-gs2gs
 in2n @ git+https://github.com/ayaanzhaque/instruct-nerf2nerf
