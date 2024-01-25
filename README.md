@@ -310,24 +310,29 @@ conda create --name nerfstudio -y python=3.8
 conda activate nerfstudio
 python -m pip install --upgrade pip
 python -m pip install --upgrade pip setuptools
-python -m pip install -r requirements.txt --force-reinstall --ignore-installed --no-deps
 ```
 
 Install PyTorch with CUDA (this repo has been tested with CUDA 11.7 and CUDA 12.3) and [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn). `cuda-toolkit` is required for building `tiny-cuda-nn`.
 
 For CUDA 11.7
 ```bash
-python -m pip install torch==2.0.1+cu117 torchvision==0.15.2+cu117 torchaudio==2.0.1+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
+python -m pip install torch==2.0.1+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
+python -m pip install torchvision==0.15.2+cu117 torchaudio==2.0.1+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
 
 conda install -c "nvidia/label/cuda-11.7.1" cuda-toolkit
 python -m pip install ninja git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
 ```
 For CUDA 12 and above
 ```bash
-python -m pip install torch==2.1.1 torchvision==0.15.2 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121
+python -m pip install torchvision==0.15.2 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121
+python -m pip install torchvision==0.15.2 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121
 
 conda install -c "nvidia/label/cuda-12.3.0" cuda-toolkit
 python -m pip install ninja git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
+```
+After installing torch, install nerfstudio's requirements:
+```bash
+python -m pip install -r requirements.txt --force-reinstall --ignore-installed --no-deps
 ```
 
 Installing your Nerfstudio package
