@@ -30,8 +30,6 @@ gsplat
 
 # pynerf
 pynerf @ git+https://github.com/hturki/pynerf
-#torch-scatter @ git+https://data.pyg.org/whl/torch-2.1.1+cu117.html # for cuda 11.7
-#torch-scatter @ git+https://data.pyg.org/whl/torch-2.1.1+cu121.html # for cuda 12.X
 
 # instruct-nerf2nerf and instruct-gs2gs
 in2n @ git+https://github.com/ayaanzhaque/instruct-nerf2nerf
@@ -45,6 +43,10 @@ lerf @ git+https://github.com/kerrj/lerf
 
 # nerfbusters
 nerfbusters @ git+https://github.com/ethanweber/nerfbusters
+gdown
+tyro
+jaxtyping
+tensorboard
 ###note: this requires to run 'nerfbusters-setup' in terminal
 
 # Tetra-nerf
