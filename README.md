@@ -343,7 +343,7 @@ python -m pip install -e . --ignore-installed --force-reinstall --no-deps
 ```
 See [Dependencies](https://github.com/nerfstudio-project/nerfstudio/blob/main/docs/quickstart/installation.md#dependencies) in the Installation documentation for more.
 
-## Installation: Build and Compile Colmap preprocessing for GPU
+## Installation: Colmap and Hloc data preprocessing (SfM tools) for GPU
 
 Install prior dependencies:
 ```bash
@@ -369,7 +369,7 @@ sudo apt-get install \
     libcgal-dev \
     libceres-dev
 ```
-Build and compile Colmap (make sure you are back to conda's base)
+Build and compile Colmap (make sure you are back to base environment)
 ```bash
 git clone https://github.com/colmap/colmap.git
 cd colmap
@@ -380,4 +380,14 @@ sudo chown -R $(whoami) .
 ninja
 sudo ninja install
 ```
-See the [Colmap Installation](https://colmap.github.io/install.html) documentation for more.
+Install Hloc (make sure you are in your nerfstudio's environment)
+```bash
+git clone --recursive https://github.com/cvg/Hierarchical-Localization/
+cd Hierarchical-Localization
+python -m pip install -e .
+```
+See the [Colmap Installation](https://colmap.github.io/install.html) and [Hloc Installation](https://github.com/cvg/Hierarchical-Localization#installation) documentation for more.
+## Installation: ffmpeg for rendering
+```bash
+sudo apt install ffmpeg
+```
