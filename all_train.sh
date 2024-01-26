@@ -31,17 +31,21 @@ fi
 
 for SCENE_FOLDER in $FOLDER/*
 do
+
+if [ ! -d "${SCENE_FOLDER}" ]; then 
+continue;
+fi
+
 SCENE=$(basename $SCENE_FOLDER)
 DATASET=$FOLDER/$SCENE
 
 PATH_TRANSFORMS=${DATASET}/transforms*.json
-
-if ![ -e $PATH_TRANSFORMS ]; then
-echo "$DATASET not processed"
+if [ ! $(ls -a ${PATH_TRANSFORMS} | wc -l) ]; then 
+echo "$DATASET not processed, discard training."
 continue
 fi
 
-if [ -e "outputs/$SCENE/$MODEL" ]
+if [ -e "outputs/${SCENE}/${MODEL}" ]
 then
 if [ `ls -a outputs/$SCENE/$MODEL | wc -l` ]
 #if [[ ! -z $(ls -A outputs/$SCENE/$MODEL) ]]
@@ -51,11 +55,17 @@ do
 CKPT_DATE=$(basename $DATE)
 if [ -e "outputs/$SCENE/$MODEL/$CKPT_DATE/nerfstudio_models" ]
 then
-if [ `ls -a outputs/$SCENE/$MODEL/$CKPT_DATE/nerfstudio_models/*.ckpt | wc -l` ] && ! $OVERWRITE
+EXIST_CKPT=$(ls -a outputs/$SCENE/$MODEL/$CKPT_DATE/nerfstudio_models/*.ckpt)
+NUM_EXIST_CKPT=$( ls $EXIST_CKPT | wc -l)
+if [ $NUM_EXIST_CKPT ] && ! $OVERWRITE
 then
-CKPT=$( ls outputs/$SCENE/$MODEL/$CKPT_DATE/nerfstudio_models/*.ckpt | sort -n 1 | tail -n 1)
+if [ $NUM_EXIST_CKPT -gt 1 ]; then
+CKPT=$( ls $EXIST_CKPT | sort -n 1 | tail -n 1)
+else
+CKPT=$EXIST_CKPT
+fi
 echo "$CKPT already trained (ckpt exists)"
-exit
+break
 fi
 fi
 done

@@ -28,9 +28,10 @@ TRANSFORMS_TRAIN=${DATASET}/transforms_train.json
 TRANSFORMS_TEST=${DATASET}/transforms_test.json
 TRANSFORMS_VAL=${DATASET}/transforms_val.json
 
-if ([ -e $TRANSFORMS ] || [ -e $TRANSFORMS_TRAIN ] || [ -e $TRANSFORMS_TEST ] || [ -e $TRANSFORMS_VAL ] ) && ! $OVERWRITE; then
+# ([ -e $TRANSFORMS ] || [ -e $TRANSFORMS_TRAIN ] || [ -e $TRANSFORMS_TEST ] || [ -e $TRANSFORMS_VAL ] )
+if [ -e $TRANSFORMS ] && ! $OVERWRITE; then
 echo "$DATASET already processed"
-break
+continue
 
 else
 
