@@ -342,3 +342,42 @@ Installing your Nerfstudio package
 python -m pip install -e . --ignore-installed --force-reinstall --no-deps
 ```
 See [Dependencies](https://github.com/nerfstudio-project/nerfstudio/blob/main/docs/quickstart/installation.md#dependencies) in the Installation documentation for more.
+
+## Installation: Build and Compile Colmap preprocessing for GPU
+
+Install prior dependencies:
+```bash
+sudo apt-get install \
+    git \
+    cmake \
+    ninja-build \
+    build-essential \
+    libboost-program-options-dev \
+    libboost-filesystem-dev \
+    libboost-graph-dev \
+    libboost-system-dev \
+    libeigen3-dev \
+    libflann-dev \
+    libfreeimage-dev \
+    libmetis-dev \
+    libgoogle-glog-dev \
+    libgtest-dev \
+    libsqlite3-dev \
+    libglew-dev \
+    qtbase5-dev \
+    libqt5opengl5-dev \
+    libcgal-dev \
+    libceres-dev
+```
+Build and compile Colmap (make sure you are back to conda's base)
+```bash
+git clone https://github.com/colmap/colmap.git
+cd colmap
+mkdir build
+cd build
+cmake .. -GNinja -DCMAKE_CUDA_ARCHITECTURES=native
+sudo chown -R $(whoami) .
+ninja
+sudo ninja install
+```
+See the [Colmap Installation](https://colmap.github.io/install.html) documentation for more.
