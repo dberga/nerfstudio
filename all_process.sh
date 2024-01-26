@@ -35,6 +35,10 @@ continue
 
 else
 
+if [ ! -d $DATASET ]; then
+continue
+fi
+
 # possible video paths
 PATH_MP4=${DATASET}/*.mp4
 PATH_AVI=${DATASET}/*.avi
