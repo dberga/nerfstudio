@@ -369,17 +369,14 @@ sudo apt-get install \
     libcgal-dev \
     libceres-dev
 ```
-Install Nvidia Compiler Drivers (for C++)
-```bash
-sudo apt install nvidia-cuda-toolkit nvidia-cuda-toolkit-gcc
-```
-Build and compile Colmap
+Build and compile Colmap (make sure you are back to conda's base)
 ```bash
 git clone https://github.com/colmap/colmap.git
 cd colmap
 mkdir build
 cd build
 cmake .. -GNinja -DCMAKE_CUDA_ARCHITECTURES=native
+sudo chown -R $(whoami) .
 ninja
 sudo ninja install
 ```
