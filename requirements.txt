@@ -30,6 +30,11 @@ newrawpy
 imageio
 python-dateutils
 
+# ns-process
+scipy
+appdirs
+matplotlib
+
 # generfacto
 huggingface-hub==0.19.0
 diffusers==0.24.0
