@@ -16,6 +16,12 @@ export OVERWRITE=false
 else
 export OVERWRITE=$3
 fi
+if [ -z $4 ]
+then
+export SFM=hloc
+else
+export SFM=$4 #colmap or hloc
+fi
 
 for SCENE_FOLDER in $FOLDER/*
 do
@@ -88,7 +94,7 @@ break
 fi
 
 echo "sh process_data.sh $CUDA_VISIBLE_DEVICES $TYPE $DATASET"
-sh process_data.sh $CUDA_VISIBLE_DEVICES $TYPE $DATASET $OUTPUT_DIR
+sh process_data.sh $CUDA_VISIBLE_DEVICES $TYPE $DATASET $OUTPUT_DIR $SFM
 fi
 
 done

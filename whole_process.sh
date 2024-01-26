@@ -10,10 +10,16 @@ export OVERWRITE=false
 else
 export OVERWRITE=$2
 fi
+if [ -z $3 ]
+then
+export SFM=hloc
+else
+export SFM=$3
+fi
 
 for FOLDER in data/*; 
 do
-sh all_process.sh $CUDA_VISIBLE_DEVICES $FOLDER $OVERWRITE
+sh all_process.sh $CUDA_VISIBLE_DEVICES $FOLDER $OVERWRITE $SFM
 done
 
 
