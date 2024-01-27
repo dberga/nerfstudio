@@ -240,7 +240,7 @@ To use this we built a script `instruct.sh` in which you can run `ns-train in2n`
 ```
 sh instruct.sh 0 nerfacto data/nerfstudio/kitchen "convert the piano to drums" 7.5 1.5 in2n
 ```
-#### [Instruct-GS2GS](https://docs.nerf.studio/nerfology/methods/igs2gs.html) using `gaussian-splatting`
+#### [Instruct-GS2GS](https://docs.nerf.studio/nerfology/methods/igs2gs.html) using Gaussian Splatting
 
 Installation:
 ```
@@ -248,7 +248,7 @@ python -m pip install git+https://github.com/cvachha/instruct-gs2gs
 ```
 To use this we built a script `instruct.sh` in which you can run `ns-train igs2gs` with specific `GPU`, `MODEL`, `DATASET` (scene folder), `PROMPT` (the edit target prompt you can enter), `GSCALE` and `ISCALE`, for example:
 ```
-sh instruct.sh 0 gaussian-splatting data/nerfstudio/kitchen "convert the piano to drums" 12.5 1.5 igs2gs
+sh instruct.sh 0 splatfacto data/nerfstudio/kitchen "convert the piano to drums" 12.5 1.5 igs2gs
 ```
 
 ### Playing 3D Videos in [Nerfplayer](https://docs.nerf.studio/nerfology/methods/nerfplayer.html)
