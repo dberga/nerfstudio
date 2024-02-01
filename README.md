@@ -59,8 +59,6 @@ pynerf
 pynerf-synthetic
 pynerf-occupancy-grid
 nerfbusters
-tetra-nerf-original
-tetra-nerf
 ```
 #### Other useful methods (image generation, editing, region proposals, segmentation, video nerfs, etc.)
 ```
