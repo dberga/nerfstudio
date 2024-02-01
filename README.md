@@ -94,6 +94,10 @@ For rendering all output files, use `all_eval.sh` specifying the `GPU` and wheth
 ```
 sh all_eval.sh 0 true
 ```
+The outputs will appear as `.json` in your `outputs/` folder. To stack all the results in one csv you'd need to run `all_benchmark.sh` to convert and stack the results in one unique `.csv`, which will be saved in your `benchmarks/` folder; specifying the `GPU` and the `outputs/` folder (already set by default).
+```
+sh all_benchmark.sh 0 outputs
+```
 ### Exporting Nerf's 3D scenes to Point Clouds and Meshes
 Use `export.sh` to use `ns-export`, specifying the `GPU`, `MODEL`, `DATASET` (scene folder) and `SCALE`:
 ```
