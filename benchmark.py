@@ -37,6 +37,7 @@ def read_json(json_path):
 
 
 if __name__ == "__main__":
+        print("Use as 'python benchmark.py --scene SCENE_NAME'")
 	os.makedirs(BENCHMARKS_FOLDER,exist_ok=True)
 	scene_path,scene_name, output_folder = parse_scene_path()
 	list_results = find_all('results.json',scene_path)

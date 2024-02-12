@@ -118,9 +118,12 @@ For specific dataset cases, use `all_export.sh` specifying the `GPU`, `DATASET` 
 ```
 sh all_showcase.sh 0 data/nerfstudio/kitchen true
 ```
+You can also visualize examples using `open3d`:
+```
+python visualize.py --scene kitchen --type mesh
+```
 
 ## Benchmarking
-
 
 The following renders have been done using [Nerfacto](https://docs.nerf.studio/en/latest/nerfology/methods/nerfacto.html) over Nerfstudio scenes and our own captures from the Design and Archeological Museums of Barcelona.
 
