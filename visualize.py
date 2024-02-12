@@ -50,18 +50,19 @@ def rotate_view(vis):
         ctr.rotate(2.5, 0.0)
         return False
 
-if __name__ == "__main__":
-    print("Use as 'python visualize.py --scene SCENE_NAME'")
+if __name__ == "__main__":        
     scene_path_mesh,scene_path_pcd, scene_name, file_type, exports_folder = parse_scene_path()
 
     if file_type == "mesh":
         path_mesh = find_all('poisson_mesh.ply',scene_path_mesh)
         for results_path in path_mesh:
             # read mesh
+            algorithm = os.path.basename(os.path.dirname(results_path))
             results_data = read_mesh(results_path)
-            o3d.visualization.draw_geometries_with_animation_callback([results_data], rotate_view) # draw_geometries([results_data])
+            o3d.visualization.draw_geometries_with_animation_callback([results_data], rotate_view, window_name=algorithm) # draw_geometries([results_data])
     if file_type == "pcd":
         path_pcd = find_all('point_cloud.ply',scene_path_pcd)
         for results_path in path_pcd:
+            algorithm = os.path.basename(os.path.dirname(results_path))
             results_data = read_pcd(results_path)
-            o3d.visualization.draw_geometries_with_animation_callback([results_data], rotate_view) # draw_geometries([results_data])
+            o3d.visualization.draw_geometries_with_animation_callback([results_data], rotate_view, window_name=algorithm) # draw_geometries([results_data])
