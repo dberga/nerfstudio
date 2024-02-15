@@ -103,7 +103,7 @@ Use `export.sh` to use `ns-export`, specifying the `GPU`, `MODEL`, `DATASET` (sc
 ```
 sh export.sh 0 nerfacto data/nerfstudio/kitchen 1
 ```
-For exporting all output files, use `all_export.sh` specifying the `GPU`, `MODEL`, `DATASET` (scene folder) and `SCALE` and whether to `OVERWRITE` your outputs:
+For exporting all output files, use `all_export.sh` specifying the `GPU`, `SCALE` and whether to `OVERWRITE` your outputs:
 ```
 sh all_export.sh 0 1 true
 ```
