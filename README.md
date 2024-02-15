@@ -107,7 +107,17 @@ For exporting all output files, use `all_export.sh` specifying the `GPU`, `MODEL
 ```
 sh all_export.sh 0 1 true
 ```
+#### Comparing 3D data
+You can also compare `Point Cloud Distances` between algorithms using `open3d`:
+```
+python visualize.py --scene kitchen --type pcd
+```
+(note: you can add the flag `--visualize True` to view a color-coded [red-green] comparison)
 
+To compare with all the exported examples, use:
+```
+sh all_compare.sh 0 exports pcd
+```
 ### Demo Showcase - From data to gifs showcase
 
 To view all `data` examples as gifs, use `all_export.sh` specifying the `GPU` and whether to `OVERWRITE` your outputs:
