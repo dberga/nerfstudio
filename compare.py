@@ -6,8 +6,8 @@ import os
 import shutil
 import pandas as pd # make sure you also have installed 'tabulate' for markdown
 
-EXPORTS_FOLDER="." # exports
-MESHES_FOLDER="meshes" # exports/meshes
+EXPORTS_FOLDER="exports" # exports
+MESHES_FOLDER="mesh" # exports/mesh
 POINTCLOUDS_FOLDER="pcd" # exports/pcd
 
 def find_all(name, path):
@@ -25,7 +25,7 @@ def parse_scene_path():
             "--exports", nargs='?', type=str, default=EXPORTS_FOLDER
         )
         parser.add_argument(
-            "--scene", nargs='?', type=str, default="CEPA01"
+            "--scene", nargs='?', type=str, default="kitchen"
         )
 
         parser.add_argument(
