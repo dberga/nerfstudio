@@ -110,7 +110,7 @@ sh all_export.sh 0 1 true
 #### Comparing 3D data
 You can also compare `Point Cloud Distances` between algorithms using `open3d`:
 ```
-python visualize.py --scene kitchen --type pcd
+python compare.py --scene kitchen --type pcd
 ```
 (note: you can add the flag `--visualize True` to view a color-coded [red-green] comparison)
 
