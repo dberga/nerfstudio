@@ -120,11 +120,11 @@ sh all_compare.sh 0 exports pcd
 ```
 ### Demo Showcase - From data to gifs showcase
 
-To view all `data` examples as gifs, use `all_export.sh` specifying the `GPU` and whether to `OVERWRITE` your outputs:
+To view all `data` examples as gifs, use `whole_showcase.sh` specifying the `GPU` and whether to `OVERWRITE` your outputs:
 ```
 sh whole_showcase.sh 0 true
 ```
-For specific dataset cases, use `all_export.sh` specifying the `GPU`, `DATASET` (scene folder) and whether to `OVERWRITE` your outputs:
+For specific dataset cases, use `all_showcase.sh` specifying the `GPU`, `DATASET` (scene folder) and whether to `OVERWRITE` your outputs:
 ```
 sh all_showcase.sh 0 data/nerfstudio/kitchen true
 ```
