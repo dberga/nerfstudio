@@ -103,18 +103,28 @@ Use `export.sh` to use `ns-export`, specifying the `GPU`, `MODEL`, `DATASET` (sc
 ```
 sh export.sh 0 nerfacto data/nerfstudio/kitchen 1
 ```
-For exporting all output files, use `all_export.sh` specifying the `GPU`, `MODEL`, `DATASET` (scene folder) and `SCALE` and whether to `OVERWRITE` your outputs:
+For exporting all output files, use `all_export.sh` specifying the `GPU`, `SCALE` and whether to `OVERWRITE` your outputs:
 ```
 sh all_export.sh 0 1 true
 ```
+#### Comparing 3D data
+You can also compare `Point Cloud Distances` between algorithms using `open3d`:
+```
+python compare.py --scene kitchen --type pcd
+```
+(note: you can add the flag `--visualize True` to view a color-coded [red-green] comparison)
 
+To compare with all the exported examples, use:
+```
+sh all_compare.sh 0 exports pcd
+```
 ### Demo Showcase - From data to gifs showcase
 
-To view all `data` examples as gifs, use `all_export.sh` specifying the `GPU` and whether to `OVERWRITE` your outputs:
+To view all `data` examples as gifs, use `whole_showcase.sh` specifying the `GPU` and whether to `OVERWRITE` your outputs:
 ```
 sh whole_showcase.sh 0 true
 ```
-For specific dataset cases, use `all_export.sh` specifying the `GPU`, `DATASET` (scene folder) and whether to `OVERWRITE` your outputs:
+For specific dataset cases, use `all_showcase.sh` specifying the `GPU`, `DATASET` (scene folder) and whether to `OVERWRITE` your outputs:
 ```
 sh all_showcase.sh 0 data/nerfstudio/kitchen true
 ```
