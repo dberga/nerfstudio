@@ -19,7 +19,7 @@ export DATASET="$3"
 fi
 if [ -z $4 ]
 then
-export VIS="viewer"
+export VIS="viewer_legacy"
 else
 export VIS=$4
 fi
