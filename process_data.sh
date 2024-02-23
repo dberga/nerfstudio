@@ -24,7 +24,7 @@ export OUTPUT_DIR=$4
 fi
 if [ -z $5 ]
 then
-export SFM=hloc
+export SFM=colmap #hloc
 else
 export SFM=$5
 fi
