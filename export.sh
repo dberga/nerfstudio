@@ -48,7 +48,7 @@ then
   echo "ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL --normal-method open3d --rgb_output_name rgb_fine --depth_output_name depth_fine --num-rays-per-batch 8192";
   ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL --normal-method open3d --rgb_output_name rgb_fine --depth_output_name depth_fine --num-rays-per-batch 8192;
   echo "ns-export poisson --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL --normal-method open3d --rgb_output_name rgb_fine --depth_output_name depth_fine --num-rays-per-batch 8192";
-  ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL --normal-method open3d --rgb_output_name rgb_fine --depth_output_name depth_fine --num-rays-per-batch 8192;
+  ns-export poisson --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL --normal-method open3d --rgb_output_name rgb_fine --depth_output_name depth_fine --num-rays-per-batch 8192;
 elif [ "${MODEL}" = "splatfacto" ] # for gaussian splatting
 then
   echo "ns-export gaussian-splat --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL";
