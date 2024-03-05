@@ -34,9 +34,9 @@ export QT_QPA_PLATFORM=offscreen
 
 # RUN
 {
-echo "ns-process-data $TYPE --data $DATASET --output-dir $OUTPUT_DIR"
+echo "ns-process-data $TYPE --data $DATASET --output-dir $OUTPUT_DIR --sfm_tool $SFM"
 ns-process-data $TYPE --data $DATASET --output-dir $OUTPUT_DIR --sfm_tool $SFM
 } || {
-echo "ns-process-data $TYPE --data $DATASET --output-dir $OUTPUT_DIR --no-gpu" # without --no-gpu crashes
+echo "ns-process-data $TYPE --data $DATASET --output-dir $OUTPUT_DIR --no-gpu --sfm_tool $SFM" # without --no-gpu crashes
 ns-process-data $TYPE --data $DATASET --output-dir $OUTPUT_DIR --no-gpu --sfm_tool $SFM
 }
