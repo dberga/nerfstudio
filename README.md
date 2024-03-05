@@ -6,9 +6,9 @@
 ## Usage (Scripts)
 
 ### Preprocessing scenes of videos and images
-Use `process_data.sh` to use `ns-process`, specifying the `GPU`, `TYPE` (whether 'images' or 'video') and `DATASET` (scene folder), for example:
+Use `process_data.sh` to use `ns-process`, specifying the `GPU`, `TYPE` (whether 'images' or 'video'), `DATASET` (scene folder) and `SFM` (either colmap or hloc) for example:
 ```
-sh process_data.sh 0 images data/nerfstudio/kitchen
+sh process_data.sh 0 images data/nerfstudio/kitchen colmap
 ```
 For processing an entire dataset (folder of scenes), use `all_process.sh` specifying the `GPU`, `FOLDER` (folder with scenes) and whether to `OVERWRITE` your processed files:
 ```
