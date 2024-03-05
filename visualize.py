@@ -5,7 +5,7 @@ import os
 import shutil
 
 EXPORTS_FOLDER="exports" # exports
-MESHES_FOLDER="meshes" # exports/meshes
+MESHES_FOLDER="mesh" # exports/meshes
 POINTCLOUDS_FOLDER="pcd" # exports/pcd
 
 def find_all(name, path):
