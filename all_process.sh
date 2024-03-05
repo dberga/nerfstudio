@@ -18,7 +18,7 @@ export OVERWRITE=$3
 fi
 if [ -z $4 ]
 then
-export SFM=hloc
+export SFM=colmap
 else
 export SFM=$4 #colmap or hloc
 fi
@@ -93,8 +93,8 @@ echo "$DATASET has no data"
 break
 fi
 
-echo "sh process_data.sh $CUDA_VISIBLE_DEVICES $TYPE $DATASET"
-sh process_data.sh $CUDA_VISIBLE_DEVICES $TYPE $DATASET $OUTPUT_DIR $SFM
+echo "sh process_data.sh $CUDA_VISIBLE_DEVICES $TYPE $DATASET $SFM $OUTPUT_DIR"
+sh process_data.sh $CUDA_VISIBLE_DEVICES $TYPE $DATASET $SFM $OUTPUT_DIR
 fi
 
 done

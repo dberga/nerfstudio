@@ -18,15 +18,15 @@ export DATASET=$3
 fi
 if [ -z $4 ]
 then
-export OUTPUT_DIR=$DATASET
+export SFM=colmap #hloc
 else
-export OUTPUT_DIR=$4
+export SFM=$4
 fi
 if [ -z $5 ]
 then
-export SFM=colmap #hloc
+export OUTPUT_DIR=$DATASET
 else
-export SFM=$5
+export OUTPUT_DIR=$5
 fi
 
 # disable xcb Qt
