@@ -41,6 +41,11 @@ diffusers==0.24.0
 
 # Gaussian Splatting (splatfacto)
 gsplat
+viser
+pathos
+pytorch-msssim
+nerfacc
+splines
 
 # pynerf
 pynerf @ git+https://github.com/hturki/pynerf
@@ -68,3 +73,4 @@ tetra-nerf @ git+https://github.com/jkulhanek/tetra-nerf
 ###note: this requires extra preprocessing and triangulation:
 ## python -m tetranerf.scripts.process_images --path <data folder>
 ## python -m tetranerf.scripts.triangulate --pointcloud <data folder>/sparse.ply --output <data folder>/sparse.th
+
