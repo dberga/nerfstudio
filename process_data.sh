@@ -29,6 +29,12 @@ else
 export OUTPUT_DIR=$5
 fi
 
+# for the video case update output_dir to the folder where its located
+if [ $TYPE=="video" ]
+then
+export OUTPUT_DIR=$(dirname $DATASET)
+fi
+
 # disable xcb Qt
 export QT_QPA_PLATFORM=offscreen
 
