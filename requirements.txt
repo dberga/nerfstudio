@@ -35,10 +35,6 @@ scipy
 appdirs
 matplotlib
 
-# generfacto
-huggingface-hub==0.19.0
-diffusers==0.24.0
-
 # Gaussian Splatting (splatfacto)
 gsplat
 viser
@@ -47,21 +43,25 @@ pytorch-msssim
 nerfacc
 splines
 
+# generfacto
+#huggingface-hub==0.19.0
+#diffusers==0.24.0
+
 # pynerf
-pynerf @ git+https://github.com/hturki/pynerf
+#pynerf @ git+https://github.com/hturki/pynerf
 
 # instruct-nerf2nerf and instruct-gs2gs
-in2n @ git+https://github.com/ayaanzhaque/instruct-nerf2nerf
-igs2gs @ git+https://github.com/cvachha/instruct-gs2gs
+#in2n @ git+https://github.com/ayaanzhaque/instruct-nerf2nerf
+#igs2gs @ git+https://github.com/cvachha/instruct-gs2gs
 
 # kplanes
-kplanes-nerfstudio
+#kplanes-nerfstudio
 
 # language-embedded region proposals (lerf)
-lerf @ git+https://github.com/kerrj/lerf
+#lerf @ git+https://github.com/kerrj/lerf
 
 # nerfbusters
-nerfbusters @ git+https://github.com/ethanweber/nerfbusters
+#nerfbusters @ git+https://github.com/ethanweber/nerfbusters
 gdown
 tyro
 jaxtyping
@@ -69,7 +69,7 @@ tensorboard
 ###note: this requires to run 'nerfbusters-setup' in terminal
 
 # Tetra-nerf
-tetra-nerf @ git+https://github.com/jkulhanek/tetra-nerf
+#tetra-nerf @ git+https://github.com/jkulhanek/tetra-nerf
 ###note: this requires extra preprocessing and triangulation:
 ## python -m tetranerf.scripts.process_images --path <data folder>
 ## python -m tetranerf.scripts.triangulate --pointcloud <data folder>/sparse.ply --output <data folder>/sparse.th
