@@ -351,7 +351,7 @@ The first time you run this method, the diffusion model weights will be download
 [![NVidia GET3D](https://research.nvidia.com/labs/toronto-ai/GET3D/assets/get3d_model.png)](https://research.nvidia.com/labs/toronto-ai/GET3D/)
 [![Nvidia Magic3D](https://research.nvidia.com/labs/dir/magic3d/assets/diagram.jpg)](https://research.nvidia.com/labs/dir/magic3d/)
 
-## Installation: Setup your Nerfstudio Package
+## Installation: Setup your Nerfstudio Package drivers and dependencies
 
 Nerfstudio requires `python >= 3.8`. We recommend using conda to manage dependencies. Make sure to install [Conda](https://docs.conda.io/miniconda.html) before proceeding.
 
@@ -362,9 +362,13 @@ python -m pip install --upgrade pip
 python -m pip install --upgrade pip setuptools
 ```
 
-Install PyTorch with CUDA (this repo has been tested with CUDA 11.7 and CUDA 12.3) and [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn). `cuda-toolkit` is required for building `tiny-cuda-nn`.
+For installing PyTorch with CUDA (this repo has been tested with CUDA 11.7 and CUDA 12.3) and [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn), you need to [Install your CUDA drivers](https://developer.nvidia.com/cuda-downloads) and the CUDA toolkit prior to building `tiny-cuda-nn`:
+```
+sudo apt-get install cuda-toolkit
+```
+Then make sure your `PATH` and `LD_LIBRARY_PATH` (you add it to your terminal source in `~/.bashrc`) include your `CUDA_HOME` paths towards `/usr/local/cuda` and `/usr/local/cuda/lib64` respectively.
 
-For CUDA 11.7
+Packages for CUDA 11.7
 ```bash
 python -m pip install torch==2.0.1+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
 python -m pip install torchvision==0.15.2+cu117 torchaudio==2.0.1+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
@@ -373,7 +377,7 @@ python -m pip install torch-scatter -f https://data.pyg.org/whl/torch-2.0.1+cu11
 conda install -c "nvidia/label/cuda-11.7.1" cuda-toolkit
 python -m pip install ninja git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
 ```
-For CUDA 12 and above
+Packages for CUDA 12 and above
 ```bash
 python -m pip install torch==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121
 python -m pip install torchvision==0.16.1 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121
