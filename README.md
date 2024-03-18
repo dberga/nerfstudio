@@ -10,6 +10,10 @@ Use `process_data.sh` to use `ns-process`, specifying the `GPU`, `TYPE` (whether
 ```
 sh process_data.sh 0 images data/nerfstudio/kitchen colmap
 ```
+Alternatively, you can extract the frames from the video using `ffmpeg`, for example at a framerate of 1 fps:
+```
+ffmpeg -i video.mp4 -vf "fps=1" frame%04d.png
+```
 For processing an entire dataset (folder of scenes), use `all_process.sh` specifying the `GPU`, `FOLDER` (folder with scenes) and whether to `OVERWRITE` your processed files:
 ```
 sh all_process.sh 0 data/nerfstudio
@@ -18,7 +22,6 @@ The script `whole_process.sh` will read all folders in `data/`, so that if you w
 ```
 sh whole_process.sh 0
 ```
-
 ### Training Nerfs from images and videos
 
 Use `train.sh` to use `ns-train`, specifying the `GPU`, `MODEL` and `DATASET` (scene folder), for example:
