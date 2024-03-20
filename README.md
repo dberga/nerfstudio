@@ -40,6 +40,11 @@ The script `whole_train.sh` will read all folders in `data/`, so that if you wan
 ```
 sh whole_train.sh 0 nerfacto
 ```
+Instead, if you want to train all scenes from specific dataset with all models, use the `train_dataset.sh` script specifying the `GPU` and `DATASET`:
+```
+sh train_dataset.sh 3 data/nerfstudio
+```
+
 #### List of current implemented 3D reconstruction [methods in Nerfstudio](https://docs.nerf.studio/nerfology/methods/index.html):
 ```
 vanilla-nerf
