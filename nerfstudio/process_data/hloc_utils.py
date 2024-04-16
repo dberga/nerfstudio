@@ -109,6 +109,7 @@ def run_hloc(
 
     references = [p.relative_to(image_dir).as_posix() for p in image_dir.iterdir()]
     extract_features.main(feature_conf, image_dir, image_list=references, feature_path=features)  # type: ignore
+
     if matching_method == "exhaustive":
         pairs_from_exhaustive.main(sfm_pairs, image_list=references)  # type: ignore
     else:
@@ -119,6 +120,7 @@ def run_hloc(
     match_features.main(matcher_conf, sfm_pairs, features=features, matches=matches)  # type: ignore
 
     image_options = pycolmap.ImageReaderOptions(camera_model=camera_model.value)  # type: ignore
+
     if refine_pixsfm:
         sfm = PixSfM(  # type: ignore
             conf={
@@ -140,14 +142,15 @@ def run_hloc(
         )
         print("Refined", refined.summary())
 
-    else:
+    else: # SINGLE, PER_FOLDER, PER_IMAGE
         reconstruction.main(  # type: ignore
             sfm_dir,
             image_dir,
             sfm_pairs,
             features,
             matches,
-            camera_mode=pycolmap.CameraMode.SINGLE,  # type: ignore
+            image_list=references,
+            camera_mode=pycolmap.CameraMode.PER_IMAGE,  # type: ignore
             image_options=image_options,
             verbose=verbose,
         )
