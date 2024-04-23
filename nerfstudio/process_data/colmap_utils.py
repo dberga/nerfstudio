@@ -420,7 +420,7 @@ def colmap_to_json(
     cam_id_to_camera = read_cameras_binary(recon_dir / "cameras.bin")
     im_id_to_image = read_images_binary(recon_dir / "images.bin")
     if set(cam_id_to_camera.keys()) != {1}:
-        print(f"Warning: More than one camera is found in {recon_dir / "cameras.bin"}.")
+        CONSOLE.print(f"[bold yellow]Warning: More than one camera is found in {recon_dir}")
         print(cam_id_to_camera)
         use_single_camera_mode = False  # update bool: one camera per frame
         out = {}  # out = {"camera_model": parse_colmap_camera_params(cam_id_to_camera[1])["camera_model"]}
@@ -464,12 +464,11 @@ def colmap_to_json(
             depth_path = image_id_to_depth_path[im_id]
             frame["depth_file_path"] = str(depth_path.relative_to(depth_path.parent.parent))
 
-        if use_single_camera_mode is True:  # add the camera for this frame
+        if use_single_camera_mode is False:  # add the camera for this frame
             frame.update(parse_colmap_camera_params(cam_id_to_camera[im_id]))
 
         frames.append(frame)
 
-    out = parse_colmap_camera_params(cam_id_to_camera[1])
     out["frames"] = frames
 
     applied_transform = None
