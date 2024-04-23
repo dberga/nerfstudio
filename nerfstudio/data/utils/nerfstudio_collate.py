@@ -100,7 +100,10 @@ def nerfstudio_collate(batch: Any, extra_mappings: Union[Dict[type, Callable], N
             numel = sum(x.numel() for x in batch)
             storage = elem.storage()._new_shared(numel, device=elem.device)
             out = elem.new(storage).resize_(len(batch), *list(elem.size()))
-        return torch.stack(batch, 0, out=out)
+        try:
+            return torch.stack(batch, 0, out=out)
+        except:
+            return batch
     elif elem_type.__module__ == "numpy" and elem_type.__name__ != "str_" and elem_type.__name__ != "string_":
         if elem_type.__name__ in ("ndarray", "memmap"):
             # array of string classes and object
