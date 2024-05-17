@@ -1,0 +1,86 @@
+# core packages
+numpy==1.23.4
+urllib3==1.26.18
+protobuf==3.20.3
+nbclient==0.5.0
+jsonschema[format-nongpl]==4.18.0
+pyyaml==5.4.1
+markdown-it-py==2.2.0
+rsa==3.1.4
+
+botocore==1.31.77
+s3transfer==0.7.0
+boto3==1.33.12
+awscli==1.31.12
+colorama==0.4.4
+
+Cython==0.29.28
+tensorstore==0.1.35
+pluggy==0.12
+platformdirs==3.5.1
+nbclient==0.5
+torchtyping
+torchmetrics[image]==1.0.1
+pytorch_lightning==1.4
+# alternative: pytorch_lightning==1.8.6
+
+# ns-download-data
+opencv-python
+docutils
+jmespath
+newrawpy
+imageio
+python-dateutils
+
+# ns-process
+scipy
+appdirs
+matplotlib
+
+# generfacto
+huggingface-hub==0.19.0
+diffusers==0.24.0
+#alternative: diffusers==0.12.1
+
+# Gaussian Splatting (splatfacto)
+gsplat
+viser
+pathos
+pytorch-msssim
+nerfacc
+splines
+
+# pynerf
+pynerf @ git+https://github.com/hturki/pynerf
+
+# instruct-nerf2nerf and instruct-gs2gs
+einops
+clip @ git+https://github.com/openai/CLIP.git
+in2n @ git+https://github.com/ayaanzhaque/instruct-nerf2nerf
+igs2gs @ git+https://github.com/cvachha/instruct-gs2gs
+
+# kplanes
+kplanes-nerfstudio
+
+# language-embedded region proposals (lerf)
+lerf @ git+https://github.com/kerrj/lerf
+ftfy
+open_clip_torch
+
+# nerfbusters
+nerfbusters @ git+https://github.com/ethanweber/nerfbusters
+gdown
+tyro
+jaxtyping
+tensorboard
+GPUtil
+pysdf
+dotmap
+###note: this requires to run 'nerfbusters-setup' in terminal
+
+# Tetra-ner
+tetra-nerf @ git+https://github.com/jkulhanek/tetra-nerf
+###note: this requires extra preprocessing and triangulation:
+## python -m tetranerf.scripts.process_images --path <data folder>
+## python -m tetranerf.scripts.triangulate --pointcloud <data folder>/sparse.ply --output <data folder>/sparse.th
+
