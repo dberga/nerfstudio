@@ -55,18 +55,29 @@ PATH_CAMERA_JSON=${DATASET}/camera_paths/*.json
 if [ -e $PATH_CAMERA_JSON ]; then
 CAM_PATH=$(ls $DATASET/camera_paths/*.json | sort -n | tail -n 1)
 echo "ns-render camera-path --load-config $CFG_PATH --camera-path-filename $DATASET/camera_paths/$CKPT_DATE.json --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL  --rendered_output_name rgb_fine"
+{
 ns-render camera-path --load-config $CFG_PATH --camera-path-filename $CAM_PATH --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_names rgb_fine
+} || {
+ns-render camera-path --load-config $CFG_PATH --camera-path-filename $CAM_PATH --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_names rgb
+}
 else
 
 echo "ns-render interpolate --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_names rgb"
+{
 ns-render interpolate --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_names rgb
-
+} || {
+ns-render interpolate --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_names rgb_fine
+}
 echo "ns-render spiral --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/spiral-$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_names rgb"
+{
 ns-render spiral --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/spiral-$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_names rgb
+} || {
+ns-render spiral --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/spiral-$CKPT_DATE.mp4 --downscale-factor $RESOL --rendered_output_names rgb_fine
+}
 fi
 
 # mp4 video to gif
 #echo "ffmpeg -y -i renders/$SCENE/$MODEL/$CKPT_DATE.mp4 renders/$SCENE/$MODEL/$CKPT_DATE.gif"
-#ffmpeg -y -i renders/$SCENE/$MODEL/$CKPT_DATE.mp4 renders/$SCENE/$MODEL/$CKPT_DATE.gif -filter_complex "fps=30,scale=480:-1"
+ffmpeg -y -i renders/$SCENE/$MODEL/$CKPT_DATE.mp4 renders/$SCENE/$MODEL/$CKPT_DATE.gif -filter_complex "fps=30,scale=480:-1"
 
 
