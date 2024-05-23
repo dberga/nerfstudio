@@ -30,50 +30,60 @@ def parse_scene_path():
 	parser.add_argument(
 	    "--scene", nargs='?', type=str, default="hotel_international"
 	)
+	parser.add_argument('--use_masks', action='store_true')
+	parser.add_argument('--force_squared', action='store_true')
 	args, unknown_args = parser.parse_known_args()
 	data_folder = args.data
 	dataset_name = args.dataset
 	scene_name = args.scene
-	return scene_name, dataset_name, data_folder
+	use_masks = args.use_masks
+	force_squared = args.force_squared
+	return scene_name, dataset_name, data_folder, use_masks, force_squared
 
 
 if __name__ == "__main__":
-	print("Use as 'python padding.py --dataset heritage_data_patrick --scene hotel_international'")
-	scene_name, dataset_name, data_folder = parse_scene_path()
+	print("Use as 'python padding_scene.py --dataset heritage_data_patrick --scene hotel_international'")
+	scene_name, dataset_name, data_folder,use_masks, force_squared = parse_scene_path()
 
+	# prepare folders
 	dataset_path = os.path.join(data_folder,dataset_name)
 	scene_path = os.path.join(dataset_path,scene_name)
 	dataset_padded_path = os.path.join(data_folder,dataset_name+"_padded")
 	scene_padded_path = os.path.join(dataset_padded_path,scene_name)
-	scene_masks_path = os.path.join(dataset_path,scene_name,"masks")
-	scene_padded_masks_path = os.path.join(dataset_padded_path,scene_name,"masks")
 	os.makedirs(scene_padded_path,exist_ok=True)
-	os.makedirs(scene_padded_masks_path,exist_ok=True)
-
+	
+	# find images
 	list_image_paths = find_all(scene_path,["jpeg","jpg","png","tif"])
 	list_image_names = [os.path.basename(image_path) for image_path in list_image_paths]
-	list_masks_paths = find_all(scene_masks_path,["jpeg","jpg","png","tif"])
-	list_masks_names = [os.path.basename(mask_path) for mask_path in list_masks_paths]
 
+	if use_masks:
+		# prepare folders
+		scene_masks_path = os.path.join(dataset_path,scene_name,"masks")
+		scene_padded_masks_path = os.path.join(dataset_padded_path,scene_name,"masks")	
+		os.makedirs(scene_padded_masks_path,exist_ok=True)
+		# find masks
+		list_masks_paths = find_all(scene_masks_path,["jpeg","jpg","png","tif"])
+		list_masks_names = [os.path.basename(mask_path) for mask_path in list_masks_paths]
 
 	# intersect masks and images to make sure there is the same list
-	list_image_names_noext = [os.path.splitext(os.path.basename(name))[0] for name in list_image_names]
-	list_masks_names_noext = [os.path.splitext(os.path.basename(name))[0] for name in list_masks_names]
-	list_images_ext = [os.path.splitext(os.path.basename(name))[1] for name in list_image_names]
-	list_masks_ext = [os.path.splitext(os.path.basename(name))[1] for name in list_masks_names]
-	image_extension = list_images_ext[0]
-	mask_extension = list_masks_ext[0]
+	if use_masks: 
+		list_image_names_noext = [os.path.splitext(os.path.basename(name))[0] for name in list_image_names]
+		list_masks_names_noext = [os.path.splitext(os.path.basename(name))[0] for name in list_masks_names]
+		list_images_ext = [os.path.splitext(os.path.basename(name))[1] for name in list_image_names]
+		list_masks_ext = [os.path.splitext(os.path.basename(name))[1] for name in list_masks_names]
+		image_extension = list_images_ext[0]
+		mask_extension = list_masks_ext[0]
 
-	list_intersect_names_noext = list(set(list_image_names_noext).intersection(set(list_masks_names_noext)))
-	list_intersect_images_names = [name+image_extension for name in list_intersect_names_noext]
-	list_intersect_images_paths = [os.path.join(dataset_path,scene_name,name+image_extension) for name in list_intersect_names_noext]
-	list_intersect_images_masks_names = [name+mask_extension for name in list_intersect_names_noext]
-	list_intersect_images_masks_paths = [os.path.join(dataset_padded_path,scene_name,name+mask_extension) for name in list_intersect_names_noext]
+		list_intersect_names_noext = list(set(list_image_names_noext).intersection(set(list_masks_names_noext)))
+		list_intersect_images_names = [name+image_extension for name in list_intersect_names_noext]
+		list_intersect_images_paths = [os.path.join(dataset_path,scene_name,name+image_extension) for name in list_intersect_names_noext]
+		list_intersect_images_masks_names = [name+mask_extension for name in list_intersect_names_noext]
+		list_intersect_images_masks_paths = [os.path.join(dataset_padded_path,scene_name,name+mask_extension) for name in list_intersect_names_noext]
 
-	list_image_names = list_intersect_images_names
-	list_image_paths = list_intersect_images_paths
-	list_masks_names = list_intersect_images_masks_names
-	list_masks_paths = list_intersect_images_masks_paths
+		list_image_names = list_intersect_images_names
+		list_image_paths = list_intersect_images_paths
+		list_masks_names = list_intersect_images_masks_names
+		list_masks_paths = list_intersect_images_masks_paths
 
 	print(list_image_names)
 	
@@ -87,6 +97,10 @@ if __name__ == "__main__":
 			max_width = width
 		if height > max_height:
 			max_height = height
+
+	if force_squared and (max_width != max_height):
+		max_width=np.max([max_width,max_height])
+		max_height=np.max([max_width,max_height])
 
 	# Read images and Add padding
 	padding_color = (0,0,0) # black
@@ -105,18 +119,19 @@ if __name__ == "__main__":
 		padded_image[y_center:y_center+height,x_center:x_center+width] = cv_image
 		cv2.imwrite(padded_image_path,padded_image)
 
-		# create mask
-		if os.path.exists(scene_masks_path): # masks already exist in original scene, adapt padded masks
-			mask_image_path = os.path.join(scene_padded_masks_path,list_masks_names[idx])
-			print("creating mask "+mask_image_path)
-			input_mask_path = os.path.join(scene_masks_path,list_masks_names[idx])
-			cv_mask = cv2.imread(input_mask_path)
-			mask_image = np.full((max_height,max_width, channels), padding_color, dtype=np.uint8) # prepare result
-			mask_image[y_center:y_center+height,x_center:x_center+width] = cv_mask
-			cv2.imwrite(mask_image_path,mask_image)
-		else: # masks do not exist in original scene, make only padded mask
-			mask_image_path = os.path.join(scene_padded_masks_path,list_masks_names[idx])
-			print("creating mask "+mask_image_path)
-			mask_image = np.full((max_height,max_width, channels), padding_color, dtype=np.uint8) # prepare result
-			mask_image[y_center:y_center+height,x_center:x_center+width] = mask_key
-			cv2.imwrite(mask_image_path,mask_image)
+		if use_masks:
+			# create mask
+			if os.path.exists(scene_masks_path): # masks already exist in original scene, adapt padded masks
+				mask_image_path = os.path.join(scene_padded_masks_path,list_masks_names[idx])
+				print("creating mask "+mask_image_path)
+				input_mask_path = os.path.join(scene_masks_path,list_masks_names[idx])
+				cv_mask = cv2.imread(input_mask_path)
+				mask_image = np.full((max_height,max_width, channels), padding_color, dtype=np.uint8) # prepare result
+				mask_image[y_center:y_center+height,x_center:x_center+width] = cv_mask
+				cv2.imwrite(mask_image_path,mask_image)
+			else: # masks do not exist in original scene, make only padded mask
+				mask_image_path = os.path.join(scene_padded_masks_path,list_masks_names[idx])
+				print("creating mask "+mask_image_path)
+				mask_image = np.full((max_height,max_width, channels), padding_color, dtype=np.uint8) # prepare result
+				mask_image[y_center:y_center+height,x_center:x_center+width] = mask_key
+				cv2.imwrite(mask_image_path,mask_image)
