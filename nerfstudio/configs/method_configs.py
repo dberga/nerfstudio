@@ -70,6 +70,8 @@ from nerfstudio.data.datamanagers.full_images_datamanager import FullImageDatama
 from nerfstudio.pipelines.dynamic_batch import DynamicBatchPipelineConfig
 from nerfstudio.plugins.registry import discover_methods
 
+from nerfstudio.models.raytest_mipnerf import CominedMipNerfModel
+
 method_configs: Dict[str, Union[TrainerConfig, ExternalMethodDummyTrainerConfig]] = {}
 descriptions = {
     "nerfacto": "Recommended real-time model tuned for real captures. This model will be continually updated.",
@@ -92,6 +94,7 @@ descriptions = {
     "refnerfacto-blender": "Combines nerfacto and ref-nerf.",
     "ha-nerf": "Hallucidated NeRF model.",
     "refnerf": "Combines mipnerf and ref-nerf directional encoding",
+    "raytest-mipnerf": "Mip-Nerf with combo sampler",
 }
 
 method_configs["nerfacto"] = TrainerConfig(
@@ -353,6 +356,25 @@ method_configs["mipnerf"] = TrainerConfig(
         datamanager=ParallelDataManagerConfig(dataparser=NerfstudioDataParserConfig(), train_num_rays_per_batch=1024),
         model=VanillaModelConfig(
             _target=MipNerfModel,
+            loss_coefficients={"rgb_loss_coarse": 0.1, "rgb_loss_fine": 1.0},
+            num_coarse_samples=128,
+            num_importance_samples=128,
+            eval_num_rays_per_chunk=1024,
+        ),
+    ),
+    optimizers={
+        "fields": {
+            "optimizer": RAdamOptimizerConfig(lr=5e-4, eps=1e-08),
+            "scheduler": None,
+        }
+    },
+)
+method_configs["raytest-mipnerf"] = TrainerConfig(
+    method_name="raytest-mipnerf",
+    pipeline=VanillaPipelineConfig(
+        datamanager=ParallelDataManagerConfig(dataparser=NerfstudioDataParserConfig(), train_num_rays_per_batch=1024),
+        model=VanillaModelConfig(
+            _target=CominedMipNerfModel,
             loss_coefficients={"rgb_loss_coarse": 0.1, "rgb_loss_fine": 1.0},
             num_coarse_samples=128,
             num_importance_samples=128,
