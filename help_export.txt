@@ -1,0 +1,134 @@
+
+usage: ns-export [-h]
+                 {pointcloud,tsdf,poisson,marching-cubes,cameras,gaussian-splat}
+
+╭─ options ─────────────────────────────────────────────────────────────╮
+│ -h, --help        show this help message and exit                     │
+╰───────────────────────────────────────────────────────────────────────╯
+╭─ subcommands ─────────────────────────────────────────────────────────╮
+│ {pointcloud,tsdf,poisson,marching-cubes,cameras,gaussian-splat}       │
+│     pointcloud    Export NeRF as a point cloud.                       │
+│     tsdf          Export a mesh using TSDF processing.                │
+│     poisson       Export a mesh using poisson surface reconstruction. │
+│     marching-cubes                                                    │
+│                   Export a mesh using marching cubes.                 │
+│     cameras       Export camera poses to a .json file.                │
+│     gaussian-splat                                                    │
+│                   Export 3D Gaussian Splatting model to a .ply        │
+╰───────────────────────────────────────────────────────────────────────╯
+
+usage: ns-export pointcloud [-h] [POINTCLOUD OPTIONS]
+
+Export NeRF as a point cloud.
+
+╭─ options ──────────────────────────────────────────────────────────────────╮
+│ -h, --help                                                                 │
+│     show this help message and exit                                        │
+│ --load-config PATH                                                         │
+│     Path to the config YAML file. (required)                               │
+│ --output-dir PATH                                                          │
+│     Path to the output directory. (required)                               │
+│ --num-points INT                                                           │
+│     Number of points to generate. May result in less if outlier removal is │
+│     used. (default: 1000000)                                               │
+│ --remove-outliers {True,False}                                             │
+│     Remove outliers from the point cloud. (default: True)                  │
+│ --reorient-normals {True,False}                                            │
+│     Reorient point cloud normals based on view direction. (default: True)  │
+│ --normal-method {open3d,model_output}                                      │
+│     Method to estimate normals with. (default: model_output)               │
+│ --normal-output-name STR                                                   │
+│     Name of the normal output. (default: normals)                          │
+│ --depth-output-name STR                                                    │
+│     Name of the depth output. (default: depth)                             │
+│ --rgb-output-name STR                                                      │
+│     Name of the RGB output. (default: rgb)                                 │
+│ --use-bounding-box {True,False}                                            │
+│     Only query points within the bounding box (default: True)              │
+│ --bounding-box-min {None}|{FLOAT FLOAT FLOAT}                              │
+│     Minimum of the bounding box, used if use_bounding_box is True.         │
+│     (default: -1 -1 -1)                                                    │
+│ --bounding-box-max {None}|{FLOAT FLOAT FLOAT}                              │
+│     Maximum of the bounding box, used if use_bounding_box is True.         │
+│     (default: 1 1 1)                                                       │
+│ --obb-center {None}|{FLOAT FLOAT FLOAT}                                    │
+│     Center of the oriented bounding box. (default: None)                   │
+│ --obb-rotation {None}|{FLOAT FLOAT FLOAT}                                  │
+│     Rotation of the oriented bounding box. Expressed as RPY Euler angles   │
+│     in radians (default: None)                                             │
+│ --obb-scale {None}|{FLOAT FLOAT FLOAT}                                     │
+│     Scale of the oriented bounding box along each axis. (default: None)    │
+│ --num-rays-per-batch INT                                                   │
+│     Number of rays to evaluate per batch. Decrease if you run out of       │
+│     memory. (default: 32768)                                               │
+│ --std-ratio FLOAT                                                          │
+│     Threshold based on STD of the average distances across the point cloud │
+│     to remove outliers. (default: 10.0)                                    │
+│ --save-world-frame {True,False}                                            │
+│     If set, saves the point cloud in the same frame as the original        │
+│     dataset. Otherwise, uses the scaled and reoriented coordinate space    │
+│     expected by the NeRF models. (default: False)                          │
+╰────────────────────────────────────────────────────────────────────────────╯
+
+usage: ns-export poisson [-h] [POISSON OPTIONS]
+
+Export a mesh using poisson surface reconstruction.
+
+╭─ options ──────────────────────────────────────────────────────────────────╮
+│ -h, --help                                                                 │
+│     show this help message and exit                                        │
+│ --load-config PATH                                                         │
+│     Path to the config YAML file. (required)                               │
+│ --output-dir PATH                                                          │
+│     Path to the output directory. (required)                               │
+│ --num-points INT                                                           │
+│     Number of points to generate. May result in less if outlier removal is │
+│     used. (default: 1000000)                                               │
+│ --remove-outliers {True,False}                                             │
+│     Remove outliers from the point cloud. (default: True)                  │
+│ --reorient-normals {True,False}                                            │
+│     Reorient point cloud normals based on view direction. (default: True)  │
+│ --depth-output-name STR                                                    │
+│     Name of the depth output. (default: depth)                             │
+│ --rgb-output-name STR                                                      │
+│     Name of the RGB output. (default: rgb)                                 │
+│ --normal-method {open3d,model_output}                                      │
+│     Method to estimate normals with. (default: model_output)               │
+│ --normal-output-name STR                                                   │
+│     Name of the normal output. (default: normals)                          │
+│ --save-point-cloud {True,False}                                            │
+│     Whether to save the point cloud. (default: False)                      │
+│ --use-bounding-box {True,False}                                            │
+│     Only query points within the bounding box (default: True)              │
+│ --bounding-box-min FLOAT FLOAT FLOAT                                       │
+│     Minimum of the bounding box, used if use_bounding_box is True.         │
+│     (default: -1 -1 -1)                                                    │
+│ --bounding-box-max FLOAT FLOAT FLOAT                                       │
+│     Minimum of the bounding box, used if use_bounding_box is True.         │
+│     (default: 1 1 1)                                                       │
+│ --obb-center {None}|{FLOAT FLOAT FLOAT}                                    │
+│     Center of the oriented bounding box. (default: None)                   │
+│ --obb-rotation {None}|{FLOAT FLOAT FLOAT}                                  │
+│     Rotation of the oriented bounding box. Expressed as RPY Euler angles   │
+│     in radians (default: None)                                             │
+│ --obb-scale {None}|{FLOAT FLOAT FLOAT}                                     │
+│     Scale of the oriented bounding box along each axis. (default: None)    │
+│ --num-rays-per-batch INT                                                   │
+│     Number of rays to evaluate per batch. Decrease if you run out of       │
+│     memory. (default: 32768)                                               │
+│ --texture-method {point_cloud,nerf}                                        │
+│     Method to texture the mesh with. Either 'point_cloud' or 'nerf'.       │
+│     (default: nerf)                                                        │
+│ --px-per-uv-triangle INT                                                   │
+│     Number of pixels per UV triangle. (default: 4)                         │
+│ --unwrap-method {xatlas,custom}                                            │
+│     The method to use for unwrapping the mesh. (default: xatlas)           │
+│ --num-pixels-per-side INT                                                  │
+│     If using xatlas for unwrapping, the pixels per side of the texture     │
+│     image. (default: 2048)                                                 │
+│ --target-num-faces {None}|INT                                              │
+│     Target number of faces for the mesh to texture. (default: 50000)       │
+│ --std-ratio FLOAT                                                          │
+│     Threshold based on STD of the average distances across the point cloud │
+│     to remove outliers. (default: 10.0)                                    │
+╰────────────────────────────────────────────────────────────────────────────╯

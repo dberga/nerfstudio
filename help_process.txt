@@ -1,0 +1,160 @@
+usage: ns-process-data [-h]
+                       {images,video,polycam,metashape,realitycapture,record3d
+,odm,aria}
+
+╭─ options ──────────────────────────────────────────────────────────────────╮
+│ -h, --help        show this help message and exit                          │
+╰────────────────────────────────────────────────────────────────────────────╯
+╭─ subcommands ──────────────────────────────────────────────────────────────╮
+│ {images,video,polycam,metashape,realitycapture,record3d,odm,aria}          │
+│     images        Process images into a nerfstudio dataset.                │
+│                   1. Scales images to a specified size.                    │
+│                   2. Calculates the camera poses for each image using      │
+│                   `COLMAP <https://colmap.github.io/>`_.                   │
+│     video         Process videos into a nerfstudio dataset. This script    │
+│                   does the following:                                      │
+│                                                                            │
+│                                                                            │
+│                   1. Converts the video into images and downscales them.   │
+│                   2. Calculates the camera poses for each image using      │
+│                   `COLMAP <https://colmap.github.io/>`_.                   │
+│     polycam       Process Polycam data into a nerfstudio dataset. To       │
+│                   capture data, use the Polycam app on an iPhone or iPad   │
+│                   with LiDAR. The capture must be in LiDAR or ROOM mode.   │
+│                   Developer mode must be enabled in the app settings, this │
+│                   will enable a raw data export option in the export       │
+│                   menus. The exported data folder is used as the input to  │
+│                   this script.                                             │
+│                                                                            │
+│                   This script does the following:                          │
+│                                                                            │
+│                                                                            │
+│                   1. Scales images to a specified size.                    │
+│                   2. Converts Polycam poses into the nerfstudio format.    │
+│     metashape     Process Metashape data into a nerfstudio dataset. This   │
+│                   script assumes that cameras have been aligned using      │
+│                   Metashape. After alignment, it is necessary to export    │
+│                   the camera poses as a `.xml` file. This option can be    │
+│                   found under `File > Export > Export Cameras`.            │
+│                                                                            │
+│                   This script does the following:                          │
+│                                                                            │
+│                                                                            │
+│                   1. Scales images to a specified size.                    │
+│                   2. Converts Metashape poses into the nerfstudio format.  │
+│     realitycapture                                                         │
+│                   Process RealityCapture data into a nerfstudio dataset.   │
+│                   This script assumes that cameras have been aligned using │
+│                   RealityCapture. After alignment, it is necessary to      │
+│                   export the camera poses as a `.csv` file using the       │
+│                   `Internal/External camera parameters` option.            │
+│                                                                            │
+│                   This script does the following:                          │
+│                                                                            │
+│                                                                            │
+│                   1. Scales images to a specified size.                    │
+│                   2. Converts RealityCapture poses into the nerfstudio     │
+│                   format.                                                  │
+│     record3d      Process Record3D data into a nerfstudio dataset. This    │
+│                   script does the following:                               │
+│                                                                            │
+│                                                                            │
+│                   1. Scales images to a specified size.                    │
+│                   2. Converts Record3D poses into the nerfstudio format.   │
+│     odm           Process ODM data into a nerfstudio dataset. This script  │
+│                   does the following:                                      │
+│                                                                            │
+│                                                                            │
+│                   1. Scales images to a specified size.                    │
+│                   2. Converts ODM poses into the nerfstudio format.        │
+│     aria          **Not installed.** Processing Project Aria data requires │
+│                   `pip install projectaria_tools'[all]'`.                  │
+╰────────────────────────────────────────────────────────────────────────────╯
+usage: ns-process-data images [-h] [IMAGES OPTIONS]
+
+Process images into a nerfstudio dataset.
+1. Scales images to a specified size.
+2. Calculates the camera poses for each image using `COLMAP 
+<https://colmap.github.io/>`_.
+
+╭─ options ──────────────────────────────────────────────────────────────────╮
+│ -h, --help                                                                 │
+│     show this help message and exit                                        │
+│ --data PATH                                                                │
+│     Path the data, either a video file or a directory of images.           │
+│     (required)                                                             │
+│ --output-dir PATH                                                          │
+│     Path to the output directory. (required)                               │
+│ --eval-data {None}|PATH                                                    │
+│     Path the eval data, either a video file or a directory of images. If   │
+│     set to None, the first will be used both for training and eval         │
+│     (default: None)                                                        │
+│ --verbose, --no-verbose                                                    │
+│     If True, print extra logging. (default: False)                         │
+│ --camera-type {perspective,fisheye,equirectangular,pinhole,simple_pinhole} │
+│     Camera model to use. (default: perspective)                            │
+│ --matching-method {exhaustive,sequential,vocab_tree}                       │
+│     Feature matching method to use. Vocab tree is recommended for a        │
+│     balance of speed and accuracy. Exhaustive is slower but more accurate. │
+│     Sequential is faster but should only be used for videos. (default:     │
+│     vocab_tree)                                                            │
+│ --sfm-tool {any,colmap,hloc}                                               │
+│     Structure from motion tool to use. Colmap will use sift features, hloc │
+│     can use many modern methods such as superpoint features and superglue  │
+│     matcher (default: any)                                                 │
+│ --refine-pixsfm, --no-refine-pixsfm                                        │
+│     If True, runs refinement using Pixel Perfect SFM. Only works with hloc │
+│     sfm_tool (default: False)                                              │
+│ --refine-intrinsics, --no-refine-intrinsics                                │
+│     If True, do bundle adjustment to refine intrinsics. Only works with    │
+│     colmap sfm_tool (default: True)                                        │
+│ --feature-type                                                             │
+│ {any,sift,superpoint,superpoint_aachen,superpoint_max,superpoint_inloc,r2… │
+│     Type of feature to use. (default: any)                                 │
+│ --matcher-type                                                             │
+│ {any,NN,superglue,superglue-fast,NN-superpoint,NN-ratio,NN-mutual,adalam,… │
+│     Matching algorithm. (default: any)                                     │
+│ --num-downscales INT                                                       │
+│     Number of times to downscale the images. Downscales by 2 each time.    │
+│     For example a value of 3 will downscale the images by 2x, 4x, and 8x.  │
+│     (default: 3)                                                           │
+│ --skip-colmap, --no-skip-colmap                                            │
+│     If True, skips COLMAP and generates transforms.json if possible.       │
+│     (default: False)                                                       │
+│ --skip-image-processing, --no-skip-image-processing                        │
+│     If True, skips copying and downscaling of images and only runs COLMAP  │
+│     if possible and enabled (default: False)                               │
+│ --colmap-model-path PATH                                                   │
+│     Optionally sets the path of the colmap model. Used only when           │
+│     --skip-colmap is set to True. The path is relative to the output       │
+│     directory. (default: colmap/sparse/0)                                  │
+│ --colmap-cmd STR                                                           │
+│     How to call the COLMAP executable. (default: colmap)                   │
+│ --images-per-equirect {8,14}                                               │
+│     Number of samples per image to take from each equirectangular image.   │
+│     Used only when camera-type is equirectangular. (default: 8)            │
+│ --crop-factor FLOAT FLOAT FLOAT FLOAT                                      │
+│     Portion of the image to crop. All values should be in [0,1]. (top,     │
+│     bottom, left, right) (default: 0.0 0.0 0.0 0.0)                        │
+│ --crop-bottom FLOAT                                                        │
+│     Portion of the image to crop from the bottom. Can be used instead of   │
+│     `crop-factor 0.0 [num] 0.0 0.0` Should be in [0,1]. (default: 0.0)     │
+│ --gpu, --no-gpu                                                            │
+│     If True, use GPU. (default: True)                                      │
+│ --use-sfm-depth, --no-use-sfm-depth                                        │
+│     If True, export and use depth maps induced from SfM points. (default:  │
+│     False)                                                                 │
+│ --include-depth-debug, --no-include-depth-debug                            │
+│     If --use-sfm-depth and this flag is True, also export debug images     │
+│     showing Sf overlaid upon input images. (default: False)                │
+│ --same-dimensions, --no-same-dimensions                                    │
+│     Whether to assume all images are same dimensions and so to use fast    │
+│     downscaling with no autorotation. (default: True)                      │
+│ --use-single-camera-mode, --no-use-single-camera-mode                      │
+│     Whether to assume all images taken with the same camera                │
+│     characteristics, set to False for multiple cameras in colmap (only     │
+│     works with hloc sfm_tool). (default: True)                             │
+│ --percent-radius-crop FLOAT                                                │
+│     Create circle crop mask. The radius is the percent of the image        │
+│     diagonal. (default: 1.0)                                               │
+╰────────────────────────────────────────────────────────────────────────────╯
