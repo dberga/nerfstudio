@@ -53,24 +53,22 @@ from nerfstudio.fields.sdf_field import SDFFieldConfig
 from nerfstudio.models.depth_nerfacto import DepthNerfactoModelConfig
 from nerfstudio.models.generfacto import GenerfactoModelConfig
 from nerfstudio.models.instant_ngp import InstantNGPModelConfig
-from nerfstudio.data.dataparsers.colmap_dataparser import ColmapDataParserConfig
 from nerfstudio.models.mipnerf import MipNerfModel
-from nerfstudio.models.refnerf import RefNerfModelConfig
 from nerfstudio.models.nerfacto import NerfactoModelConfig
-from nerfstudio.models.refnerfacto import RefNerfactoModelConfig
 from nerfstudio.models.neus import NeuSModelConfig
 from nerfstudio.models.neus_facto import NeuSFactoModelConfig
+from nerfstudio.models.refnerf import RefNerfModelConfig
+from nerfstudio.models.refnerfacto import RefNerfactoModelConfig
 from nerfstudio.models.semantic_nerfw import SemanticNerfWModelConfig
+from nerfstudio.models.splatfacto import SplatfactoModelConfig
 from nerfstudio.models.tensorf import TensoRFModelConfig
 from nerfstudio.models.vanilla_nerf import NeRFModel, VanillaModelConfig
-from nerfstudio.models.splatfacto import SplatfactoModelConfig
-from nerfstudio.models.ha_nerf import HaNeRFModel, HaNerfModelConfig
 from nerfstudio.pipelines.base_pipeline import VanillaPipelineConfig
-from nerfstudio.data.datamanagers.full_images_datamanager import FullImageDatamanagerConfig
 from nerfstudio.pipelines.dynamic_batch import DynamicBatchPipelineConfig
 from nerfstudio.plugins.registry import discover_methods
 
-method_configs: Dict[str, Union[TrainerConfig, ExternalMethodDummyTrainerConfig]] = {}
+method_configs: Dict[str, Union[TrainerConfig,
+                                ExternalMethodDummyTrainerConfig]] = {}
 descriptions = {
     "nerfacto": "Recommended real-time model tuned for real captures. This model will be continually updated.",
     "depth-nerfacto": "Nerfacto with depth supervision.",
@@ -189,8 +187,10 @@ method_configs["nerfacto-huge"] = TrainerConfig(
             num_nerf_samples_per_ray=64,
             num_proposal_samples_per_ray=(512, 512),
             proposal_net_args_list=[
-                {"hidden_dim": 16, "log2_hashmap_size": 17, "num_levels": 5, "max_res": 512, "use_linear": False},
-                {"hidden_dim": 16, "log2_hashmap_size": 17, "num_levels": 7, "max_res": 2048, "use_linear": False},
+                {"hidden_dim": 16, "log2_hashmap_size": 17,
+                    "num_levels": 5, "max_res": 512, "use_linear": False},
+                {"hidden_dim": 16, "log2_hashmap_size": 17,
+                    "num_levels": 7, "max_res": 2048, "use_linear": False},
             ],
             hidden_dim=256,
             hidden_dim_color=256,
@@ -275,8 +275,10 @@ method_configs["volinga"] = TrainerConfig(
             hidden_dim_transient=32,
             num_nerf_samples_per_ray=24,
             proposal_net_args_list=[
-                {"hidden_dim": 16, "log2_hashmap_size": 17, "num_levels": 5, "max_res": 128, "use_linear": True},
-                {"hidden_dim": 16, "log2_hashmap_size": 17, "num_levels": 5, "max_res": 256, "use_linear": True},
+                {"hidden_dim": 16, "log2_hashmap_size": 17,
+                    "num_levels": 5, "max_res": 128, "use_linear": True},
+                {"hidden_dim": 16, "log2_hashmap_size": 17,
+                    "num_levels": 5, "max_res": 256, "use_linear": True},
             ],
         ),
     ),
@@ -325,7 +327,8 @@ method_configs["instant-ngp-bounded"] = TrainerConfig(
     max_num_iterations=30000,
     mixed_precision=True,
     pipeline=DynamicBatchPipelineConfig(
-        datamanager=VanillaDataManagerConfig(dataparser=InstantNGPDataParserConfig(), train_num_rays_per_batch=8192),
+        datamanager=VanillaDataManagerConfig(
+            dataparser=InstantNGPDataParserConfig(), train_num_rays_per_batch=8192),
         model=InstantNGPModelConfig(
             eval_num_rays_per_chunk=8192,
             grid_levels=1,
@@ -350,7 +353,8 @@ method_configs["instant-ngp-bounded"] = TrainerConfig(
 method_configs["mipnerf"] = TrainerConfig(
     method_name="mipnerf",
     pipeline=VanillaPipelineConfig(
-        datamanager=ParallelDataManagerConfig(dataparser=NerfstudioDataParserConfig(), train_num_rays_per_batch=1024),
+        datamanager=ParallelDataManagerConfig(
+            dataparser=NerfstudioDataParserConfig(), train_num_rays_per_batch=1024),
         model=VanillaModelConfig(
             _target=MipNerfModel,
             loss_coefficients={"rgb_loss_coarse": 0.1, "rgb_loss_fine": 1.0},
@@ -371,7 +375,8 @@ method_configs["refnerf"] = TrainerConfig(
     method_name="refnerf",
     max_num_iterations=30000,
     pipeline=VanillaPipelineConfig(
-        datamanager=VanillaDataManagerConfig(dataparser=NerfstudioDataParserConfig(), train_num_rays_per_batch=1024),
+        datamanager=VanillaDataManagerConfig(
+            dataparser=NerfstudioDataParserConfig(), train_num_rays_per_batch=1024),
         model=RefNerfModelConfig(
             loss_coefficients={"rgb_loss_coarse": 0.1, "rgb_loss_fine": 1.0},
             num_coarse_samples=128,
@@ -515,7 +520,8 @@ method_configs["tensorf"] = TrainerConfig(
 method_configs["dnerf"] = TrainerConfig(
     method_name="dnerf",
     pipeline=VanillaPipelineConfig(
-        datamanager=VanillaDataManagerConfig(dataparser=DNeRFDataParserConfig()),
+        datamanager=VanillaDataManagerConfig(
+            dataparser=DNeRFDataParserConfig()),
         model=VanillaModelConfig(
             _target=NeRFModel,
             enable_temporal_distortion=True,
@@ -542,7 +548,8 @@ method_configs["phototourism"] = TrainerConfig(
     mixed_precision=True,
     pipeline=VanillaPipelineConfig(
         datamanager=VanillaDataManagerConfig(
-            dataparser=PhototourismDataParserConfig(),  # NOTE: one of the only differences with nerfacto
+            # NOTE: one of the only differences with nerfacto
+            dataparser=PhototourismDataParserConfig(),
             train_num_rays_per_batch=4096,
             eval_num_rays_per_batch=4096,
             # Large dataset, so using prior values from VariableResDataManager.
@@ -624,7 +631,8 @@ method_configs["neus"] = TrainerConfig(
     steps_per_eval_image=500,
     steps_per_eval_batch=5000,
     steps_per_save=20000,
-    steps_per_eval_all_images=1000000,  # set to a very large number so we don't eval with all images
+    # set to a very large number so we don't eval with all images
+    steps_per_eval_all_images=1000000,
     max_num_iterations=100000,
     mixed_precision=False,
     pipeline=VanillaPipelineConfig(
@@ -655,7 +663,8 @@ method_configs["neus-facto"] = TrainerConfig(
     steps_per_eval_image=5000,
     steps_per_eval_batch=5000,
     steps_per_save=2000,
-    steps_per_eval_all_images=1000000,  # set to a very large model so we don't eval with all images
+    # set to a very large model so we don't eval with all images
+    steps_per_eval_all_images=1000000,
     max_num_iterations=20001,
     mixed_precision=False,
     pipeline=VanillaPipelineConfig(
@@ -802,6 +811,7 @@ method_configs["refnerfacto-blender"] = TrainerConfig(
     vis="viewer",
 )
 
+
 def merge_methods(methods, method_descriptions, new_methods, new_descriptions, overwrite=True):
     """Merge new methods and descriptions into existing methods and descriptions.
     Args:
@@ -824,13 +834,15 @@ def merge_methods(methods, method_descriptions, new_methods, new_descriptions, o
 def sort_methods(methods, method_descriptions):
     """Sort methods and descriptions by method name."""
     methods = OrderedDict(sorted(methods.items(), key=lambda x: x[0]))
-    method_descriptions = OrderedDict(sorted(method_descriptions.items(), key=lambda x: x[0]))
+    method_descriptions = OrderedDict(
+        sorted(method_descriptions.items(), key=lambda x: x[0]))
     return methods, method_descriptions
 
 
 all_methods, all_descriptions = method_configs, descriptions
 # Add discovered external methods
-all_methods, all_descriptions = merge_methods(all_methods, all_descriptions, *discover_methods())
+all_methods, all_descriptions = merge_methods(
+    all_methods, all_descriptions, *discover_methods())
 all_methods, all_descriptions = sort_methods(all_methods, all_descriptions)
 
 # Register all possible external methods which can be installed with Nerfstudio
@@ -840,7 +852,8 @@ all_methods, all_descriptions = merge_methods(
 
 AnnotatedBaseConfigUnion = tyro.conf.SuppressFixed[  # Don't show unparseable (fixed) arguments in helptext.
     tyro.conf.FlagConversionOff[
-        tyro.extras.subcommand_type_from_defaults(defaults=all_methods, descriptions=all_descriptions)
+        tyro.extras.subcommand_type_from_defaults(
+            defaults=all_methods, descriptions=all_descriptions)
     ]
 ]
 """Union[] type over config types, annotated with default instances for use with
