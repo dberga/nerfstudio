@@ -41,7 +41,12 @@ else # for any nerf model
 export SCENE=$(echo $(basename $DATASET))
 fi
 
-CKPT_PATH=$(ls outputs/$SCENE/$MODEL/*/*/*.ckpt | sort -n | tail -n 1)
+
+CKPT_LIST=$(ls -d $PWD/outputs/$SCENE/$MODEL/*/*/*.ckpt)
+for CKPT in $CKPT_LIST
+do
+CKPT_PATH=$CKPT #$(ls outputs/$SCENE/$MODEL/*/*/*.ckpt | sort -n | tail -n 1)
+CKPT_NAME=$(basename $(dirname $(dirname $CKPT)))
 MODEL_PATH=$(dirname $(dirname $CKPT_PATH))
 CKPT_DATE=$(basename $MODEL_PATH)
 CFG_PATH=$MODEL_PATH/config.yml
@@ -81,3 +86,4 @@ fi
 ffmpeg -y -i renders/$SCENE/$MODEL/$CKPT_DATE.mp4 renders/$SCENE/$MODEL/$CKPT_DATE.gif -filter_complex "fps=30,scale=480:-1"
 
 
+done

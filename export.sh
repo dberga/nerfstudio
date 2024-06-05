@@ -37,35 +37,44 @@ else # for any nerf model
 export SCENE=$(echo $(basename $DATASET))
 fi
 
-CKPT_PATH=$(ls outputs/$SCENE/$MODEL/*/*/*.ckpt | sort -n | tail -n 1)
+CKPT_LIST=$(ls -d $PWD/outputs/$SCENE/$MODEL/*/*/*.ckpt)
+for CKPT in $CKPT_LIST
+do
+CKPT_PATH=$CKPT #$(ls outputs/$SCENE/$MODEL/*/*/*.ckpt | sort -n | tail -n 1)
+MODEL_PATH=$(dirname $(dirname $CKPT_PATH))
+CKPT_DATE=$(basename $MODEL_PATH)
 MODEL_PATH=$(dirname $(dirname $CKPT_PATH))
 CFG_PATH=$MODEL_PATH/config.yml
 
 echo $MODEL_PATH;
+echo $CKPT_NAME;
+
 # RUN
 if [ $MODEL = "vanilla-nerf" ] # vanilla nerf
 then
-  echo "ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL --normal-method open3d --rgb-output-name rgb_fine --depth-output-name depth_fine --num-rays-per-batch 8192";
-  ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL --normal-method open3d --rgb-output-name rgb_fine --depth-output-name depth_fine --num-rays-per-batch 8192;
-  echo "ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL --normal-method open3d --rgb-output-name rgb_fine --depth-output-name depth_fine --num-rays-per-batch 8192";
-  ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL --normal-method open3d --rgb-output-name rgb_fine --depth-output-name depth_fine --num-rays-per-batch 8192;
+  echo "ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL-$CKPT_DATE --normal-method open3d --rgb-output-name rgb_fine --depth-output-name depth_fine --num-rays-per-batch 8192";
+  ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL-$CKPT_DATE --normal-method open3d --rgb-output-name rgb_fine --depth-output-name depth_fine --num-rays-per-batch 8192;
+  echo "ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL-$CKPT_DATE --normal-method open3d --rgb-output-name rgb_fine --depth-output-name depth_fine --num-rays-per-batch 8192";
+  ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL-$CKPT_DATE --normal-method open3d --rgb-output-name rgb_fine --depth-output-name depth_fine --num-rays-per-batch 8192;
 elif [ $MODEL = "splatfacto" ] # for gaussian splatting
 then
-  echo "ns-export gaussian-splat --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL";
-  ns-export gaussian-splat --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL;
-  echo "ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL --rgb-output-name rgb --depth-output-name depth --num-rays-per-batch 8192 --normal-method open3d";
-  ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL --rgb-output-name rgb --depth-output-name depth --num-rays-per-batch 8192 --normal-method open3d;
+  echo "ns-export gaussian-splat --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL-$CKPT_DATE";
+  ns-export gaussian-splat --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL-$CKPT_DATE;
+  echo "ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL-$CKPT_DATE --rgb-output-name rgb --depth-output-name depth --num-rays-per-batch 8192 --normal-method open3d";
+  ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL-$CKPT_DATE --rgb-output-name rgb --depth-output-name depth --num-rays-per-batch 8192 --normal-method open3d;
 elif [ $MODEL = "nerfacto" ] # nerfacto calcs normals (no need to use open3d if trained with predicted normals)
 then
-  echo "ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL --num-rays-per-batch 8192 --rgb-output-name rgb --depth-output-name depth --normal-method open3d ";
-  ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL --num-rays-per-batch 8192 --rgb-output-name rgb --depth-output-name depth --normal-method open3d ;
-  echo "ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL --num-rays-per-batch 8192 --rgb-output-name rgb --depth-output-name depth --normal-method open3d ";
-  ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL --num-rays-per-batch 8192 --rgb-output-name rgb --depth-output-name depth --normal-method open3d ;
+  echo "ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL-$CKPT_DATE --num-rays-per-batch 8192 --rgb-output-name rgb --depth-output-name depth --normal-method open3d ";
+  ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL-$CKPT_DATE --num-rays-per-batch 8192 --rgb-output-name rgb --depth-output-name depth --normal-method open3d ;
+  echo "ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL-$CKPT_DATE --num-rays-per-batch 8192 --rgb-output-name rgb --depth-output-name depth --normal-method open3d ";
+  ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL-$CKPT_DATE --num-rays-per-batch 8192 --rgb-output-name rgb --depth-output-name depth --normal-method open3d ;
 else # all other methods
-  echo "ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL --num-rays-per-batch 8192 --normal-method open3d --rgb-output-name rgb --depth-output-name depth --normal-method open3d ";
-  ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL --num-rays-per-batch 8192 --normal-method open3d --rgb-output-name rgb --depth-output-name depth;
-  echo "ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL --num-rays-per-batch 8192 --normal-method open3d --rgb-output-name rgb --depth-output-name depth";
-  ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL --num-rays-per-batch 8192 --normal-method open3d --rgb-output-name rgb --depth-output-name depth;
+  echo "ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL-$CKPT_DATE --num-rays-per-batch 8192 --normal-method open3d --rgb-output-name rgb --depth-output-name depth --normal-method open3d ";
+  ns-export pointcloud --load-config $CFG_PATH --output-dir exports/pcd/$SCENE/$MODEL-$CKPT_DATE --num-rays-per-batch 8192 --normal-method open3d --rgb-output-name rgb --depth-output-name depth;
+  echo "ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL-$CKPT_DATE --num-rays-per-batch 8192 --normal-method open3d --rgb-output-name rgb --depth-output-name depth";
+  ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL-$CKPT_DATE --num-rays-per-batch 8192 --normal-method open3d --rgb-output-name rgb --depth-output-name depth;
 fi
 # pointcloud args: --num-points 1000000 --remove-outliers True --normal-method open3d --use-bounding-box True --bounding-box-min -$SCALE -$SCALE --bounding-box-max $SCALE $SCALE $SCALE;
 # poisson args: --target-num-faces 50000 --num-pixels-per-side 2048 --normal-method open3d --num-points 1000000 --remove-outliers True --use-bounding-box True --bounding-box-min -$SCALE -$SCALE -$SCALE --bounding-box-max $SCALE $SCALE $SCALE;
+
+done
