@@ -56,6 +56,9 @@ echo "renders/$SCENE/$MODEL/$CKPT_DATE.mp4 already rendered"
 continue
 fi
 
+echo $MODEL_PATH;
+echo $CKPT_PATH;
+
 PATH_CAMERA_JSON=${DATASET}/camera_paths/*.json
 if [ -e $PATH_CAMERA_JSON ]; then
 CAM_PATH=$(ls $DATASET/camera_paths/*.json | sort -n | tail -n 1)
@@ -82,8 +85,7 @@ ns-render spiral --load-config $CFG_PATH --output-path renders/$SCENE/$MODEL/spi
 fi
 
 # mp4 video to gif
-#echo "ffmpeg -y -i renders/$SCENE/$MODEL/$CKPT_DATE.mp4 renders/$SCENE/$MODEL/$CKPT_DATE.gif"
+echo "ffmpeg -y -i renders/$SCENE/$MODEL/$CKPT_DATE.mp4 renders/$SCENE/$MODEL/$CKPT_DATE.gif"
 ffmpeg -y -i renders/$SCENE/$MODEL/$CKPT_DATE.mp4 renders/$SCENE/$MODEL/$CKPT_DATE.gif -filter_complex "fps=30,scale=480:-1"
-
 
 done

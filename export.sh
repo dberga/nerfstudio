@@ -47,7 +47,7 @@ MODEL_PATH=$(dirname $(dirname $CKPT_PATH))
 CFG_PATH=$MODEL_PATH/config.yml
 
 echo $MODEL_PATH;
-echo $CKPT_NAME;
+echo $CKPT_PATH;
 
 if [ -d exports/pcd/$SCENE/$MODEL-$CKPT_DATE ] && [ -d exports/mesh/$SCENE/$MODEL-$CKPT_DATE ]
 echo "$SCENE/$MODEL-$CKPT_DATE already exported"
@@ -79,5 +79,4 @@ else # all other methods
   echo "ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL-$CKPT_DATE --num-rays-per-batch 8192 --normal-method open3d --rgb-output-name rgb --depth-output-name depth";
   ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL-$CKPT_DATE --num-rays-per-batch 8192 --normal-method open3d --rgb-output-name rgb --depth-output-name depth;
 fi
-
 done
