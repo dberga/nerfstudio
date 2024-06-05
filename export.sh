@@ -49,6 +49,11 @@ CFG_PATH=$MODEL_PATH/config.yml
 echo $MODEL_PATH;
 echo $CKPT_NAME;
 
+if [ -d exports/pcd/$SCENE/$MODEL-$CKPT_DATE ] && [ -d exports/mesh/$SCENE/$MODEL-$CKPT_DATE ]
+echo "$SCENE/$MODEL-$CKPT_DATE already exported"
+continue
+fi
+
 # RUN
 if [ $MODEL = "vanilla-nerf" ] # vanilla nerf
 then
@@ -74,7 +79,5 @@ else # all other methods
   echo "ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL-$CKPT_DATE --num-rays-per-batch 8192 --normal-method open3d --rgb-output-name rgb --depth-output-name depth";
   ns-export poisson --load-config $CFG_PATH --output-dir exports/mesh/$SCENE/$MODEL-$CKPT_DATE --num-rays-per-batch 8192 --normal-method open3d --rgb-output-name rgb --depth-output-name depth;
 fi
-# pointcloud args: --num-points 1000000 --remove-outliers True --normal-method open3d --use-bounding-box True --bounding-box-min -$SCALE -$SCALE --bounding-box-max $SCALE $SCALE $SCALE;
-# poisson args: --target-num-faces 50000 --num-pixels-per-side 2048 --normal-method open3d --num-points 1000000 --remove-outliers True --use-bounding-box True --bounding-box-min -$SCALE -$SCALE -$SCALE --bounding-box-max $SCALE $SCALE $SCALE;
 
 done

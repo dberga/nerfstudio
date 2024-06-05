@@ -53,7 +53,7 @@ CFG_PATH=$MODEL_PATH/config.yml
 
 if [ -e renders/$SCENE/$MODEL/$CKPT_DATE.mp4 ] && ! $OVERWRITE; then
 echo "renders/$SCENE/$MODEL/$CKPT_DATE.mp4 already rendered"
-exit
+continue
 fi
 
 PATH_CAMERA_JSON=${DATASET}/camera_paths/*.json
