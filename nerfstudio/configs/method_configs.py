@@ -67,8 +67,7 @@ from nerfstudio.pipelines.base_pipeline import VanillaPipelineConfig
 from nerfstudio.pipelines.dynamic_batch import DynamicBatchPipelineConfig
 from nerfstudio.plugins.registry import discover_methods
 
-method_configs: Dict[str, Union[TrainerConfig,
-                                ExternalMethodDummyTrainerConfig]] = {}
+method_configs: Dict[str, Union[TrainerConfig, ExternalMethodDummyTrainerConfig]] = {}
 descriptions = {
     "nerfacto": "Recommended real-time model tuned for real captures. This model will be continually updated.",
     "depth-nerfacto": "Nerfacto with depth supervision.",
@@ -84,6 +83,7 @@ descriptions = {
     "phototourism": "Uses the Phototourism data.",
     "generfacto": "Generative Text to NeRF model",
     "splatfacto": "Gaussian Splatting model",
+    "splatfacto-big": "Gaussian Splatting model",
     "neus": "Implementation of NeuS. (slow)",
     "neus-facto": "Implementation of NeuS-Facto. (slow)",
     "refnerfacto": "Combines nerfacto and ref-nerf.",
@@ -106,6 +106,7 @@ method_configs["nerfacto"] = TrainerConfig(
         ),
         model=NerfactoModelConfig(
             eval_num_rays_per_chunk=1 << 15,
+            average_init_density=0.01,
             camera_optimizer=CameraOptimizerConfig(mode="SO3xR3"),
         ),
     ),
@@ -149,6 +150,7 @@ method_configs["nerfacto-big"] = TrainerConfig(
             max_res=4096,
             proposal_weights_anneal_max_num_iters=5000,
             log2_hashmap_size=21,
+            average_init_density=0.01,
             camera_optimizer=CameraOptimizerConfig(mode="SO3xR3"),
         ),
     ),
@@ -187,10 +189,8 @@ method_configs["nerfacto-huge"] = TrainerConfig(
             num_nerf_samples_per_ray=64,
             num_proposal_samples_per_ray=(512, 512),
             proposal_net_args_list=[
-                {"hidden_dim": 16, "log2_hashmap_size": 17,
-                    "num_levels": 5, "max_res": 512, "use_linear": False},
-                {"hidden_dim": 16, "log2_hashmap_size": 17,
-                    "num_levels": 7, "max_res": 2048, "use_linear": False},
+                {"hidden_dim": 16, "log2_hashmap_size": 17, "num_levels": 5, "max_res": 512, "use_linear": False},
+                {"hidden_dim": 16, "log2_hashmap_size": 17, "num_levels": 7, "max_res": 2048, "use_linear": False},
             ],
             hidden_dim=256,
             hidden_dim_color=256,
@@ -198,6 +198,7 @@ method_configs["nerfacto-huge"] = TrainerConfig(
             max_res=8192,
             proposal_weights_anneal_max_num_iters=5000,
             log2_hashmap_size=21,
+            average_init_density=0.01,
             camera_optimizer=CameraOptimizerConfig(mode="SO3xR3"),
         ),
     ),
@@ -302,7 +303,7 @@ method_configs["instant-ngp"] = TrainerConfig(
     steps_per_save=2000,
     max_num_iterations=30000,
     mixed_precision=True,
-    pipeline=VanillaPipelineConfig(
+    pipeline=DynamicBatchPipelineConfig(  # type: ignore # VanillaPipelineConfig
         datamanager=VanillaDataManagerConfig(
             dataparser=NerfstudioDataParserConfig(),
             train_num_rays_per_batch=4096,
@@ -327,8 +328,7 @@ method_configs["instant-ngp-bounded"] = TrainerConfig(
     max_num_iterations=30000,
     mixed_precision=True,
     pipeline=DynamicBatchPipelineConfig(
-        datamanager=VanillaDataManagerConfig(
-            dataparser=InstantNGPDataParserConfig(), train_num_rays_per_batch=8192),
+        datamanager=VanillaDataManagerConfig(dataparser=InstantNGPDataParserConfig(), train_num_rays_per_batch=8192),
         model=InstantNGPModelConfig(
             eval_num_rays_per_chunk=8192,
             grid_levels=1,
@@ -353,8 +353,7 @@ method_configs["instant-ngp-bounded"] = TrainerConfig(
 method_configs["mipnerf"] = TrainerConfig(
     method_name="mipnerf",
     pipeline=VanillaPipelineConfig(
-        datamanager=ParallelDataManagerConfig(
-            dataparser=NerfstudioDataParserConfig(), train_num_rays_per_batch=1024),
+        datamanager=ParallelDataManagerConfig(dataparser=NerfstudioDataParserConfig(), train_num_rays_per_batch=1024),
         model=VanillaModelConfig(
             _target=MipNerfModel,
             loss_coefficients={"rgb_loss_coarse": 0.1, "rgb_loss_fine": 1.0},
@@ -490,7 +489,7 @@ method_configs["tensorf"] = TrainerConfig(
     mixed_precision=False,
     pipeline=VanillaPipelineConfig(
         datamanager=ParallelDataManagerConfig(
-            dataparser=NerfstudioDataParserConfig(),
+            dataparser=NerfstudioDataParserConfig(),  # type: ignore # BlenderDataParserConfig
             train_num_rays_per_batch=4096,
             eval_num_rays_per_batch=4096,
         ),
@@ -520,8 +519,7 @@ method_configs["tensorf"] = TrainerConfig(
 method_configs["dnerf"] = TrainerConfig(
     method_name="dnerf",
     pipeline=VanillaPipelineConfig(
-        datamanager=VanillaDataManagerConfig(
-            dataparser=DNeRFDataParserConfig()),
+        datamanager=VanillaDataManagerConfig(dataparser=DNeRFDataParserConfig()),
         model=VanillaModelConfig(
             _target=NeRFModel,
             enable_temporal_distortion=True,
@@ -548,8 +546,7 @@ method_configs["phototourism"] = TrainerConfig(
     mixed_precision=True,
     pipeline=VanillaPipelineConfig(
         datamanager=VanillaDataManagerConfig(
-            # NOTE: one of the only differences with nerfacto
-            dataparser=PhototourismDataParserConfig(),
+            dataparser=PhototourismDataParserConfig(),  # NOTE: one of the only differences with nerfacto
             train_num_rays_per_batch=4096,
             eval_num_rays_per_batch=4096,
             # Large dataset, so using prior values from VariableResDataManager.
@@ -631,8 +628,7 @@ method_configs["neus"] = TrainerConfig(
     steps_per_eval_image=500,
     steps_per_eval_batch=5000,
     steps_per_save=20000,
-    # set to a very large number so we don't eval with all images
-    steps_per_eval_all_images=1000000,
+    steps_per_eval_all_images=1000000,  # set to a very large number so we don't eval with all images
     max_num_iterations=100000,
     mixed_precision=False,
     pipeline=VanillaPipelineConfig(
@@ -663,8 +659,7 @@ method_configs["neus-facto"] = TrainerConfig(
     steps_per_eval_image=5000,
     steps_per_eval_batch=5000,
     steps_per_save=2000,
-    # set to a very large model so we don't eval with all images
-    steps_per_eval_all_images=1000000,
+    steps_per_eval_all_images=1000000,  # set to a very large model so we don't eval with all images
     max_num_iterations=20001,
     mixed_precision=False,
     pipeline=VanillaPipelineConfig(
@@ -719,11 +714,12 @@ method_configs["splatfacto"] = TrainerConfig(
     pipeline=VanillaPipelineConfig(
         datamanager=FullImageDatamanagerConfig(
             dataparser=NerfstudioDataParserConfig(load_3D_points=True),
+            cache_images_type="uint8",
         ),
         model=SplatfactoModelConfig(),
     ),
     optimizers={
-        "xyz": {
+        "means": {
             "optimizer": AdamOptimizerConfig(lr=1.6e-4, eps=1e-15),
             "scheduler": ExponentialDecaySchedulerConfig(
                 lr_final=1.6e-6,
@@ -738,18 +734,75 @@ method_configs["splatfacto"] = TrainerConfig(
             "optimizer": AdamOptimizerConfig(lr=0.0025 / 20, eps=1e-15),
             "scheduler": None,
         },
-        "opacity": {
+        "opacities": {
             "optimizer": AdamOptimizerConfig(lr=0.05, eps=1e-15),
             "scheduler": None,
         },
-        "scaling": {
+        "scales": {
             "optimizer": AdamOptimizerConfig(lr=0.005, eps=1e-15),
             "scheduler": None,
         },
-        "rotation": {"optimizer": AdamOptimizerConfig(lr=0.001, eps=1e-15), "scheduler": None},
+        "quats": {"optimizer": AdamOptimizerConfig(lr=0.001, eps=1e-15), "scheduler": None},
         "camera_opt": {
-            "optimizer": AdamOptimizerConfig(lr=1e-3, eps=1e-15),
-            "scheduler": ExponentialDecaySchedulerConfig(lr_final=5e-5, max_steps=30000),
+            "optimizer": AdamOptimizerConfig(lr=1e-4, eps=1e-15),
+            "scheduler": ExponentialDecaySchedulerConfig(
+                lr_final=5e-7, max_steps=30000, warmup_steps=1000, lr_pre_warmup=0
+            ),
+        },
+    },
+    viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
+    vis="viewer",
+)
+
+method_configs["splatfacto-big"] = TrainerConfig(
+    method_name="splatfacto",
+    steps_per_eval_image=100,
+    steps_per_eval_batch=0,
+    steps_per_save=2000,
+    steps_per_eval_all_images=1000,
+    max_num_iterations=30000,
+    mixed_precision=False,
+    pipeline=VanillaPipelineConfig(
+        datamanager=FullImageDatamanagerConfig(
+            dataparser=NerfstudioDataParserConfig(load_3D_points=True),
+            cache_images_type="uint8",
+        ),
+        model=SplatfactoModelConfig(
+            cull_alpha_thresh=0.005,
+            continue_cull_post_densification=False,
+            densify_grad_thresh=0.0006,
+        ),
+    ),
+    optimizers={
+        "means": {
+            "optimizer": AdamOptimizerConfig(lr=1.6e-4, eps=1e-15),
+            "scheduler": ExponentialDecaySchedulerConfig(
+                lr_final=1.6e-6,
+                max_steps=30000,
+            ),
+        },
+        "features_dc": {
+            "optimizer": AdamOptimizerConfig(lr=0.0025, eps=1e-15),
+            "scheduler": None,
+        },
+        "features_rest": {
+            "optimizer": AdamOptimizerConfig(lr=0.0025 / 20, eps=1e-15),
+            "scheduler": None,
+        },
+        "opacities": {
+            "optimizer": AdamOptimizerConfig(lr=0.05, eps=1e-15),
+            "scheduler": None,
+        },
+        "scales": {
+            "optimizer": AdamOptimizerConfig(lr=0.005, eps=1e-15),
+            "scheduler": None,
+        },
+        "quats": {"optimizer": AdamOptimizerConfig(lr=0.001, eps=1e-15), "scheduler": None},
+        "camera_opt": {
+            "optimizer": AdamOptimizerConfig(lr=1e-4, eps=1e-15),
+            "scheduler": ExponentialDecaySchedulerConfig(
+                lr_final=5e-7, max_steps=30000, warmup_steps=1000, lr_pre_warmup=0
+            ),
         },
     },
     viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
@@ -834,15 +887,13 @@ def merge_methods(methods, method_descriptions, new_methods, new_descriptions, o
 def sort_methods(methods, method_descriptions):
     """Sort methods and descriptions by method name."""
     methods = OrderedDict(sorted(methods.items(), key=lambda x: x[0]))
-    method_descriptions = OrderedDict(
-        sorted(method_descriptions.items(), key=lambda x: x[0]))
+    method_descriptions = OrderedDict(sorted(method_descriptions.items(), key=lambda x: x[0]))
     return methods, method_descriptions
 
 
 all_methods, all_descriptions = method_configs, descriptions
 # Add discovered external methods
-all_methods, all_descriptions = merge_methods(
-    all_methods, all_descriptions, *discover_methods())
+all_methods, all_descriptions = merge_methods(all_methods, all_descriptions, *discover_methods())
 all_methods, all_descriptions = sort_methods(all_methods, all_descriptions)
 
 # Register all possible external methods which can be installed with Nerfstudio
@@ -852,8 +903,7 @@ all_methods, all_descriptions = merge_methods(
 
 AnnotatedBaseConfigUnion = tyro.conf.SuppressFixed[  # Don't show unparseable (fixed) arguments in helptext.
     tyro.conf.FlagConversionOff[
-        tyro.extras.subcommand_type_from_defaults(
-            defaults=all_methods, descriptions=all_descriptions)
+        tyro.extras.subcommand_type_from_defaults(defaults=all_methods, descriptions=all_descriptions)
     ]
 ]
 """Union[] type over config types, annotated with default instances for use with

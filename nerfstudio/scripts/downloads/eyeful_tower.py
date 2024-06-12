@@ -41,6 +41,8 @@ eyefultower_downloads = [
     "seating_area",
     "table",
     "workshop",
+    "raf_emptyroom",
+    "raf_furnishedroom",
 ]
 
 # Crop radii empirically chosen to try to avoid hitting the rig base or go out of bounds
@@ -261,6 +263,7 @@ class EyefulTowerDownload(DatasetDownload):
         output["frames"] = frames
         output["train_filenames"] = split_filenames["train"]
         output["val_filenames"] = split_filenames["test"]
+        output["test_filenames"] = []
         return output
 
     @staticmethod

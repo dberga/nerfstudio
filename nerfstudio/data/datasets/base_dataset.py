@@ -53,6 +53,7 @@ class InputDataset(Dataset):
         self.metadata = deepcopy(dataparser_outputs.metadata)
         self.cameras = deepcopy(dataparser_outputs.cameras)
         self.cameras.rescale_output_resolution(scaling_factor=scale_factor)
+        self.mask_color = dataparser_outputs.metadata.get("mask_color", None)
 
     def __len__(self):
         return len(self._dataparser_outputs.image_filenames)
@@ -68,7 +69,7 @@ class InputDataset(Dataset):
         if self.scale_factor != 1.0:
             width, height = pil_image.size
             newsize = (int(width * self.scale_factor), int(height * self.scale_factor))
-            pil_image = pil_image.resize(newsize, resample=Image.BILINEAR)
+            pil_image = pil_image.resize(newsize, resample=Image.Resampling.BILINEAR)
         image = np.array(pil_image, dtype="uint8")  # shape is (h, w) or (h, w, 3 or 4)
         if len(image.shape) == 2:
             image = image[:, :, None].repeat(3, axis=2)
@@ -102,7 +103,7 @@ class InputDataset(Dataset):
             assert (self._dataparser_outputs.alpha_color >= 0).all() and (
                 self._dataparser_outputs.alpha_color <= 1
             ).all(), "alpha color given is out of range between [0, 1]."
-            image = image[:, :, :3] * image[:, :, -1:] / 255.0 + 255.0 * self._dataparser_outputs.alpha_color * (
+            image = image[:, :, :3] * (image[:, :, -1:] / 255.0) + 255.0 * self._dataparser_outputs.alpha_color * (
                 1.0 - image[:, :, -1:] / 255.0
             )
             image = torch.clamp(image, min=0, max=255).to(torch.uint8)
@@ -129,6 +130,10 @@ class InputDataset(Dataset):
             assert (
                 data["mask"].shape[:2] == data["image"].shape[:2]
             ), f"Mask and image have different shapes. Got {data['mask'].shape[:2]} and {data['image'].shape[:2]}"
+        if self.mask_color:
+            data["image"] = torch.where(
+                data["mask"] == 1.0, data["image"], torch.ones_like(data["image"]) * torch.tensor(self.mask_color)
+            )
         metadata = self.get_metadata(data)
         data.update(metadata)
         return data

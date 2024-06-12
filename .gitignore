@@ -188,6 +188,11 @@ camera_paths/
 */**/.DS_Store
 */**/._.DS_Store
 
+# Output folders
 exports
 renders
 outputs
+
+# pixi environments
+.pixi
+/third_party
