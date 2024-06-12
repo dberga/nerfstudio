@@ -50,6 +50,7 @@ echo $MODEL_PATH;
 echo $CKPT_PATH;
 
 if [ -d exports/pcd/$SCENE/$MODEL-$CKPT_DATE ] && [ -d exports/mesh/$SCENE/$MODEL-$CKPT_DATE ]
+then
 echo "$SCENE/$MODEL-$CKPT_DATE already exported"
 continue
 fi
