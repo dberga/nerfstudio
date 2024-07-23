@@ -26,6 +26,10 @@ The script `whole_process.sh` will read all folders in `data/`, so that if you w
 ```
 sh whole_process.sh 0
 ```
+Note: For testing SFM precision (% matching images) run `count_sfm.py`, as an example:
+```
+python count_sfm.py --dataset nerfstudio --scene kitchen
+```
 ### Training Nerfs from images and videos
 
 Use `train.sh` to use `ns-train`, specifying the `GPU`, `MODEL` and `DATASET` (scene folder), for example:
